@@ -1,3 +1,5 @@
 python-instagram
 facebook-sdk
 tornado
+python-linkedin
+TwitterAPI

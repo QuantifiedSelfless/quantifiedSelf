@@ -1,7 +1,7 @@
 from linkedin import linkedin
 import webbrowser
-API_KEY = i'78qkq081mu75tc'
-API_SECRET = '7xaodJadE96TFup1'
+API_KEY = ''
+API_SECRET = ''
 RETURN_URL = 'http://localhost:8080'
 
 #Put in your applications key and secret and set the return url to a local-host or

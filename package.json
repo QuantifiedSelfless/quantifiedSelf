@@ -1,0 +1,22 @@
+{
+  "name": "quantifiedSelf",
+  "version": "1.0.0",
+  "description": "Web App for QSelf Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wannabeCitizen/quantifiedSelf.git"
+  },
+  "keywords": [
+    "nada"
+  ],
+  "author": "Michael Skirpan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wannabeCitizen/quantifiedSelf/issues"
+  },
+  "homepage": "https://github.com/wannabeCitizen/quantifiedSelf"
+}

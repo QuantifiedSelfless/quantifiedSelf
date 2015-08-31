@@ -5,9 +5,14 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
 
+class TestHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("home.html")
+
 app = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/favicon.ico", tornado.web.StaticFileHandler, {"path":"./favicon.ico"}),
+    (r"/test", TestHandler),
+   # (r"/favicon.ico", tornado.web.StaticFileHandler, {"path":"."}),
 ],
     template_path = "./templates/",
     static_path = "./static/",

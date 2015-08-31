@@ -5,7 +5,7 @@ var react = require('gulp-react');
 var htmlreplace = require('gulp-html-replace');
 
 var path = {
-    HTML: ['index.html', 'signup.html']
+    HTML: ['index.html', 'signup.html'],
     ALL: ['js/*.js', 'js/**/*.js', 'home.html', 'signup.html'],
     JS: ['js/*.js', 'js/**/*.js'],
     CSS: ['css/*.css'],
@@ -41,8 +41,8 @@ gulp.task('default', ['watch']);
 gulp.task('build', function(){
     gulp.src(path.JS)
         .pipe(react())
+        .pipe(uglify())
         .pipe(concat(path.MINIFIED_OUT))
-        .pipe(uglify(path.MINIFIED_OUT))
         .pipe(gulp.dest(path.DEST_BUILD));
 });
 

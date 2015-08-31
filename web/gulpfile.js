@@ -11,7 +11,7 @@ var path = {
     CSS: ['css/*.css'],
     MINIFIED_OUT: 'build.min.js',
     DEST_SRC: 'public/src',
-    DEST_BUILD: 'public/build',
+    DEST_BUILD: 'public/static',
     DEST: 'public'
     };
 
@@ -28,7 +28,7 @@ gulp.task('copy', function(){
 
 gulp.task('css', function(){
     gulp.src(path.CSS)
-        .pipe(gulp.dest(path.DEST));
+        .pipe(gulp.dest(path.DEST_BUILD + '/css'));
 });
 
 
@@ -43,7 +43,7 @@ gulp.task('build', function(){
         .pipe(react())
         .pipe(uglify())
         .pipe(concat(path.MINIFIED_OUT))
-        .pipe(gulp.dest(path.DEST_BUILD));
+        .pipe(gulp.dest(path.DEST_BUILD + '/js'));
 });
 
 // Remember use <!-- build:js --> and <!-- endbuild --> for stuff that needs replaced

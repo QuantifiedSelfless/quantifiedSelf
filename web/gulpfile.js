@@ -5,13 +5,14 @@ var react = require('gulp-react');
 var htmlreplace = require('gulp-html-replace');
 
 var path = {
-    HTML: ['web/index.html', 'web/signup.html']
-    ALL: ['web/js/*.js', 'web/js/**/*.js', 'web/home.html', 'web/signup.html'],
-    JS: ['web/js/*.js', 'web/js/**/*.js']
+    HTML: ['index.html', 'signup.html']
+    ALL: ['js/*.js', 'js/**/*.js', 'home.html', 'signup.html'],
+    JS: ['js/*.js', 'js/**/*.js'],
+    CSS: ['css/*.css'],
     MINIFIED_OUT: 'build.min.js',
-    DEST_SRC: 'web/src',
-    DEST_BUILD: 'build',
-    DEST: 'dist'
+    DEST_SRC: 'public/src',
+    DEST_BUILD: 'public/build',
+    DEST: 'public'
     };
 
 gulp.task('transform', function(){

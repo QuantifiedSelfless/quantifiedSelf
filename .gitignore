@@ -2,5 +2,5 @@
 *.pyc
 *.swp
 *.log
-*node_modules/*
-*/.module-cache
+*/node_modules/*
+*/.module-cache/*

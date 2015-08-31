@@ -1,3 +1,4 @@
 */creds.py
 *.pyc
 *.swp
+rethinkdb_data

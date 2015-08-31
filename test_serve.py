@@ -7,7 +7,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 app = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/(favicon.ico)", tornado.web.StaticFileHandler, {"path":""}),
+    (r"/favicon.ico", tornado.web.StaticFileHandler, {"path":"./favicon.ico"}),
 ],
     template_path = "./templates/",
     static_path = "./static/",

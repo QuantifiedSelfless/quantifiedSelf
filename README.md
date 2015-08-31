@@ -3,7 +3,7 @@ This app is the source code for the web presence and data processing infrastruct
 
 We use a mixture of a JS front-end app using React and a Python Tornado back-end.
 
-Please ensure pip is installed do:
+Please ensure pip is installed, then do:
 
 `pip install requirements.txt` to get all python dependencies
 
@@ -16,6 +16,6 @@ We are using the gulp build engine. All front-end build and maintenance should s
 If you want to test front-end code...
 
 1. run `gulp build`
-2. run python -m SimpleHTTPServer 8000
+2. run `python -m SimpleHTTPServer 8000`
 3. point your browser to http://localhost:8000
 4. Browse to the page you're testing

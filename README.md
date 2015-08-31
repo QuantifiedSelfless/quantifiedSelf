@@ -1,4 +1,4 @@
-= Quantified Self Art Project = 
+# Quantified Self Art Project 
 This app is the source code for the web presence and data processing infrastructure for the quantified self art project opening at CU-Boulder in April 2016.
 
 We use a mixture of a JS front-end app using React and a Python Tornado back-end.

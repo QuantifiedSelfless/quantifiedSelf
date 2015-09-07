@@ -21,7 +21,8 @@
   "homepage": "https://github.com/wannabeCitizen/quantifiedSelf",
   "dependencies": {
     "react": "^0.13.3",
-    "react-tools": "^0.13.3"
+    "react-tools": "^0.13.3",
+    "gulp-util": "~3.0.6"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

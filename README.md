@@ -5,7 +5,7 @@ We use a mixture of a JS front-end app using React and a Python Tornado back-end
 
 Please ensure pip is installed, then do:
 
-`pip install requirements.txt` to get all python dependencies
+`pip install -r requirements.txt` to get all python dependencies
 
 Next ensure you have `node` and `npm` installed and go to the `web/` directory and type:
 

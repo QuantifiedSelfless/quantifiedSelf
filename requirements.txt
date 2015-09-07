@@ -5,3 +5,5 @@ tornado
 python-linkedin
 TwitterAPI
 pytumblr
+rethinkdb
+requests

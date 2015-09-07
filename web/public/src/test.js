@@ -1,6 +1,6 @@
 //Currently am loading React from CDN
 
 React.render(
-        <GAuth />,
+        React.createElement(GAuth, null),
         document.getElementById('test')
 );

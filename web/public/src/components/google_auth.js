@@ -1,4 +1,4 @@
-var GAuth = React.createClass({
+var GAuth = React.createClass({displayName: "GAuth",
     
     getInitialState: function() {
         // Check cookie
@@ -17,11 +17,11 @@ var GAuth = React.createClass({
 
     render: function() {
         return (
-            <div className="authbtn google">
-                <a href="http://iamadatapoint.com/auth/google">
-                    <img src="google icon"/>
-                </a>
-            </div>
+            React.createElement("div", {className: "authbtn google"}, 
+                React.createElement("a", {href: "http://iamadatapoint.com/auth/google"}, 
+                    React.createElement("img", {src: "google icon"})
+                )
+            )
         );
     }
 

@@ -18,8 +18,8 @@ var GAuth = React.createClass({
     render: function() {
         return (
             <div className="authbtn google">
-                <a href="http://iamadatapoint.com/auth/google">
-                    <img src="google icon"/>
+                <a className="zocial google" href="http://iamadatapoint.com/auth/google">
+                    Authorize with Google
                 </a>
             </div>
         );
@@ -27,4 +27,5 @@ var GAuth = React.createClass({
 
 });
 
+module.exports = GAuth;
     //May want a handleclick function

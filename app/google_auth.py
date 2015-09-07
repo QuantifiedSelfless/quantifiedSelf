@@ -30,10 +30,13 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
             yield self.authorize_redirect(
                     redirect_uri="http://iamadatapoint.com/auth/google",
                     client_id=self.application.settings['google_oauth']['key'],
-                    scope = ['profile', 
+                    scope = [
+                        'https://www.googleapis.com/auth/plus.login',
+                        'https://www.googleapis.com/auth/plus.me',
                         'https://www.googleapis.com/auth/gmail.readonly', 
                         'https://www.googleapis.com/auth/calendar.readonly', 
-                        'https://www.googleapis.com/auth/youtube.readonly'],
+                        'https://www.googleapis.com/auth/youtube.readonly',
+                        ],
                     response_type = 'code',
                     extra_params={'approval_prompt' : 'auto'})
 

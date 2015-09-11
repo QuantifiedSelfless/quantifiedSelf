@@ -87,14 +87,16 @@ gulp.task('watch', function(){
 gulp.task('default', ['watch', 'copy', 'css', 'js']);
 
 gulp.task('build', function(){
-    browserify({
-        entries: [path.ENTRY_POINT],
-        transform: [reactify]
-    })
-    .bundle()
-    .pipe(source(path.MINIFIED_OUT))
-    .pipe(streamify(minifier({}, uglifyjs)))
-    .pipe(gulp.dest(path.DEST_FINAL_JS));
+    _.each(path.ENTRIES, function(page) {
+        browserify({
+            entries: [page],
+            transform: [reactify]
+        })
+        .bundle()
+        .pipe(source(page.split('/')[1].split('.')[0] + path.MINIFIED_OUT))
+        .pipe(streamify(minifier({}, uglifyjs)))
+        .pipe(gulp.dest(path.DEST_FINAL_JS));
+    });
 });
 
 

@@ -5,8 +5,6 @@ from tornado import ioloop
 from tornado import httpclient
 import ujson as json
 
-from creds import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
-
 #May eventually want to add instance of IOLoop if we want to add in callbacks for scraping tasks
 
 class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):

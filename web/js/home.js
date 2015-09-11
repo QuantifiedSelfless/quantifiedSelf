@@ -1,9 +1,9 @@
 //Currently am loading React from CDN
-var GAuth = require('./home_comps/GAuth.js');
+var Intro = require('./home_comps/Intro.js');
 
 React.render(
-        <GAuth />,
-        document.getElementById('test')
+        <Intro />,
+        document.getElementById('intro')
 );
 
 

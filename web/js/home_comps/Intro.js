@@ -17,13 +17,13 @@ var Intro = React.createClass({
 
     render: function() {
         return (
-            <div className="checkit">
-                <p>It Worked!!</p>
+            <div className="p10 mx-auto">
+               <p>I will never do this again without going to the mall. Seriously it's scaring me to see all the things that we can do these days with these machines. I'm not sure I even know if my friends are my friends or if dudes are dudes or anything. I always just wanted to bro out. </p>
             </div>
         );
     }
 
 });
 
-module.exports = GAuth;
+module.exports = Intro;
     //May want a handleclick function

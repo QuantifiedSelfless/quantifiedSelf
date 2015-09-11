@@ -7,7 +7,7 @@ function setup() {
   var myCanvas = createCanvas(windowWidth, windowHeight);
   myCanvas.parent('processing');
   systems = [];
-  start = false;
+  start = true;
 }
 
 function draw() {
@@ -18,13 +18,21 @@ function draw() {
       systems.splice(i, 1);
     }
   }
-  if (systems.length==0) {
-    fill(255);
-    textAlign(CENTER);
-    textSize(32);
-    text("click mouse to be traced", width/2, height/2);
-  }
+    drawText();
 }
+
+function drawText() {
+    stroke(255);
+    //line(width/2, 0+height/8, width/2, height);
+    textSize(42);
+    fill(199, 238, 255);
+    textFont("Anonymous Pro");
+    textAlign(CENTER);
+    text("Quantified Self Art and Theater Experience", width/2, height/2);
+    textSize(32);
+    text("Are you your data?", width/2, height/1.5);
+}
+
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);

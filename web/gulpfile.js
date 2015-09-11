@@ -13,9 +13,10 @@ var path = {
     HTML: ['index.html', 'home.html','signup.html'],
     FINAL_HTML: '../templates',
     ALL: ['js/*.js', 'js/**/*.js', 'home.html', 'signup.html'],
-    JS: ['js/*.js', 'js/**/*.js'],
+    REACT_JS: ['js/*.js', 'js/components/*.js'],
+    JS_LIB: ['js/lib/*.js'],
     CSS: ['css/*'],
-    OUT: 'build.js',
+    OUT: 'app.js',
     MINIFIED_OUT: 'build.min.js',
     DEST_BUILD: 'public/static',
     DEST_BUILD_JS: 'public/static/js',
@@ -47,8 +48,19 @@ gulp.task('css-prod', function(){
         .pipe(gulp.dest(path.DEST_FINAL_CSS));
 });
 
+gulp.task('js', function() {
+    gulp.src(path.JS_LIB)
+        .pipe(gulp.dest(path.DEST_BUILD_JS));
+});
+
+gulp.task('js-prod', function() {
+    gulp.src(path.JS_LIB)
+        .pipe(gulp.dest(path.DEST_FINAL_JS));
+});
+
 gulp.task('watch', function(){
     gulp.watch(path.HTML, ['copy']);
+    gulp.watch(path.JS_LIB, ['js']);
 
     var watcher = watchify(browserify({
         entries: [path.ENTRY_POINT],
@@ -68,7 +80,7 @@ gulp.task('watch', function(){
           .pipe(gulp.dest(path.DEST_BUILD_JS));
 });
 
-gulp.task('default', ['watch', 'css']);
+gulp.task('default', ['watch', 'copy', 'css', 'js']);
 
 gulp.task('build', function(){
     browserify({
@@ -91,4 +103,4 @@ gulp.task('replaceHTML', function(){
         .pipe(gulp.dest(path.FINAL_HTML));
 });
 
-gulp.task('production', ['replaceHTML', 'build', 'css-prod']);
+gulp.task('production', ['replaceHTML', 'build', 'css-prod', 'js-prod']);

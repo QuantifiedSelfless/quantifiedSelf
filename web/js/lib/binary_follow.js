@@ -1,9 +1,11 @@
 var systems;
 var start;
-var vals = ["0", "1", "01","00", "11", "10"];
+var vals = ["0", "1"];
+//, "01","00", "11", "10"];
 
 function setup() {
-  createCanvas(710, 400);
+  var myCanvas = createCanvas(windowWidth, windowHeight);
+  myCanvas.parent('processing');
   systems = [];
   start = false;
 }
@@ -24,6 +26,10 @@ function draw() {
   }
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function mouseMoved() {
   if (start == true && random() > .5 ) {
     this.p = new BinarySystem(createVector(mouseX, mouseY));
@@ -35,7 +41,6 @@ function mouseMoved() {
 
 function mouseClicked() {
   if (start == false) {
-    console.log('click');
     this.p = new BinarySystem(createVector(mouseX, mouseY));
     systems.push(p);
     p.addBinary();
@@ -45,7 +50,7 @@ function mouseClicked() {
 
 // A simple Particle class
 var Binary = function(position, repr) {
-  this.velocity = createVector(random(-10, 10), random(-10, 10));
+  this.velocity = createVector(random(-5, 5), random(-5, 5));
   this.position = position.copy();
   this.lifespan = 100.0;
   this.repr = repr;
@@ -59,7 +64,6 @@ var Binary = function(position, repr) {
 };
 
 Binary.prototype.run = function() {
-  console.log('running?');
   this.update();
   this.display();
 };
@@ -71,7 +75,7 @@ Binary.prototype.update = function(){
   } else{
     this.position.y += this.velocity.y;
   }
-  this.lifespan -= 2;
+  this.lifespan -= 1;
 };
 
 // Method to display

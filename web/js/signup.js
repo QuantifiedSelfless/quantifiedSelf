@@ -1,5 +1,5 @@
 //Currently am loading React from CDN
-var GAuth = require('./components/GAuth.js');
+var GAuth = require('./signup_comps/GAuth.js');
 
 React.render(
         <GAuth />,

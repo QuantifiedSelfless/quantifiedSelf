@@ -8,6 +8,7 @@ var watchify = require('watchify');
 var streamify = require('gulp-streamify');
 var htmlreplace = require('gulp-html-replace');
 var gutil = require('gulp-util');
+var _ = require('lodash');
 
 var path = {
     HTML: ['index.html', 'home.html','signup.html'],
@@ -16,7 +17,7 @@ var path = {
     REACT_JS: ['js/*.js', 'js/components/*.js'],
     JS_LIB: ['js/lib/*.js'],
     CSS: ['css/*'],
-    OUT: 'app.js',
+    OUT: 'build.js',
     MINIFIED_OUT: 'build.min.js',
     DEST_BUILD: 'public/static',
     DEST_BUILD_JS: 'public/static/js',
@@ -24,7 +25,7 @@ var path = {
     DEST_BUILD_CSS: 'public/static/css',
     DEST_FINAL_CSS: '../static/css',
     DEST: 'public',
-    ENTRY_POINT: 'js/app.js'
+    ENTRIES: ['js/home.js', 'js/signup.js']
     };
 
 
@@ -62,22 +63,25 @@ gulp.task('watch', function(){
     gulp.watch(path.HTML, ['copy']);
     gulp.watch(path.JS_LIB, ['js']);
 
-    var watcher = watchify(browserify({
-        entries: [path.ENTRY_POINT],
-        transform: [reactify],
-        debug: true,
-        cache: {}, packageCache: {}, fullPaths: true
-    }));
+    _.each(path.ENTRIES, function(page) {
 
-    return watcher.on('update', function(){
-        watcher.bundle()
-            .pipe(source(path.OUT))
+        var watcher = watchify(browserify({
+            entries: [page],
+            transform: [reactify],
+            debug: true,
+            cache: {}, packageCache: {}, fullPaths: true
+        }));
+
+        return watcher.on('update', function(){
+            watcher.bundle()
+                .pipe(source(page.split('/')[1].split('.')[0] + path.OUT))
+                .pipe(gulp.dest(path.DEST_BUILD_JS));
+                console.log('Updated');
+            })
+            .bundle()
+            .pipe(source(page.split('/')[1].split('.')[0] + path.OUT))
             .pipe(gulp.dest(path.DEST_BUILD_JS));
-            console.log('Updated');
-        })
-          .bundle()
-          .pipe(source(path.OUT))
-          .pipe(gulp.dest(path.DEST_BUILD_JS));
+        });
 });
 
 gulp.task('default', ['watch', 'copy', 'css', 'js']);

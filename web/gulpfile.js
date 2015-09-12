@@ -17,6 +17,7 @@ var path = {
     REACT_JS: ['js/*.js', 'js/components/*.js'],
     JS_LIB: ['js/lib/*.js'],
     CSS: ['css/*'],
+    IMG: ['img/*'],
     OUT: 'build.js',
     MINIFIED_OUT: 'build.min.js',
     DEST_BUILD: 'public/static',
@@ -24,6 +25,8 @@ var path = {
     DEST_FINAL_JS: '../static/js',
     DEST_BUILD_CSS: 'public/static/css',
     DEST_FINAL_CSS: '../static/css',
+    DEST_BUILD_IMG: 'public/static/img',
+    DEST_FINAL_IMG: '../static/img',
     DEST: 'public',
     ENTRIES: ['js/home.js', 'js/signup.js']
     };
@@ -49,6 +52,16 @@ gulp.task('css-prod', function(){
         .pipe(gulp.dest(path.DEST_FINAL_CSS));
 });
 
+gulp.task('img', function() {
+    gulp.src(path.IMG)
+        .pipe(gulp.dest(path.DEST_BUILD_IMG));
+});
+
+gulp.task('img-prod', function() {
+    gulp.src(path.IMG)
+        .pipe(gulp.dest(path.DEST_FINAL_IMG));
+});
+
 gulp.task('js', function() {
     gulp.src(path.JS_LIB)
         .pipe(gulp.dest(path.DEST_BUILD_JS));
@@ -62,6 +75,7 @@ gulp.task('js-prod', function() {
 gulp.task('watch', function(){
     gulp.watch(path.HTML, ['copy']);
     gulp.watch(path.JS_LIB, ['js']);
+    gulp.watch(path.CSS, ['css']);
 
     _.each(path.ENTRIES, function(page) {
 
@@ -84,7 +98,7 @@ gulp.task('watch', function(){
         });
 });
 
-gulp.task('default', ['watch', 'copy', 'css', 'js']);
+gulp.task('default', [ 'img', 'copy', 'css', 'js', 'watch']);
 
 gulp.task('build', function(){
     _.each(path.ENTRIES, function(page) {
@@ -109,4 +123,4 @@ gulp.task('replaceHTML', function(){
         .pipe(gulp.dest(path.FINAL_HTML));
 });
 
-gulp.task('production', ['replaceHTML', 'build', 'css-prod', 'js-prod']);
+gulp.task('production', ['replaceHTML', 'build', 'css-prod', 'js-prod', 'img-prod']);

@@ -4,6 +4,9 @@ from tornado import auth
 from tornado import ioloop
 from tornado import httpclient
 import ujson as json
+from oauth2client import client
+import httplib2
+from apiclient.discovery import build
 
 #May eventually want to add instance of IOLoop if we want to add in callbacks for scraping tasks
 
@@ -18,16 +21,31 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri='http://iamadatapoint.com/auth/google',
+                    redirect_uri='https://iamadatapoint.com/auth/google',
                     code=self.get_argument('code'))
             print access
-            user = yield self.oauth2_request(
-                    'https://googleapis.com/oauth2/v1/userinfo',
-                    access_token = access['access_token'])
-        else:
-            yield self.authorize_redirect(
-                    redirect_uri="http://iamadatapoint.com/auth/google",
+            #Set Cookie, Eventually (change cookie_secret)
+            creds = client.OAuth2Credentials(
+                    access_token=access['access_token'],
                     client_id=self.application.settings['google_oauth']['key'],
+                    client_secret=self.application.settings['google_oauth']['secret'],
+                    refresh_token=access.get('refresh_token', None),
+                    token_uri=client.GOOGLE_TOKEN_URI,
+                    token_expiry=access.get('expires_in', None),
+                    user_agent='QS-server-agent/1.0',
+                    id_token=access.get('id_token', None)
+                    )
+            http = httplib2.Http()
+            http = creds.authorize(http)
+            info_service = build('oauth2', 'v2', http=http)
+            myinfo = info_service.userinfo().get().execute()
+            print myinfo
+            self.redirect('https://iamadatapoint.com/test')
+            return
+        else:
+            flow = client.OAuth2WebServerFlow(
+                    client_id=self.application.settings['google_oauth']['key'],
+                    client_secret=self.application.settings['google_oauth']['secret'],
                     scope = [
                         'https://www.googleapis.com/auth/plus.login',
                         'https://www.googleapis.com/auth/plus.me',
@@ -35,6 +53,26 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                         'https://www.googleapis.com/auth/calendar.readonly', 
                         'https://www.googleapis.com/auth/youtube.readonly',
                         ],
-                    response_type = 'code',
-                    extra_params={'approval_prompt' : 'auto'})
+                    redirect_uri="https://iamadatapoint.com/auth/google",
+                    approval_prompt= 'force', 
+                    access_type =  'offline',
+                    response_type = 'code'
+                    )
+
+            self.redirect(flow.step1_get_authorize_url())
+            return
+            
+            
+     #       yield self.authorize_redirect(
+     #               redirect_uri="https://iamadatapoint.com/auth/google",
+     #               client_id=self.application.settings['google_oauth']['key'],
+     #               scope = [
+     #                   'https://www.googleapis.com/auth/plus.login',
+     #                   'https://www.googleapis.com/auth/plus.me',
+     #                   'https://www.googleapis.com/auth/gmail.readonly', 
+     #                   'https://www.googleapis.com/auth/calendar.readonly', 
+     #                   'https://www.googleapis.com/auth/youtube.readonly',
+     #                   ],
+     #               response_type = 'code',
+     #               extra_params={'approval_prompt' : 'force', 'access_type': 'offline'})
 

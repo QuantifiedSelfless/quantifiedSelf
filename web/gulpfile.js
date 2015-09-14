@@ -116,11 +116,13 @@ gulp.task('build', function(){
 
 // Remember use <!-- build:js --> and <!-- endbuild --> for stuff that needs replaced
 gulp.task('replaceHTML', function(){
-    gulp.src(path.HTML)
-        .pipe(htmlreplace({
-            'js': 'static/js/' + path.MINIFIED_OUT
-        }))
-        .pipe(gulp.dest(path.FINAL_HTML));
+    _.each(path.HTML, function(page) {
+        gulp.src(page)
+            .pipe(htmlreplace({
+                'js': 'static/js/' + page.split('.')[0] + path.MINIFIED_OUT
+            }))
+            .pipe(gulp.dest(path.FINAL_HTML));
+    })
 });
 
 gulp.task('production', ['replaceHTML', 'build', 'css-prod', 'js-prod', 'img-prod']);

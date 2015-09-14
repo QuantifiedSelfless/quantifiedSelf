@@ -17,7 +17,7 @@ var Footer = React.createClass({
 
     render: function() {
         return (
-        <div className="m3 border-top bg-lighten-1 flex">
+        <div className="border-top bg-lighten-1 flex">
             <br />
           <div className="left bg-lighten-1">
             <img src="/static/img/CULogo.png" width="30%" />

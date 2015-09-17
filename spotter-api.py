@@ -17,6 +17,7 @@ webbrowser.open(authentication.get_authorize_url())
 
 #------------------------------------------------------------------------------------
 #application = spot.Spotify(auth='BQBT3xoMT7NmRRdiRI16kkqPwDL3lXW1FO2Z2M7T4Ki6IuyjARjT104w6QUnZ5NexZelO7nSkQv1ThUs_-jC_xPbaQig0AnJ93lWGxHK0MfJxrmtwWYFjUWgKbCaMzavkWXALIf6eF6fFcRnZcUhLUbnh0Cifu2-Me59UI388ARdVvY_ba5woQ')
+#print application._get(https://api.spotify.com/v1/me)
 #r.connect("localhost", 28015).repl()
 #r.db("test").table_create('user_profiles').run();
 #r.table('user_profiles').insert().run();

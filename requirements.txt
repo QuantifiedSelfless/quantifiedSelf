@@ -7,3 +7,4 @@ TwitterAPI
 pytumblr
 rethinkdb
 requests
+ujson

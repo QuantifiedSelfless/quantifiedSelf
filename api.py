@@ -38,7 +38,6 @@ if __name__ == "__main__":
         google_oauth = {"key": GOOGLE_CLIENT_ID, "secret": GOOGLE_CLIENT_SECRET}, 
         )
 
-
-    app.listen(6060)
+    app.listen(6060,protocol='https')
     ioloop.IOLoop.current().start()
 

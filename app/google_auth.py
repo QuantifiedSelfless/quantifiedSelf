@@ -3,14 +3,18 @@ from tornado import gen
 from tornado import auth
 from tornado import ioloop
 from tornado import httpclient
+
 import ujson as json
+
 from oauth2client import client
 import httplib2
 from apiclient.discovery import build
 
+from lib import scrapers
 #May eventually want to add instance of IOLoop if we want to add in callbacks for scraping tasks
 
 class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
+    _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -37,9 +41,10 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                     )
             http = httplib2.Http()
             http = creds.authorize(http)
-            info_service = build('oauth2', 'v2', http=http)
-            myinfo = info_service.userinfo().get().execute()
-            print myinfo
+            self._ioloop.add_callback(scrapers.scrape_google_user, http=http)
+            #info_service = build('oauth2', 'v2', http=http)
+            #myinfo = info_service.userinfo().get().execute()
+            #print myinfo
             self.redirect('https://iamadatapoint.com/test')
             return
         else:

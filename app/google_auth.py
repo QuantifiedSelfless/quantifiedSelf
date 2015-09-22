@@ -49,30 +49,29 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                     scope = [
                         'https://www.googleapis.com/auth/plus.login',
                         'https://www.googleapis.com/auth/plus.me',
-                        'https://www.googleapis.com/auth/gmail.readonly', 
-                        'https://www.googleapis.com/auth/calendar.readonly', 
+                        'https://www.googleapis.com/auth/gmail.readonly',
+                        'https://www.googleapis.com/auth/calendar.readonly',
                         'https://www.googleapis.com/auth/youtube.readonly',
                         ],
                     redirect_uri="https://iamadatapoint.com/auth/google",
-                    approval_prompt= 'force', 
+                    approval_prompt= 'force',
                     access_type =  'offline',
                     response_type = 'code'
                     )
 
             self.redirect(flow.step1_get_authorize_url())
             return
-            
-            
+
+
      #       yield self.authorize_redirect(
      #               redirect_uri="https://iamadatapoint.com/auth/google",
      #               client_id=self.application.settings['google_oauth']['key'],
      #               scope = [
      #                   'https://www.googleapis.com/auth/plus.login',
      #                   'https://www.googleapis.com/auth/plus.me',
-     #                   'https://www.googleapis.com/auth/gmail.readonly', 
-     #                   'https://www.googleapis.com/auth/calendar.readonly', 
+     #                   'https://www.googleapis.com/auth/gmail.readonly',
+     #                   'https://www.googleapis.com/auth/calendar.readonly',
      #                   'https://www.googleapis.com/auth/youtube.readonly',
      #                   ],
      #               response_type = 'code',
      #               extra_params={'approval_prompt' : 'force', 'access_type': 'offline'})
-

@@ -13,6 +13,7 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
     @web.asynchronous
     @gen.coroutine
     def get(self):
+        base_url = self.request.protocol + '://' + self.request.host
         if self.get_argument('error', None):
             raise web.HTTPError(
                     '500',
@@ -20,7 +21,7 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri='https://iamadatapoint.com/auth/facebook',
+                    redirect_uri= base_url + '/auth/facebook',
                     client_id=self.application.settings['facebook_oauth']['key'],
                     client_secret=self.application.settings['facebook_oauth']['secret'],
                     code=self.get_argument('code'))
@@ -28,7 +29,8 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
             self.redirect('https://iamadatapoint.com/test')
             return
         else:
+            print base_url + '/auth/facebook'
             yield self.authorize_redirect(
-              redirect_uri='https://iamadatapoint.com/auth/facebook',
+              redirect_uri= base_url + '/auth/facebook',
               client_id=self.application.settings['facebook_oauth']['key'],
               extra_params={"scope": "public_profile,email,user_friends"})

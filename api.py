@@ -2,6 +2,7 @@ from tornado import ioloop
 from tornado import web
 from tornado import httpserver
 from tornado import options
+import os
 
 from app.google_auth import GoogleAuth
 from app.facebook_auth import FacebookAuth
@@ -44,6 +45,10 @@ if __name__ == "__main__":
         # spotify_oauth =  { "key": FACEBOOK_SPOTIFY_ID, "secret": SPOTIFY_CLIENT_SECRET  }
         )
 
+    port = os.environ.get('QS_PORT')
+    if(not port):
+        port = 6060 # default port.
 
-    app.listen(6060)
+    print "Listening on port: " + str(port)
+    app.listen(port)
     ioloop.IOLoop.current().start()

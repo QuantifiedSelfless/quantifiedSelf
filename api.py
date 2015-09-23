@@ -38,7 +38,7 @@ if __name__ == "__main__":
         debug = debug,
         cookie_secret = "weareseriouslyquantifyingyousohard&**@8274djfkaJJ%%93823#9djdk$<PP?",
         google_oauth = {"key": GOOGLE_CLIENT_ID, "secret": GOOGLE_CLIENT_SECRET},
-        facebook_oauth = {"key": "709107859190815", "secret": "b142a97497efccb74d758d4f96c088a6"} # to be changed
+        facebook_oauth = {"key": FACEBOOK_CLIENT_ID, "secret": FACEBOOK_CLIENT_SECRET} # to be changed
         )
 
 

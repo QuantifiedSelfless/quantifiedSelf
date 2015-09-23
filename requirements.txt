@@ -1,0 +1,10 @@
+python-instagram
+google-api-python-client
+facebook-sdk
+tornado
+python-linkedin
+TwitterAPI
+pytumblr
+rethinkdb
+requests
+ujson

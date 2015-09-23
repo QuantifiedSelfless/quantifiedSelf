@@ -2,15 +2,13 @@ Facebook (Together)
 LinkedIn (Leif)
 Twitter (Slaton)
 Instagram (Mike)
+Spotify
 Google+
 Gmail
 Four Square
-Yelp
 Reddit
-GitHub
 Blog/Website?
 Tumblr
-Pinterest
 
 
 (Check if these all have APIs)

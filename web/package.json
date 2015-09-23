@@ -1,0 +1,44 @@
+{
+  "name": "quantifiedSelf",
+  "version": "1.0.0",
+  "description": "Web App for QSelf Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wannabeCitizen/quantifiedSelf.git"
+  },
+  "keywords": [
+    "nada"
+  ],
+  "author": "Michael Skirpan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wannabeCitizen/quantifiedSelf/issues"
+  },
+  "homepage": "https://github.com/wannabeCitizen/quantifiedSelf",
+  "dependencies": {
+    "react": "^0.13.3",
+    "react-tools": "^0.13.3",
+    "gulp-util": "~3.0.6"
+  },
+  "devDependencies": {
+    "browserify": "~11.0.1",
+    "fullpage.js": "~2.7.1",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-html-replace": "^1.5.1",
+    "gulp-react": "^3.0.1",
+    "gulp-streamify": "~1.0.2",
+    "gulp-uglify": "^1.4.0",
+    "lodash": "^3.10.1",
+    "p5": "~0.4.9",
+    "react-router": "^0.13.3",
+    "reactify": "~1.1.1",
+    "uglify-js": "~2.4.24",
+    "vinyl-source-stream": "~1.1.0",
+    "watchify": "~3.4.0"
+  }
+}

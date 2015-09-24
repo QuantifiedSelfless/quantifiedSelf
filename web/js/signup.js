@@ -6,15 +6,19 @@ $(document).ready(function() {
 });
 
 //Currently am loading React from CDN
-var GAuth = require('./signup_comps/GAuth.js');
+var GoogleAuth = require('./signup_comps/GoogleAuth.js');
 var FacebookAuth = require('./signup_comps/FacebookAuth.js');
 
 React.render(
-        <GAuth />,
+        <div className="center">
+          <GoogleAuth />
+        </div>,
         document.getElementById('google')
 );
 
 React.render(
-        <FacebookAuth />,
+        <div className="center">
+          <FacebookAuth />
+        </div>,
         document.getElementById('facebook')
 );

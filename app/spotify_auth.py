@@ -46,4 +46,3 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
               client_id=self.application.settings['spotify_oauth']['key'],
               extra_params={"scope": 'playlist-read-private playlist-read-collaborative user-follow-read user-library-read user-read-birthdate user-read-email'
 })
-

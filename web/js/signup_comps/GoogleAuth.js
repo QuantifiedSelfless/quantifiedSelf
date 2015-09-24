@@ -1,5 +1,5 @@
-var GAuth = React.createClass({
-    
+var GoogleAuth = React.createClass({
+
     getInitialState: function() {
         // Check cookie
         var authed = false;
@@ -27,5 +27,5 @@ var GAuth = React.createClass({
 
 });
 
-module.exports = GAuth;
-    //May want a handleclick function
+module.exports = GoogleAuth;
+//May want a handleclick function

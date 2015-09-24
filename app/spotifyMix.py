@@ -6,15 +6,15 @@ class SpotifyOAuth2Mixin(OAuth2Mixin):
     relevant parameters to your application settings.
 
     """
-    
+
     _OAUTH_AUTHORIZE_URL = "https://accounts.spotify.com/authorize"
     _OAUTH_ACCESS_TOKEN_URL = "https://account.spotify.com/api/token"
     _OAUTH_NO_CALLBACKS = False
     _SPOTIFY_BASE_URL_ = "https://account.spotify.com/v1"
     @_auth_return_future
-     def get_authenticated_user(self, redirect_uri, client_id, client_secret,
+    def get_authenticated_user(self, redirect_uri, client_id, client_secret,
                                code, callback, extra_fields=None):
-       
+
         http = self.get_auth_http_client()
         args = {
             "redirect_uri": redirect_uri,

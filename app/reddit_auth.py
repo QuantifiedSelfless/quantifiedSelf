@@ -6,9 +6,9 @@ import ujson as json
 from oauth2client import client
 import httplib2
 from apiclient.discovery import build
-import spotifyMix.py as spot
+import redditMix.py as redd
 
-class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
+class SpotifyAuth(web.RequestHandler, redd.RedditGraphMixin):
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -19,7 +19,7 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri='https://iamadatapoint.com/auth/spotify',
+                    redirect_uri='https://iamadatapoint.com/auth/reddit',
                     code=self.get_argument('code'))
             print access
             #Set Cookie, Eventually (change cookie_secret)
@@ -42,8 +42,8 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
             return
         else:
             yield self.authorize_redirect(
-              redirect_uri='https://iamadatapoint.com/auth/spotify',
-              client_id=self.application.settings['spotify_oauth']['key'],
-              extra_params={"scope": 'playlist-read-private playlist-read-collaborative user-follow-read user-library-read user-read-birthdate user-read-email'
-})
+              redirect_uri='https://iamadatapoint.com/auth/reddit',
+              client_id=self.application.settings['reddit_oauth']['key'],
+              extra_params={"scope": 'identity history modlog mysubreddits'})
+
 

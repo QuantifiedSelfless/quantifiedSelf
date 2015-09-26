@@ -1,0 +1,45 @@
+{
+    "db_name" : "QSelf",
+    "tables": [
+                { "Users" : { "full_name" : String,
+                              "email" : String,
+                              "id" : Int,
+                              "tokens" : "[{token}, ]",
+
+
+                            
+                            }
+                },
+
+                { "Google" : { "fields" : 
+                            
+                            }
+                },
+
+                { "Twitter" : { "fields" : 
+                            
+                            }
+                },
+
+                { "Facebook" : { "fields" : 
+                            
+                            }
+                },
+
+                { "Spotify" : { "fields" : 
+                            
+                            }
+                },
+
+                { "Reddit" : { "fields" : 
+                            
+                            }
+                },
+
+                { "YouTube" : { "fields" : 
+                            
+                            }
+                },
+
+
+}

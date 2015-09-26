@@ -45,10 +45,6 @@ if __name__ == "__main__":
         # spotify_oauth =  { "key": FACEBOOK_SPOTIFY_ID, "secret": SPOTIFY_CLIENT_SECRET  }
         )
 
-    port = os.environ.get('QS_PORT')
-    if(not port):
-        port = 6060 # default port.
-
     print "Listening on port: " + str(port)
     app.listen(port)
     ioloop.IOLoop.current().start()

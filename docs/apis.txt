@@ -1,14 +1,14 @@
-Facebook (Together)
-LinkedIn (Leif)
+Facebook (Slaton?)
+LinkedIn (?)
 Twitter (Slaton)
 Instagram (Mike)
-Spotify
-Google+
-Gmail
+Spotify (Leif)
+Google+ (Mike)
+Gmail (Mike)
 Four Square
-Reddit
+Reddit (Leif)
 Blog/Website?
-Tumblr
+Tumblr (Mike)
 
 
 (Check if these all have APIs)

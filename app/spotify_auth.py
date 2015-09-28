@@ -6,9 +6,9 @@ import ujson as json
 from oauth2client import client
 import httplib2
 from apiclient.discovery import build
-import spotifyMix.py as spot
+import app.spotifyMix as spot
 
-class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
+class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -22,27 +22,14 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyGraphMixin):
                     redirect_uri='https://iamadatapoint.com/auth/spotify',
                     code=self.get_argument('code'))
             print access
-            #Set Cookie, Eventually (change cookie_secret)
-            # creds = client.OAuth2Credentials(
-            #         access_token=access['access_token'],
-            #         client_id=self.application.settings['spotify_oauth']['key'],
-            #         client_secret=self.application.settings['spotify_oauth']['secret'],
-            #         refresh_token=access.get('refresh_token', None),
-            #         token_uri=client.GOOGLE_TOKEN_URI,
-            #         token_expiry=access.get('expires_in', None),
-            #         user_agent='QS-server-agent/1.0',
-            #         id_token=access.get('id_token', None)
-            #         )
-            # http = httplib2.Http()
-            # http = creds.authorize(http)
-            # info_service = build('oauth2', 'v2', http=http)
-            # myinfo = info_service.userinfo().get().execute()
-            # print myinfo
+            #from here use spotipy - pass it over to a scraper context
             self.redirect('https://iamadatapoint.com/test')
             return
         else:
             yield self.authorize_redirect(
-              redirect_uri='https://iamadatapoint.com/auth/spotify',
-              client_id=self.application.settings['spotify_oauth']['key'],
-              extra_params={"scope": 'playlist-read-private playlist-read-collaborative user-follow-read user-library-read user-read-birthdate user-read-email'
-})
+                    redirect_uri = 'https://iamadatapoint.com/auth/spotify',
+                    client_id = self.application.settings['spotify_oauth']['key'],
+                    response_type='code',
+                    scope = ['playlist-read-private', 'playlist-read-collaborative', 'user-follow-read', 'user-library-read','user-read-birthdate', 'user-read-email']
+)
+            return

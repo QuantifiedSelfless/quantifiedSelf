@@ -8,3 +8,4 @@ pytumblr
 rethinkdb
 requests
 ujson
+spotipy

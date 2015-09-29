@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
 ## TODO
+# Modify to get API setup from oauth script
+# 
 # For each friend, get tweets, add their friends to back of queue
 # Depth first tree, either store friends friends tweets in same or different section 
+# Fix update not working
 
 import rethinkdb as r
 from TwitterAPI import TwitterAPI
@@ -37,11 +40,11 @@ def get_user_data(username):
 
 	friend_dict = parse_user_info(friend_list)
 
-        r.table("Users").insert([info_dict],conflict="update").run()
+	r.table("Users").insert([info_dict],conflict="update").run()
 
-	r.table("Users").filter({"screen_name":username}).update({"friends":str(friend_dict)},conflict="update").run()
+	r.table("Users").filter({"screen_name":username}).update({"friends":str(friend_dict)}).run()
 
-	r.table("Users").filter({"screen_name":username}).update({"tweets":str(tweets)},conflict="update").run()
+	r.table("Users").filter({"screen_name":username}).update({"tweets":str(tweets)}).run()
 	return 0
 
 conn = r.connect(host='localhost', port=28015, db='Twitter')

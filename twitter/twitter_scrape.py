@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# TODO
+## TODO
 # For each friend, get tweets, add their friends to back of queue
 # Depth first tree, either store friends friends tweets in same or different section 
 

@@ -3,12 +3,16 @@ from tornado import gen
 from tornado import ioloop
 from tornado import httpclient
 import ujson as json
-from oauth2client import client
-import httplib2
-from apiclient.discovery import build
-import redditMix.py as redd
 
-class SpotifyAuth(web.RequestHandler, redd.RedditGraphMixin):
+import praw
+
+
+class RedditAuth(web.RequestHandler):
+    reddit = praw.Reddit('application:qself-server /u/parallaxingposition')
+    reddit.set_oauth_app_info(client_id=self.application.settings['reddit_oauth']['key'],
+                                client_secret=self.application.settings['reddit_oauth']['secret'],
+                                redirect_uri="https://iamadatapoint.com/auth/reddit")
+
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -18,32 +22,14 @@ class SpotifyAuth(web.RequestHandler, redd.RedditGraphMixin):
                     'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
                     )
         if self.get_argument('code', None):
-            access = yield self.get_authenticated_user(
-                    redirect_uri='https://iamadatapoint.com/auth/reddit',
-                    code=self.get_argument('code'))
-            print access
-            #Set Cookie, Eventually (change cookie_secret)
-            # creds = client.OAuth2Credentials(
-            #         access_token=access['access_token'],
-            #         client_id=self.application.settings['spotify_oauth']['key'],
-            #         client_secret=self.application.settings['spotify_oauth']['secret'],
-            #         refresh_token=access.get('refresh_token', None),
-            #         token_uri=client.GOOGLE_TOKEN_URI,
-            #         token_expiry=access.get('expires_in', None),
-            #         user_agent='QS-server-agent/1.0',
-            #         id_token=access.get('id_token', None)
-            #         )
-            # http = httplib2.Http()
-            # http = creds.authorize(http)
-            # info_service = build('oauth2', 'v2', http=http)
-            # myinfo = info_service.userinfo().get().execute()
-            # print myinfo
+            access_info = self.reddit.get_access_information(self.get_argument('code',None))
+            self.reddit.set_access_credentials(**access_info)
+            print self.reddit.me
             self.redirect('https://iamadatapoint.com/test')
             return
         else:
-            yield self.authorize_redirect(
-              redirect_uri='https://iamadatapoint.com/auth/reddit',
-              client_id=self.application.settings['reddit_oauth']['key'],
-              extra_params={"scope": 'identity history modlog mysubreddits'})
+            url = self.reddit.get_authorize_url('uniqueKey', 'identity', True)
+            self.redirect(url)
+            return
 
 

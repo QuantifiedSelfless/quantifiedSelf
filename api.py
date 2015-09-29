@@ -44,7 +44,7 @@ if __name__ == "__main__":
         google_oauth =   { "key": GOOGLE_CLIENT_ID,    "secret": GOOGLE_CLIENT_SECRET   },
         facebook_oauth = { "key": FACEBOOK_CLIENT_ID,  "secret": FACEBOOK_CLIENT_SECRET },
         spotify_oauth =  { "key": SPOTIFY_CLIENT_ID, "secret": SPOTIFY_CLIENT_SECRET  },
-	twitter_oauth =  { "key": TWITTER_CLIENT_ID, "secret": TWITTER_CLIENT_SECRET  }
+		twitter_oauth =  { "key": TWITTER_CLIENT_ID, "secret": TWITTER_CLIENT_SECRET  }
         )
 
     print "Listening on port: " + str(port)

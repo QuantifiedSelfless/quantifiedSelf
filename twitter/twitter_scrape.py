@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 # TODO
-# Shrink friend data down?
-# For each friend, 
+# For each friend, get tweets, add their friends to back of queue
+# Depth first tree, either store friends friends tweets in same or different section 
 
 import rethinkdb as r
 from TwitterAPI import TwitterAPI
@@ -22,8 +22,10 @@ def parse_user_info(user_objects):
 					dict_dict[item_count-1] = str(user_dict)
 				user_dict[entry] = item[entry]
 	if item_count > 1:
+		print dict_dict
 		return dict_dict
 	else:
+		print user_dict
 		return user_dict
 
 def get_user_data(username):
@@ -39,7 +41,7 @@ def get_user_data(username):
 
 	r.table("Users").filter({"screen_name":username}).update({"friends":str(friend_dict)},conflict="update").run()
 
-	r.table("Users").filter({'screen_name':username}).update({"tweets":str(tweets)},conflict="update").run()
+	r.table("Users").filter({"screen_name":username}).update({"tweets":str(tweets)},conflict="update").run()
 	return 0
 
 conn = r.connect(host='localhost', port=28015, db='Twitter')

@@ -2,10 +2,9 @@ from tornado import web
 from tornado import gen
 from tornado import ioloop
 from tornado import httpclient
+
 import ujson as json
-from oauth2client import client
-import httplib2
-from apiclient.discovery import build
+
 import app.spotifyMix as spot
 
 class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):

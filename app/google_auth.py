@@ -25,7 +25,7 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri='https://iamadatapoint.com/auth/google',
+                    redirect_uri= "{0}/auth/google".format(self.application.settings['base_url']),
                     code=self.get_argument('code'))
             print access
             #Set Cookie, Eventually (change cookie_secret)
@@ -45,7 +45,8 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
             #info_service = build('oauth2', 'v2', http=http)
             #myinfo = info_service.userinfo().get().execute()
             #print myinfo
-            self.redirect('https://iamadatapoint.com/test')
+
+            self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
             return
         else:
             flow = client.OAuth2WebServerFlow(
@@ -58,25 +59,11 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                         'https://www.googleapis.com/auth/calendar.readonly',
                         'https://www.googleapis.com/auth/youtube.readonly',
                         ],
-                    redirect_uri="https://iamadatapoint.com/auth/google",
-                    approval_prompt= 'force',
-                    access_type =  'offline',
-                    response_type = 'code'
+                    redirect_uri    = "{0}/auth/google".format(self.application.settings['base_url']),
+                    approval_prompt = 'force',
+                    access_type     = 'offline',
+                    response_type   = 'code'
                     )
 
             self.redirect(flow.step1_get_authorize_url())
             return
-
-
-     #       yield self.authorize_redirect(
-     #               redirect_uri="https://iamadatapoint.com/auth/google",
-     #               client_id=self.application.settings['google_oauth']['key'],
-     #               scope = [
-     #                   'https://www.googleapis.com/auth/plus.login',
-     #                   'https://www.googleapis.com/auth/plus.me',
-     #                   'https://www.googleapis.com/auth/gmail.readonly',
-     #                   'https://www.googleapis.com/auth/calendar.readonly',
-     #                   'https://www.googleapis.com/auth/youtube.readonly',
-     #                   ],
-     #               response_type = 'code',
-     #               extra_params={'approval_prompt' : 'force', 'access_type': 'offline'})

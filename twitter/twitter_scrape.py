@@ -38,7 +38,7 @@ def get_user_data(username):
 
 	for friends in friend_dict:
 		for field in friend_dict[friends]:
-			print field, ':', friend_dict[friends][field]
+			print field
 
 
 	r.table("Users").insert([info_dict],conflict="update").run()

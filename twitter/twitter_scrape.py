@@ -36,8 +36,10 @@ def get_user_data(username):
 
 	friend_dict = parse_user_info(friend_list)
 
-	for entry in friend_dict:
-		print entry
+	for friends in friend_dict:
+		for field in friend_dict[friends]:
+			print field, ':', friend_dict[friends][field]
+
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

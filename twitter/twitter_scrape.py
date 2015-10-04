@@ -33,8 +33,8 @@ def parse_user_info(user_objects):
 
 def get_user_data(username):
 	friend_list = api.request('friends/list', {'screen_name':username})
-    info_raw = api.request('users/show', {'screen_name':username})
-    tweets = api.request('statuses/user_timeline', {'screen_name':username, 'count':'200', 'exclude_replies':'true'})
+	info_raw = api.request('users/show', {'screen_name':username})
+	tweets = api.request('statuses/user_timeline', {'screen_name':username, 'count':'200', 'exclude_replies':'true'})
         
 	info_dict = parse_user_info(info_raw)
 

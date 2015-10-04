@@ -5,7 +5,7 @@ import functools
 import urlparse
 import urllib as urllib_parse
 
-class SpotifyOAuth2Mixin(auth.OAuth2Mixin):
+class SpotifyOAuth2Mixin(auth.OAuth2Mixin, auth.OAuthMixin):
     """Spotify authentication using OAuth2.
 
     In order to use, register your application with Spotify and copy the

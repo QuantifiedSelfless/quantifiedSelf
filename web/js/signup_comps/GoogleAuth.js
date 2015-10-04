@@ -18,7 +18,7 @@ var GoogleAuth = React.createClass({
     render: function() {
         return (
             <div className="authbtn google">
-                <a className="zocial google" href="http://iamadatapoint.com/auth/google">
+                <a className="zocial google" href="/auth/google">
                     Authorize with Google
                 </a>
             </div>

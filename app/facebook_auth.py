@@ -15,17 +15,17 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri= 'https://iamadatapoint.com/auth/facebook',
+                    redirect_uri= "{0}/auth/facebook".format(self.application.settings['base_url']),
                     client_id=self.application.settings['facebook_oauth']['key'],
                     client_secret=self.application.settings['facebook_oauth']['secret'],
                     code=self.get_argument('code'))
             #Set Cookie, Eventually (change cookie_secret)
             print access
-            self.redirect('https://iamadatapoint.com/test#test')
+            self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']))
             return
         else:
             yield self.authorize_redirect(
-                redirect_uri= 'https://iamadatapoint.com/auth/facebook',
+                redirect_uri= "{0}/auth/facebook".format(self.application.settings['base_url']),
                 client_id=self.application.settings['facebook_oauth']['key'],
                 client_secret=self.application.settings['facebook_oauth']['secret'],
                 scope = ["public_profile","email","user_friends"])

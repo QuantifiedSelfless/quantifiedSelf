@@ -4,7 +4,6 @@ from tornado import ioloop
 from tornado import httpclient
 
 import ujson as json
-
 import app.spotifyMix as spot
 
 class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
@@ -18,15 +17,15 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
                     )
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
-                    redirect_uri='https://iamadatapoint.com/auth/spotify',
+                    redirect_uri= '{0}/auth/spotify'.format(self.application.settings['base_url']),
                     code=self.get_argument('code'))
             print access
             #from here use spotipy - pass it over to a scraper context
-            self.redirect('https://iamadatapoint.com/test')
+            self.redirect('{0}/signup#twitter'.format(self.application.settings['base_url']))
             return
         else:
             yield self.authorize_redirect(
-                    redirect_uri = 'https://iamadatapoint.com/auth/spotify',
+                    redirect_uri = '{0}/auth/spotify'.format(self.application.settings['base_url']),
                     client_id = self.application.settings['spotify_oauth']['key'],
                     response_type='code',
                     scope = ['playlist-read-private', 'playlist-read-collaborative', 'user-follow-read', 'user-library-read','user-read-birthdate', 'user-read-email']

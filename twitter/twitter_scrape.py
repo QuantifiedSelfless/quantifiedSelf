@@ -2,16 +2,12 @@
 
 ## TODO
 # Modify to get API setup from oauth script
-# 
 # For each friend, get tweets, add their friends to back of queue
-# Depth first tree, either store friends friends tweets in same or different section 
-# Fix update not working
+# Depth first tree, either store friends friends tweets in same or different section
 
 import rethinkdb as r
 from TwitterAPI import TwitterAPI
 from creds import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET
-
-# Start Function Here
 
 def parse_user_info(user_objects):
 	user_dict = {}
@@ -39,6 +35,9 @@ def get_user_data(username):
 	info_dict = parse_user_info(info_raw)
 
 	friend_dict = parse_user_info(friend_list)
+
+	for entry in friend_dict:
+		print entry
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

@@ -8,6 +8,7 @@
 import rethinkdb as r
 from TwitterAPI import TwitterAPI
 from creds import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET
+import json
 
 def parse_user_info(user_objects):
 	user_dict = {}
@@ -18,7 +19,7 @@ def parse_user_info(user_objects):
 		for entry in item:
 			if str(entry) == 'name' or str(entry) == 'screen_name' or str(entry) == 'followers_count':
 				if(item_count > 1):
-					dict_dict[item_count-1] = str(user_dict)
+					dict_dict[item_count-1] = json.dumps(user_dict)
 				user_dict[entry] = item[entry]
 	if item_count > 1:
 		print dict_dict
@@ -37,7 +38,8 @@ def get_user_data(username):
 	friend_dict = parse_user_info(friend_list)
 
 	for friends in friend_dict:
-		print friend_dict[friends]
+		fs = json.loads(friend_dict[friends])
+		print fs
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

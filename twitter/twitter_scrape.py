@@ -39,7 +39,9 @@ def get_user_data(username):
 
 	for friends in friend_dict:
 		fs = json.loads(friend_dict[friends])
-		print fs
+		for item in fs:
+			print item
+			print "XXX"
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

@@ -40,8 +40,9 @@ def get_user_data(username):
 	for friends in friend_dict:
 		fs = json.loads(friend_dict[friends])
 		for item in fs:
-			print item
-			print "XXX"
+			if str(item) == 'screen_name':
+				print fs[item] 
+				print "XXX"
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

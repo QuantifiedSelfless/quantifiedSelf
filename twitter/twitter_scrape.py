@@ -9,6 +9,7 @@ import rethinkdb as r
 from TwitterAPI import TwitterAPI
 from creds import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET
 import json
+import Queue
 
 def parse_user_info(user_objects):
 	user_dict = {}
@@ -37,12 +38,13 @@ def get_user_data(username):
 
 	friend_dict = parse_user_info(friend_list)
 
+	friend_queue = Queue()
+
 	for friends in friend_dict:
 		fs = json.loads(friend_dict[friends])
 		for item in fs:
 			if str(item) == 'screen_name':
-				print fs[item] 
-				print "XXX"
+				friend_queue.put(str(fs[item]))
 
 	r.table("Users").insert([info_dict],conflict="update").run()
 

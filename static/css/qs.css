@@ -17,3 +17,13 @@
 :root {
     --container-width: 100%;
 }
+
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
+
+wow {
+    -vendor-animation-delay: 2s;
+}

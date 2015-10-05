@@ -1,6 +1,6 @@
 */creds.py
 *.pyc
 *.swp
-*.log
+*log*
 */node_modules/*
 */.module-cache/*

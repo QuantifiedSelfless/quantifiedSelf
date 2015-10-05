@@ -18,11 +18,11 @@ options.define("debug", default=False, type=bool, help="Debug Mode")
 
 class MainHandler(web.RequestHandler):
     def get(self):
-        self.render("index.html")
+        self.render("home.html")
 
 class TestHandler(web.RequestHandler):
     def get(self):
-        self.render("home.html")
+        self.render("index.html")
 
 class SignupHandler(web.RequestHandler):
     def get(self):
@@ -43,7 +43,7 @@ if __name__ == "__main__":
                ( r'/auth/spotify'  , SpotifyAuth   )  ,
                ( r'/auth/twitter'  , TwitterAuth   )  ,
                ( r'/auth/reddit'   , RedditAuth    )  ,
-        # ( r"/favicon.ico" , tornado.web.StaticFileHandler , {"path":"."} )  ,
+               ( r"/favicon.ico" , web.StaticFileHandler , {"path":"./static/images/favicon.ico"} )  ,
         ],
         template_path  = "./templates/",
         static_path    = "./static/",

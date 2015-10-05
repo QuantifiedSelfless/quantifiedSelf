@@ -31,9 +31,9 @@ class TwitterAuth(web.RequestHandler):
             print credentials
 	    access_token_key = credentials.get('oauth_token')[0]
 	    access_token_secret = credentials.get('oauth_token_secret')[0]
-            self.redirect('https://iamadatapoint.com/test')
+            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']))
             return
-			
+
         else:# request token
 	    oauth = OAuth1(consumer_key, consumer_secret)
 	    #Make async

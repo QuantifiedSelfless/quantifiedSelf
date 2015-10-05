@@ -13,6 +13,7 @@ var FacebookAuth = require('./signup_comps/FacebookAuth.js');
 var SpotifyAuth = require('./signup_comps/SpotifyAuth.js');
 var TwitterAuth = require('./signup_comps/TwitterAuth.js');
 var User = require('./signup_comps/User.js');
+var RedditAuth = require('./signup_comps/RedditAuth.js');
 
 React.render(
         <Nav />,
@@ -51,9 +52,17 @@ React.render(
         </div>,
         document.getElementById('spotify')
 );
+
 React.render(
         <div className="center">
             <TwitterAuth />
         </div>,
         document.getElementById('twitter')
+);
+
+React.render(
+        <div className="center">
+            <RedditAuth />
+        </div>,
+        document.getElementById('reddit')
 );

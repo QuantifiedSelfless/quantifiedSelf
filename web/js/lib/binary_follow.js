@@ -25,7 +25,7 @@ function drawText() {
     stroke(255);
     //line(width/2, 0+height/8, width/2, height);
     textSize(42);
-    fill(199, 238, 255);
+    fill(40, 184, 255);
     textFont("Anonymous Pro");
     textAlign(CENTER);
     text("Quantified Self Art and Theater Experience", width/2, height/2);

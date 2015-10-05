@@ -43,10 +43,6 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
             http = creds.authorize(http)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(scrapers.scrape_google_user, http=http, user_id=id)
-            #info_service = build('oauth2', 'v2', http=http)
-            #myinfo = info_service.userinfo().get().execute()
-            #print myinfo
-
             self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
             return
         else:

@@ -17,7 +17,7 @@ var path = {
     REACT_JS: ['js/*.js', 'js/components/*.js'],
     JS_LIB: ['js/lib/*.js'],
     CSS: ['css/*'],
-    IMG: ['img/*'],
+    IMG: ['img/**/*'],
     OUT: 'build.js',
     MINIFIED_OUT: 'build.min.js',
     DEST_BUILD: 'public/static',

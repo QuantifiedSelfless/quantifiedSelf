@@ -15,6 +15,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.1/jquery.fullPage.min.js"></script>
     <script src="/static/js/p5.min.js"></script>
+    <style>
+        #sign-head {
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            z-index: 9;
+        }
+
+        #sign-foot {
+            bottom: 0px;
+            position: fixed;
+            width: 100%;
+            z-index: 9;
+        }
+    </style>
 </head>
 <body>
     <!-- Facebook SDK -->
@@ -37,8 +52,10 @@
     </script>
 
     <!-- <div id="test"></div> -->
+    <div id="sign-head"></div>
+    <div id="sign-foot"></div>
     <div id="fullpage">
-      <div class="section">
+      <div class="section bg-black">
         <div class="slide" id="google"></div>
         <div class="slide" id="facebook"></div>
         <div class="slide" id="spotify"></div>

@@ -1,5 +1,5 @@
-var Sign = React.createClass({
-    
+var TwitterAuth = React.createClass({
+
     getInitialState: function() {
         // Check cookie
         var authed = false;
@@ -17,15 +17,15 @@ var Sign = React.createClass({
 
     render: function() {
         return (
-          <div className="mx-auto">
-            <a href="http://iamadatapoint.com:8085/signup">
-                <button className="btn btn-outline mb2 aqua rsvp">Get a Ticket</button>
-            </a>
-          </div>
+            <div className="authbtn twitter">
+                <a className="zocial twitter" href="/auth/twitter">
+                    Authorize with Twitter
+                </a>
+            </div>
         );
     }
 
 });
 
-module.exports = Sign;
-    //May want a handleclick function
+module.exports = TwitterAuth;
+//May want a handleclick function

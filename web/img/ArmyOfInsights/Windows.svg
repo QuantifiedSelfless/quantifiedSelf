@@ -11,13 +11,16 @@
 		</g>
 		<g>
 			
-				<rect x="69.718" y="302.307" transform="matrix(-1 -0.0093 0.0093 -1 141.6687 672.3684)" fill="#FFFFFF" width="5.358" height="67.095"/>
+				<rect x="69.716" y="302.292" transform="matrix(1 0.0095 -0.0095 1 3.1861 -0.6711)" fill="#FFFFFF" width="5.358" height="67.098"/>
 		</g>
 		<g>
 			
-				<rect x="287.64" y="302.307" transform="matrix(-1 -0.0093 0.0093 -1 577.5067 674.3967)" fill="#FFFFFF" width="5.361" height="67.099"/>
+				<rect x="287.629" y="302.289" transform="matrix(1 0.0093 -0.0093 1 3.1328 -2.6827)" fill="#FFFFFF" width="5.361" height="67.103"/>
 		</g>
 	</g>
-	<text transform="matrix(1 0 0 1 109.0449 137.2617)" fill="#FFFFFF" font-family="'FontAwesome'" font-size="169.7193"></text>
+	<g enable-background="new    ">
+		<path fill="#FFFFFF" d="M173.637,16.696V79.11h-64.592V25.599L173.637,16.696z M173.637,87.065v61.656l-64.592-8.902V87.065
+			H173.637z M266.642,3.911V79.11H180.74V15.75L266.642,3.911z M266.642,87.065v74.442l-85.901-11.839V87.065H266.642z"/>
+	</g>
 </g>
 </svg>

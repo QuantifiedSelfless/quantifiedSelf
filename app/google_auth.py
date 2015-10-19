@@ -12,7 +12,6 @@ from apiclient.discovery import build
 
 from lib import scrapers
 from lib.database import deny_google
-#May eventually want to add instance of IOLoop if we want to add in callbacks for scraping tasks
 
 class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
     _ioloop = ioloop.IOLoop().instance()

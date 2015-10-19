@@ -23,10 +23,10 @@ var GoogleAuth = React.createClass({
                         Authorize with Google
                     </a>
                 </div>
-                <a href="/auth/google/?share=noacct">
+                <a href="/auth/google?share=noacct">
                     <button className="btn btn-primary m3 b1 bg-orange">Do not use Google</button>
                 </a>
-                <a href="/auth/google/?share=noshare">
+                <a href="/auth/google?share=noshare">
                     <button className="btn btn-primary m3 b1 bg-red">Will not share</button>
                 </a>
             </div>

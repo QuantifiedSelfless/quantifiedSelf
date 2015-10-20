@@ -4,6 +4,8 @@ from tornado import httpserver
 from tornado import options
 import os
 
+from app.ChatSocket import EchoWebSocket
+from app.user_auth import UserAuth
 from app.google_auth import GoogleAuth
 from app.facebook_auth import FacebookAuth
 from app.spotify_auth import SpotifyAuth
@@ -28,6 +30,10 @@ class SignupHandler(web.RequestHandler):
     def get(self):
         self.render("signup.html")
 
+class ChatHandler(web.RequestHandler):
+    def get(self):
+        self.render("chat.html")
+
 if __name__ == "__main__":
     options.parse_command_line()
     port = options.options.port
@@ -35,15 +41,18 @@ if __name__ == "__main__":
 
     app = web.Application(
         [
-               ( r'/'              , MainHandler   )  ,
-               ( r'/test'          , TestHandler   )  ,
-               ( r'/signup'        , SignupHandler )  ,
-               ( r'/auth/google'   , GoogleAuth    )  ,
-               ( r'/auth/facebook' , FacebookAuth  )  ,
-               ( r'/auth/spotify'  , SpotifyAuth   )  ,
-               ( r'/auth/twitter'  , TwitterAuth   )  ,
-               ( r'/auth/reddit'   , RedditAuth    )  ,
-               ( r"/favicon.ico" , web.StaticFileHandler , {"path":"./static/images/favicon.ico"} )  ,
+              ( r'/'              , MainHandler   )  , 
+              ( r'/test'          , TestHandler   )  , 
+              ( r'/signup'        , SignupHandler )  , 
+              ( r'/user/info'     , UserAuth      )  , 
+              ( r'/auth/google'   , GoogleAuth    )  , 
+              ( r'/auth/facebook' , FacebookAuth  )  , 
+              ( r'/auth/spotify'  , SpotifyAuth   )  , 
+              ( r'/auth/twitter'  , TwitterAuth   )  , 
+              ( r'/auth/reddit'   , RedditAuth    )  , 
+              ( r'/chat'          , EchoWebSocket )  , 
+              ( r'/chatroom'      , ChatHandler   )  , 
+            ( r"/favicon.ico" , web.StaticFileHandler , {"path":""} )  ,
         ],
         template_path  = "./templates/",
         static_path    = "./static/",

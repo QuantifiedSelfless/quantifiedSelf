@@ -33,7 +33,7 @@ var Army = React.createClass({
             <div className="flex">
                 <div className="army-1 flex-auto">
                     <img className="p3" width="15%" src="/static/img/ArmyOfInsights/WantsCar.svg" onerror="this.src='/static/img/ArmyOfInsights/WantsCar.png'" />
-                    <img className="p3" width="15%" src="/static/img/ArmyOfInsights/BuysSpinach.svg" onerror="this.src='/static/img/ArmyOfInsights/BuysSpinach.png'" />
+                    <img className="p3" width="15%" src="/static/img/ArmyOfInsights/Facebook.svg" onerror="this.src='/static/img/ArmyOfInsights/Facebook.png'" />
                     <img  className="p3" width="15%" src="/static/img/ArmyOfInsights/FeelsLonely.svg" onerror="this.src='/static/img/ArmyOfInsights/FeelsLonely.png'" />
                 </div>
               </div>

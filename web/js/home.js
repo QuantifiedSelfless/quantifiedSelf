@@ -1,5 +1,3 @@
-new WOW().init();
-
 //Currently am loading React from CDN
 var Intro = require('./home_comps/Intro.js');
 var Sign = require('./home_comps/Sign.js');

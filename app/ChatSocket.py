@@ -1,11 +1,19 @@
 from tornado import websocket
+from chatterbot import ChatBot
 
-class EchoWebSocket(websocket.WebSocketHandler):
-        def open(self):
-            print("WebSocket opened")
+clients = []
+bot = ChatBot("ChatBot", database="../database.db")
+class WSHandler(websocket.WebSocketHandler):
+    def open(self, *args):
+        clients.append(self)
+    def on_message(self, message):
+        bot.train([str(message)])
+        response = str(bot.get_response(message))
+        for client in clients:
+            client.write_message(message)
+            client.write_message(response)
+    def on_close(self):
+        clients.remove(self)
 
-        def on_message(self, message):
-            self.write_message(u"You said: " + message)
 
-        def on_close(self):
-            print("WebSocket closed")
+

@@ -15,5 +15,11 @@ class WSHandler(websocket.WebSocketHandler):
     def on_close(self):
         clients.remove(self)
 
+class EchoWebSocket(websocket.WebSocketHandler):
+        def check_origin(self, origin):
+            return True
+
+        def open(self):
+            print("WebSocket opened")
 
 

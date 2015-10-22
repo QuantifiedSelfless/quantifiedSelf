@@ -25,7 +25,7 @@ class RedditAuth(web.RequestHandler):
             #evenutually do an async fetch
             user = reddit.get_me()
             print user
-            self.redirect('{0}/test'.format(self.application.settings['base_url']))
+            self.redirect('{0}/signup#tumblr'.format(self.application.settings['base_url']))
             return
         else:
             url = reddit.get_authorize_url('uniqueKey', 'identity,flair,history,mysubreddits,privatemessages', True)

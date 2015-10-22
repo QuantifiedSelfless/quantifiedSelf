@@ -22,8 +22,9 @@ var Nav = React.createClass({
                 <a href="/"><img width="60%" src="/static/img/QuantifiedSelfLogoHorizontal.svg" onerror="this.src='/static/img/QuantifiedSelfLogoHorizontal.png'" /></a>
             </div>
             <div className="sm-col-right">
-                <a href="/" className="btn py2">About</a>
-                <a href="/" className="btn py2">Contact</a>
+                <a href="/policy" className="btn py2">Privacy</a>
+                <a href="/about" className="btn py2">About</a>
+                <a href="/contact" className="btn py2">Contact</a>
             </div>
         </nav>
         )}

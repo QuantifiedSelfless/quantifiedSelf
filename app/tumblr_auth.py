@@ -70,7 +70,7 @@ class TumblrAuth(web.RequestHandler):
 
             print client.info() # Grabs the current user information
 
-            self.redirect('{0}/signup'.format(self.application.settings['base_url']))
+            self.redirect('{0}/signup#instagram'.format(self.application.settings['base_url']))
             return
         else:
             resp, content = client.request(request_token_url, "POST")

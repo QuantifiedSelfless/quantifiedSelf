@@ -15,6 +15,7 @@ var TwitterAuth = require('./signup_comps/TwitterAuth.js');
 var User = require('./signup_comps/User.js');
 var RedditAuth = require('./signup_comps/RedditAuth.js');
 var TumblrAuth = require('./signup_comps/TumblrAuth.js');
+var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 
 React.render(
         <Nav />,
@@ -73,4 +74,11 @@ React.render(
             <TumblrAuth />
         </div>,
         document.getElementById('tumblr')
+);
+
+React.render(
+        <div className="center">
+            <InstagramAuth />
+        </div>,
+        document.getElementById('instagram')
 );

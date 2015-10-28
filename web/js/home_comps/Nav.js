@@ -24,7 +24,6 @@ var Nav = React.createClass({
             <div className="sm-col-right">
                 <a href="/policy" className="btn py2">Privacy</a>
                 <a href="/about" className="btn py2">About</a>
-                <a href="/contact" className="btn py2">Contact</a>
             </div>
         </nav>
         )}

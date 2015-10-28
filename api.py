@@ -40,6 +40,10 @@ class PolicyHandler(web.RequestHandler):
     def get(self):
         self.render("policy.html")
 
+class AboutHandler(web.RequestHandler):
+    def get(self):
+        self.render("about.html")
+
 if __name__ == "__main__":
     options.parse_command_line()
     port = options.options.port
@@ -47,20 +51,21 @@ if __name__ == "__main__":
 
     app = web.Application(
         [
-                ( r'/'                  , MainHandler   )  ,
-                ( r'/test'              , TestHandler   )  ,
-                ( r'/signup'            , SignupHandler )  ,
-                ( r'/user/info'         , UserAuth      )  ,
-                ( r'/policy'            , PolicyHandler )  ,
-                ( r'/auth/google'       , GoogleAuth    )  ,
-                ( r'/auth/facebook'     , FacebookAuth  )  ,
-                ( r'/auth/spotify'      , SpotifyAuth   )  ,
-                ( r'/auth/twitter'      , TwitterAuth   )  ,
-                ( r'/auth/reddit'       , RedditAuth    )  ,
-                ( r'/auth/tumblr'       , TumblrAuth    )  ,
-                ( r'/auth/instagram'    , InstagramAuth )  ,
-                ( r'/chat'              , EchoWebSocket )  ,
-                ( r'/chatroom'          , ChatHandler   )  ,
+                 ( r'/'               , MainHandler   )  , 
+                 ( r'/test'           , TestHandler   )  , 
+                 ( r'/signup'         , SignupHandler )  , 
+                 ( r'/user/info'      , UserAuth      )  , 
+                 ( r'/policy'         , PolicyHandler )  , 
+                 ( r'/about'          , AboutHandler  )  , 
+                 ( r'/auth/google'    , GoogleAuth    )  , 
+                 ( r'/auth/facebook'  , FacebookAuth  )  , 
+                 ( r'/auth/spotify'   , SpotifyAuth   )  , 
+                 ( r'/auth/twitter'   , TwitterAuth   )  , 
+                 ( r'/auth/reddit'    , RedditAuth    )  , 
+                 ( r'/auth/tumblr'    , TumblrAuth    )  , 
+                 ( r'/auth/instagram' , InstagramAuth )  , 
+                 ( r'/chat'           , EchoWebSocket )  , 
+                 ( r'/chatroom'       , ChatHandler   )  , 
             ( r"/favicon.ico" , web.StaticFileHandler , {"path":""} )  ,
         ],
         template_path      = "./templates/",

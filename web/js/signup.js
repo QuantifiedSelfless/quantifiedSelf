@@ -8,6 +8,7 @@ $(document).ready(function() {
 //Currently am loading React from CDN
 var Nav = require('./home_comps/Nav.js');
 var Footer = require('./home_comps/Footer.js');
+var Agree = require('./signup_comps/Agree.js');
 var GoogleAuth = require('./signup_comps/GoogleAuth.js');
 var FacebookAuth = require('./signup_comps/FacebookAuth.js');
 var SpotifyAuth = require('./signup_comps/SpotifyAuth.js');
@@ -16,6 +17,7 @@ var User = require('./signup_comps/User.js');
 var RedditAuth = require('./signup_comps/RedditAuth.js');
 var TumblrAuth = require('./signup_comps/TumblrAuth.js');
 var InstagramAuth = require('./signup_comps/InstagramAuth.js');
+var Thanks = require('./signup_comps/Thanks.js');
 
 React.render(
         <Nav />,
@@ -25,6 +27,13 @@ React.render(
 React.render(
         <Footer />,
         document.getElementById('sign-foot')
+);
+
+React.render(
+        <div className="center">
+            <Agree />
+        </div>,
+        document.getElementById('start')
 );
 
 React.render(
@@ -81,4 +90,11 @@ React.render(
             <InstagramAuth />
         </div>,
         document.getElementById('instagram')
+);
+
+React.render(
+        <div className="center">
+            <Thanks />
+        </div>,
+        document.getElementById('thankyou')
 );

@@ -11,7 +11,7 @@ import httplib2
 from apiclient.discovery import build
 
 from lib import scrapers
-#May eventually want to add instance of IOLoop if we want to add in callbacks for scraping tasks
+from lib.database import deny_google
 
 class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
     _ioloop = ioloop.IOLoop().instance()
@@ -41,11 +41,14 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
                     )
             http = httplib2.Http()
             http = creds.authorize(http)
-            self._ioloop.add_callback(scrapers.scrape_google_user, http=http)
-            #info_service = build('oauth2', 'v2', http=http)
-            #myinfo = info_service.userinfo().get().execute()
-            #print myinfo
-
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(scrapers.scrape_google_user, http=http, user_id=id)
+            self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
+            return
+        elif self.get_argument('share', None):
+            reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
             self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
             return
         else:

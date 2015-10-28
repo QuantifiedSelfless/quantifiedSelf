@@ -17,9 +17,18 @@ var TwitterAuth = React.createClass({
 
     render: function() {
         return (
-            <div className="authbtn twitter">
-                <a className="zocial twitter" href="/auth/twitter">
-                    Authorize with Twitter
+            <div>
+                <div className="authbtn twitter">
+                    <a className="zocial twitter" href="/auth/twitter">
+                        Authorize with Twitter
+                    </a>
+                </div>
+
+                <a href="/auth/twitter?share=noacct">
+                    <button className="btn btn-primary m3 b1 bg-orange">Do not use Twitter</button>
+                </a>
+                <a href="/auth/twitter?share=noshare">
+                    <button className="btn btn-primary m3 b1 bg-red">Will not share</button>
                 </a>
             </div>
         );

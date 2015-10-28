@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/wannabeCitizen/quantifiedSelf",
   "dependencies": {
+    "gulp-util": "~3.0.6",
     "react": "^0.13.3",
+    "react-remarkable": "^1.1.1",
     "react-tools": "^0.13.3",
-    "gulp-util": "~3.0.6"
+    "remarkable": "^1.6.0"
   },
   "devDependencies": {
     "browserify": "~11.0.1",

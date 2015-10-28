@@ -3,9 +3,7 @@ from tornado import gen
 from tornado import ioloop
 from tornado import httpclient
 import ujson as json
-
 import praw
-
 
 class RedditAuth(web.RequestHandler):
 
@@ -14,8 +12,8 @@ class RedditAuth(web.RequestHandler):
     def get(self):
         reddit = praw.Reddit('application:qself-server /u/parallaxingposition')
         reddit.set_oauth_app_info(client_id=self.application.settings['reddit_oauth']['key'],
-                                    client_secret=self.application.settings['reddit_oauth']['secret'],
-                                    redirect_uri="https://iamadatapoint.com/auth/reddit")
+                                  client_secret=self.application.settings['reddit_oauth']['secret'],
+                                  redirect_uri="{0}/auth/reddit".format(self.application.settings['base_url']))
         if self.get_argument('error', None):
             raise web.HTTPError(
                     '500',
@@ -27,11 +25,9 @@ class RedditAuth(web.RequestHandler):
             #evenutually do an async fetch
             user = reddit.get_me()
             print user
-            self.redirect('https://iamadatapoint.com/test')
+            self.redirect('{0}/signup#tumblr'.format(self.application.settings['base_url']))
             return
         else:
-            url = reddit.get_authorize_url('uniqueKey', 'identity', True)
+            url = reddit.get_authorize_url('uniqueKey', 'identity,flair,history,mysubreddits,privatemessages', True)
             self.redirect(url)
             return
-
-

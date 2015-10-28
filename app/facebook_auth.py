@@ -28,6 +28,6 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
                 redirect_uri= "{0}/auth/facebook".format(self.application.settings['base_url']),
                 client_id=self.application.settings['facebook_oauth']['key'],
                 client_secret=self.application.settings['facebook_oauth']['secret'],
-                scope = ["public_profile","email","user_friends"])
+                scope = ["public_profile","email","user_friends", "user_posts", "user_likes", "user_about_me", "user_education_history", "user_events", "user_photos" ])
 
             return

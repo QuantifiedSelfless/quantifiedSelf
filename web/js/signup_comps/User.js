@@ -3,6 +3,7 @@ var User = React.createClass({
     render: function() {
         return (
           <div className="container flex">
+            <p className="red">WARNING: THIS IS ONLY A PILOT OF OUR SIGN UP PROCESS, WE WILL ANNOUNCE WHEN WE ARE TAKING OFFICIAL RSVPs</p>
             <form name="user-form" className="md-col-8 sm-col-6 mx-auto white">
                 <label>Full Name</label>
                 <input type="text" ref="username" size="60" className="block mb2 field mx-auto" placeholder="Firstname Lastname" />

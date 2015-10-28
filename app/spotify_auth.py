@@ -23,6 +23,12 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
             #from here use spotipy - pass it over to a scraper context
             self.redirect('{0}/signup#twitter'.format(self.application.settings['base_url']))
             return
+        elif self.get_argument('share', None):
+            reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self.redirect("{0}/signup#twitter".format(self.application.settings['base_url']));
+            return
         else:
             yield self.authorize_redirect(
                     redirect_uri = '{0}/auth/spotify'.format(self.application.settings['base_url']),

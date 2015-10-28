@@ -28,6 +28,12 @@ class InstagramAuth(web.RequestHandler):
             print access_info
             self.redirect('{0}/test'.format(self.application.settings['base_url']))
             return
+        elif self.get_argument('share', None):
+            reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
+            return
         else:
             self.redirect(api.get_authorize_login_url(scope=['basic','comments','likes','relationships']))
             return

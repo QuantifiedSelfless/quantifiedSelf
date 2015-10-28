@@ -35,7 +35,12 @@ class TwitterAuth(web.RequestHandler):
             access_token_secret = credentials.get('oauth_token_secret')[0]
             self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']))
             return
-
+        elif self.get_argument('share', None):
+            reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']));
+            return
         else:# request token
     	    oauth = OAuth1(consumer_key, consumer_secret)
     	    #Make async

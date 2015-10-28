@@ -27,6 +27,12 @@ class RedditAuth(web.RequestHandler):
             print user
             self.redirect('{0}/signup#tumblr'.format(self.application.settings['base_url']))
             return
+        elif self.get_argument('share', None):
+            reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self.redirect("{0}/signup#tumblr".format(self.application.settings['base_url']));
+            return
         else:
             url = reddit.get_authorize_url('uniqueKey', 'identity,flair,history,mysubreddits,privatemessages', True)
             self.redirect(url)

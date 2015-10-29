@@ -13,6 +13,7 @@ import random
 secrets = {}
 
 class TumblrAuth(web.RequestHandler):
+    _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -67,6 +68,10 @@ class TumblrAuth(web.RequestHandler):
                 access_info['oauth_token'],
                 access_info['oauth_token_secret']
             )
+
+            # save the token
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(save_token, provider="tumblr", user_id=id, token_data={"access_token":access_info['oauth_token'],"access_token_secret":access_info["oauth_token_secret"]})
 
             print client.info() # Grabs the current user information
 

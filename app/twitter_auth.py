@@ -7,8 +7,10 @@ import requests
 from requests_oauthlib import OAuth1
 from urlparse import parse_qs
 
+from lib.database import save_token
 
 class TwitterAuth(web.RequestHandler):
+    _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -33,6 +35,11 @@ class TwitterAuth(web.RequestHandler):
             print credentials
             access_token_key = credentials.get('oauth_token')[0]
             access_token_secret = credentials.get('oauth_token_secret')[0]
+
+            # screape
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(save_token, provider="twitter", user_id=id, token_data={"access_token":access_token_key, "access_token_secret":access_token_secret})
+
             self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):

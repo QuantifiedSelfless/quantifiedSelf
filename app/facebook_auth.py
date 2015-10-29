@@ -1,10 +1,13 @@
 from tornado import web
 from tornado import gen
 from tornado import auth
+from tornado import ioloop
 import ujson as json
 
+from lib.database import save_token
 
 class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
+    _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -19,7 +22,9 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
                     client_id=self.application.settings['facebook_oauth']['key'],
                     client_secret=self.application.settings['facebook_oauth']['secret'],
                     code=self.get_argument('code'))
-            #Set Cookie, Eventually (change cookie_secret)
+
+            id = self.get_secure_cookie('user_id')
+            self._ioloop.add_callback(save_token, provider='facebook', user_id=id, token_data=access)
             print access
             self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']))
             return

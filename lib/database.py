@@ -19,6 +19,12 @@ def init():
     try:
         print "Creating tables"
         conn.use('pilot')
+        yield r.table_create('instagram').run(conn)
+        yield r.table_create('tumblr').run(conn)
+        yield r.table_create('reddit').run(conn)
+        yield r.table_create('twitter').run(conn)
+        yield r.table_create('spotify').run(conn)
+        yield r.table_create('facebook').run(conn)
         yield r.table_create('users').run(conn)
         yield r.table_create('google').run(conn)
     except:
@@ -43,7 +49,7 @@ def get_user(id):
 @gen.coroutine
 def save_token(provider, user_id, token_data):
     conn = yield connection
-    data = {"user_id": user_id, "token": token}
+    data = {"user_id": user_id, "token": token_data}
     result = yield r.table(provider).insert(
             data,
             conflict='update').run(conn)

@@ -5,8 +5,10 @@ from tornado import httpclient
 import ujson as json
 import praw
 
-class RedditAuth(web.RequestHandler):
+from lib.database import save_token
 
+class RedditAuth(web.RequestHandler):
+    _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
     def get(self):
@@ -22,6 +24,11 @@ class RedditAuth(web.RequestHandler):
         if self.get_argument('code', None):
             access_info = reddit.get_access_information(self.get_argument('code',None))
             reddit.set_access_credentials(**access_info)
+
+            # save the token
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(save_token, provider="reddit", user_id=id, token_data=access_info)
+
             #evenutually do an async fetch
             user = reddit.get_me()
             print user

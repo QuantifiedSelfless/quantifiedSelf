@@ -4,6 +4,7 @@ from tornado import ioloop
 from tornado import httpclient
 import ujson as json
 from instagram.client import InstagramAPI
+from lib.email_sender import EmailSender
 
 class InstagramAuth(web.RequestHandler):
 
@@ -32,6 +33,12 @@ class InstagramAuth(web.RequestHandler):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+
+            ## Send off the email here
+            #self.application.settings['emailsender'].SendConfirmation('')
+            creds = self.application.settings['gmail_smtp_creds']
+            user = 
+            EmailSender(creds['user'], creds['password']).SendConfirmation()
             self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
             return
         else:

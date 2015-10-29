@@ -17,10 +17,7 @@ class EmailSender:
         msg = MIMEText(fp.read().format(name), 'html')
         fp.close()
         msg['Subject'] = 'Ticket Confirmation - Quantified Self'
-        msg['From'] = 'quantifiedselfless@gmail.com'
+        msg['From'] = self.username
         msg['To'] = email
         client.sendmail(msg['From'], [msg['To']], msg.as_string())
         client.close()
-
-
-EmailSender("","").SendConfirmation('Michael.Skirpan@colorado.edu', 'Quantified Self')

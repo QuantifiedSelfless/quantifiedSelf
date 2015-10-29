@@ -25,6 +25,8 @@ class RedditAuth(web.RequestHandler):
             access_info = reddit.get_access_information(self.get_argument('code',None))
             reddit.set_access_credentials(**access_info)
 
+            print access_info
+
             # save the token
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider="reddit", user_id=id, token_data=access_info)

@@ -41,6 +41,15 @@ def get_user(id):
     raise gen.Return(result)
 
 @gen.coroutine
+def save_token(provider, user_id, token_data):
+    conn = yield connection
+    data = {"user_id": user_id, "token": token}
+    result = yield r.table(provider).insert(
+            data,
+            conflict='update').run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
 def google_user(data):
     conn = yield connection
     #start grabbing user ID

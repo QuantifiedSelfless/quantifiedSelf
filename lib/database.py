@@ -34,6 +34,7 @@ def user_insert(data):
             ).run(conn)
     raise gen.Return(result)
 
+@gen.coroutine
 def get_user(id):
     conn = yield connection
     result = yield r.table('users').get(id).run(conn)

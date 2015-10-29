@@ -1,5 +1,7 @@
 import smtplib
+from tornado import gen
 from email.mime.text import MIMEText
+from app.creds import *
 
 class EmailSender:
 
@@ -8,10 +10,13 @@ class EmailSender:
         self.password = password
         self.server   = server
         self.port     = port
-
+        print 'Yo Im Peyman'
 
     def SendConfirmation(self, email, name):
+        print 'XXX'
         client = smtplib.SMTP_SSL(self.server, self.port)
+        print self.username
+        print self.password
         client.login(self.username, self.password)
         fp = open('email_templates/confirmation.html', 'rb')
         msg = MIMEText(fp.read().format(name), 'html')
@@ -21,3 +26,14 @@ class EmailSender:
         msg['To'] = email
         client.sendmail(msg['From'], [msg['To']], msg.as_string())
         client.close()
+        print 'GOOD BYE'
+
+_emailsender = EmailSender(QS_GMAIL_USERNAME, QS_GMAIL_PASSWORD)
+
+@gen.coroutine
+def send_confirmation(email, name):
+    print 'YO MA MA 23'
+    sender = yield _emailsender
+    conf = yield sender.EmailSender(QS_GMAIL_USERNAME, QS_GMAIL_PASSWORD)
+    print 'YO MA MA'
+    raise gen.Return(conf)

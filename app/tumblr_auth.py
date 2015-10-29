@@ -9,6 +9,8 @@ import urlparse
 import string
 import random
 
+from lib.database import save_token
+
 # dictionary that matches auth-session-id to token secret
 secrets = {}
 

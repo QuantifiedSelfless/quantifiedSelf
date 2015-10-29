@@ -33,13 +33,11 @@ class InstagramAuth(web.RequestHandler):
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
-            #self._ioloop.add_callback(deny_google, share=reason, user_id=id)
-
+            
             ## Send off the email here
             user = yield get_user(id)
             print user
-            send_confirmation(user['email'], user['name'])
-            print 'YO'
+            self._ioloop.add_callback(send_confirmation, user=user['email'], name=user['name'])
             self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
             return
         else:

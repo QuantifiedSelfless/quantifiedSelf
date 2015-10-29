@@ -1,7 +1,7 @@
 import smtplib
 from tornado import gen
 from email.mime.text import MIMEText
-from app.creds import *
+from app.creds import EMAIL_ADDRESS, EMAIL_PASS
 
 class EmailSender:
 
@@ -18,7 +18,7 @@ class EmailSender:
         print self.username
         print self.password
         client.login(self.username, self.password)
-        fp = open('email_templates/confirmation.html', 'rb')
+        fp = open('lib/email_templates/confirmation.html', 'rb')
         msg = MIMEText(fp.read().format(name), 'html')
         fp.close()
         msg['Subject'] = 'Ticket Confirmation - Quantified Self'
@@ -28,12 +28,12 @@ class EmailSender:
         client.close()
         print 'GOOD BYE'
 
-_emailsender = EmailSender(QS_GMAIL_USERNAME, QS_GMAIL_PASSWORD)
+_emailsender = EmailSender(EMAIL_ADDRESS, EMAIL_PASS)
 
 @gen.coroutine
-def send_confirmation(email, name):
+def send_confirmation(user, name):
     print 'YO MA MA 23'
-    sender = yield _emailsender
-    conf = yield sender.EmailSender(QS_GMAIL_USERNAME, QS_GMAIL_PASSWORD)
+    sender = _emailsender
+    conf = sender.SendConfirmation(user, name)
     print 'YO MA MA'
     raise gen.Return(conf)

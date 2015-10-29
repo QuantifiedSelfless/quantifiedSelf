@@ -79,8 +79,7 @@ if __name__ == "__main__":
 	    twitter_oauth      = { "key": TWITTER_CLIENT_ID, "secret": TWITTER_CLIENT_SECRET  },
 	    tumblr_oauth       = { "key": TUMBLR_CLIENT_ID, "secret": TUMBLR_CLIENT_SECRET  },
         instagram_oauth    = { "key": INSTAGRAM_CLIENT_ID, "secret": INSTAGRAM_CLIENT_SECRET  },
-        reddit_oauth       = { "key": REDDIT_CLIENT_ID, "secret": REDDIT_CLIENT_SECRET  },
-        gmail_smtp_creds   = { "user": QS_GMAIL_USERNAME, "password": QS_GMAIL_PASSWORD }
+        reddit_oauth       = { "key": REDDIT_CLIENT_ID, "secret": REDDIT_CLIENT_SECRET  }
         )
 
     print "Listening on port: " + str(port)

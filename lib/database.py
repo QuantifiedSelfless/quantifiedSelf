@@ -19,6 +19,7 @@ def init():
     try:
         print "Creating tables"
         conn.use('pilot')
+        yield r.table_create('deauth').run(conn)
         yield r.table_create('instagram').run(conn)
         yield r.table_create('tumblr').run(conn)
         yield r.table_create('reddit').run(conn)
@@ -47,6 +48,15 @@ def get_user(id):
     raise gen.Return(result)
 
 @gen.coroutine
+def get_user_from_email(email):
+    conn = yield connection
+    result = yield r.table('users').filter({"email":email}).run(conn)
+    if(len(result.items)>0):
+        raise gen.Return(result.items[0])
+    else:
+        raise gen.Return(None)
+
+@gen.coroutine
 def save_token(provider, user_id, token_data):
     conn = yield connection
     data = {"user_id": user_id, "token": token_data}
@@ -73,3 +83,32 @@ def deny_google(share, user_id):
             conflict='update',
             ).run(conn)
     raise gen.Return(result)
+
+@gen.coroutine
+def pop_deauth_request(id):
+    conn = yield connection
+    result = yield r.table('deauth').get(id).run(conn)
+    # now remove it
+    deleteResult = yield r.table('deauth').get(id).delete().run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def create_deauth_request(id, user_id):
+    conn = yield connection
+    result = yield r.table('deauth').insert(
+    {"id": id, "user_id": user_id},
+    conflict='update'
+    ).run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def delete_user_data(id):
+    conn = yield connection
+    tables = ['google','facebook','spotify','reddit','tumblr','instagram','twitter']
+    lastResult = None
+    for table in tables:
+        print table
+        lastResult = yield r.table(table).filter({'user_id':id}).delete().run(conn)
+        print lastResult
+    lastResult = yield r.table('users').get(id).delete().run(conn)
+    raise gen.Return(lastResult)

@@ -13,6 +13,7 @@ from app.twitter_auth import TwitterAuth
 from app.reddit_auth import RedditAuth
 from app.tumblr_auth import TumblrAuth
 from app.instagram_auth import InstagramAuth
+from app.user_deauth import UserDeauth
 from app.creds import *
 
 #Set basic options
@@ -55,6 +56,7 @@ if __name__ == "__main__":
                  ( r'/test'           , TestHandler   )  ,
                  ( r'/signup'         , SignupHandler )  ,
                  ( r'/user/info'      , UserAuth      )  ,
+                 ( r'/deauth'         , UserDeauth    )  ,
                  ( r'/policy'         , PolicyHandler )  ,
                  ( r'/about'          , AboutHandler  )  ,
                  ( r'/auth/google'    , GoogleAuth    )  ,

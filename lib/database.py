@@ -76,9 +76,9 @@ def google_user(data):
     raise gen.Return(result)
 
 @gen.coroutine
-def deny_google(share, user_id):
+def deny(provider, share, user_id):
     conn = yield connection
-    result = yield r.table('google').insert(
+    result = yield r.table(provider).insert(
             {"id": user_id, "missing_reason": share},
             conflict='update',
             ).run(conn)

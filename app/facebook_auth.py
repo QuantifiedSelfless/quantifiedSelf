@@ -5,6 +5,7 @@ from tornado import ioloop
 import ujson as json
 
 from lib.database import save_token
+from lib.database import deny
 
 class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
     _ioloop = ioloop.IOLoop().instance()
@@ -31,7 +32,7 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
-            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self._ioloop.add_callback(deny, provider='facebook', share=reason, user_id=id)
             self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']));
             return
         else:

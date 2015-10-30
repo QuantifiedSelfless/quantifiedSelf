@@ -7,6 +7,7 @@ from instagram.client import InstagramAPI
 from lib.email_sender import send_confirmation
 from lib.database import get_user
 from lib.database import save_token
+from lib.database import deny
 
 class InstagramAuth(web.RequestHandler):
     _ioloop = ioloop.IOLoop().instance()
@@ -39,9 +40,10 @@ class InstagramAuth(web.RequestHandler):
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='instagram', share=reason, user_id=id)
 
             # Confirmation
-            id = self.get_secure_cookie("user_id")
             user = yield get_user(id)
             self._ioloop.add_callback(send_confirmation, user=user['email'], name=user['name'])
             self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));

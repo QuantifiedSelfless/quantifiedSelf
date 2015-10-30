@@ -6,6 +6,7 @@ import ujson as json
 import praw
 
 from lib.database import save_token
+from lib.database import deny
 
 class RedditAuth(web.RequestHandler):
     _ioloop = ioloop.IOLoop().instance()
@@ -39,7 +40,7 @@ class RedditAuth(web.RequestHandler):
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
-            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self._ioloop.add_callback(deny, provider='reddit', share=reason, user_id=id)
             self.redirect("{0}/signup#tumblr".format(self.application.settings['base_url']));
             return
         else:

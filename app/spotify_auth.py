@@ -6,6 +6,7 @@ from tornado import httpclient
 import ujson as json
 import app.spotifyMix as spot
 from lib.database import save_token
+from lib.database import deny
 
 class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
     _ioloop = ioloop.IOLoop().instance()
@@ -30,7 +31,7 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
-            self._ioloop.add_callback(deny_google, share=reason, user_id=id)
+            self._ioloop.add_callback(deny, provider='spotify', share=reason, user_id=id)
             self.redirect("{0}/signup#twitter".format(self.application.settings['base_url']));
             return
         else:

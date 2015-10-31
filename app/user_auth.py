@@ -4,6 +4,7 @@ from tornado import ioloop
 from tornado import httpclient
 
 from lib.database import user_insert
+from lib.database import get_user_from_email
 from lib.basehandler import BaseHandler
 import ujson as json
 
@@ -16,6 +17,12 @@ class UserAuth(BaseHandler):
     def post(self):
         name = self.get_argument('name', None)
         email = self.get_argument('email', None)
+
+        user = yield get_user_from_email(email)
+        if(user != None):
+            self.set_secure_cookie("user_id", user.id)
+            return
+
         if name == None or email == None:
             self.error(403, "Must provide valid username and email address to continue")
             return

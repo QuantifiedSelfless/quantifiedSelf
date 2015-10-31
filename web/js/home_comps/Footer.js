@@ -23,7 +23,8 @@ var Footer = React.createClass({
             <img src="/static/img/CULogo.png" width="30%" />
           </div>
           <div className="right white bg-lighten-1">
-            <p>Questions? Contact our project lead - michael[dot]skirpan[at]colorado[dot]edu </p>
+            <p>Questions? Contact our project lead - michael[dot]skirpan[at]colorado[dot]edu</p>
+            <p>Need to cancel? Deauthorize your account <a href="/leave">here</a></p>
           </div>
         </div>
         );

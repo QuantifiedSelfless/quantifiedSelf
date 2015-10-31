@@ -32,13 +32,13 @@ class UserDeauth(web.RequestHandler):
             request = yield pop_deauth_request(self.get_argument('token', None))
             if(request != None):
                 self._ioloop.add_callback(delete_user_data, id=request['user_id'])
+                self.redirect("{0}/leave#final".format(self.application.settings['base_url']));
                 return
             else:
                 raise web.HTTPError(
                         404,
                         'Not found.')
 
-            #dump records for this user
         else:
             #return error
             raise web.HTTPError(

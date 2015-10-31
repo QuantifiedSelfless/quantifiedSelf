@@ -45,6 +45,10 @@ class AboutHandler(web.RequestHandler):
     def get(self):
         self.render("about.html")
 
+class UserUnauth(web.RequestHandler):
+    def get(self):
+        self.render("deauth.html")
+
 if __name__ == "__main__":
     options.parse_command_line()
     port = options.options.port
@@ -57,6 +61,7 @@ if __name__ == "__main__":
                  ( r'/signup'         , SignupHandler )  ,
                  ( r'/user/info'      , UserAuth      )  ,
                  ( r'/deauth'         , UserDeauth    )  ,
+                 ( r'/leave'          , UserUnauth    )  ,
                  ( r'/policy'         , PolicyHandler )  ,
                  ( r'/about'          , AboutHandler  )  ,
                  ( r'/auth/google'    , GoogleAuth    )  ,

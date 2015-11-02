@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Tornado chat</title>
+        <script type="text/javascript" src="elizabot.js"></script>
+        <script type="text/javascript" src="elizadata.js"></script>
+        <script language="Javascript" type="text/javascript">
+        function myUsername() {
+            var username = prompt("Please enter a username");
+            if (username != null) {
+                data = {"function" : "username",
+                        "message" : username 
+                };
+
+                ws.send(JSON.stringify(data))
+            }
+        }
+        var eliza = new ElizaBot();
+        function elizaStep() {
+            var userinput =  $('#m').val();
+            if (userinput != '') {
+                ws.send(eliza.transform(userinput));
+            }
+            //$('#m').focus();
+        }
+        </script>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+            form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+            form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+            #messages { list-style-type: none; margin: 0; padding: 0; }
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+        </style>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script language="Javascript" type="text/javascript">
+        var ws = new WebSocket("ws://localhost:8888/ws");
+        window.onload = myUsername()
+        $('form').submit(function() {
+            $('html, body').animate({scrollBottom: $('form').height()}, 800);
+            data = {"function" : "chat",
+                    "message" : $('#m').val()
+            };        
+            ws.send(JSON.stringify(data));
+           //elizaStep();
+            $('#m').val('');
+            return false;
+        });
+        ws.onopen = function() {
+             $('#messages').append($('<li>').text('User connected'));
+        };
+        ws.onmessage = function(msg) {
+            $('#messages').append($('<li>').text(msg.data));
+        };
+        ws.onclose = function() {
+             $('#messages').append($('<li>').text('User disconnected'));
+        };
+        </script>    
+    </body>
+</html>

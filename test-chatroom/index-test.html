@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO chat</title>
+        <script type="text/javascript" src="file:///elizabot.js"></script>
+        <script type="text/javascript" src="file:///elizadata.js"></script>
+        <script language="Javascript" type="text/javascript">
+        var eliza = new ElizaBot();
+        function elizaStep() {
+            var userinput =  $('#m').val();
+            if (userinput != '') {
+                ws.send(eliza.transform(userinput));
+            }
+            //$('#m').focus();
+        }
+        </script>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+            form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+            form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+            #messages { list-style-type: none; margin: 0; padding: 0; }
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+        </style>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script language="Javascript" type="text/javascript"> 
+        var ws = new WebSocket("ws://localhost:8888/ws");
+        $('form').submit(function() {
+            ws.send($('#m').val());
+            elizaStep();
+            $('#m').val('');
+            return false;
+        }); 
+        ws.onopen = function() {
+             $('#messages').append($('<li>').text('User connected'));
+        };
+        ws.onmessage = function(msg) {
+            $('#messages').append($('<li>').text(msg.data));
+        };
+        ws.onclose = function() {
+             $('#messages').append($('<li>').text('User disconnected'));
+        };
+        </script>    
+    </body>
+</html>

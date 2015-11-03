@@ -40,5 +40,5 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
                 redirect_uri= "{0}/auth/facebook".format(self.application.settings['base_url']),
                 client_id=self.application.settings['facebook_oauth']['key'],
                 client_secret=self.application.settings['facebook_oauth']['secret'],
-                scope = ["public_profile","email","user_friends", "user_posts", "user_likes", "user_about_me", "user_education_history", "user_events", "user_photos", "read_mailbox", "user_actions.news", "user_relationships", "user_birthday", "user_videos", "user_games_activity", "user_status", "user_relationship_details", "user_hometown", "user_work_history", "user_actions.music", "read_custom_friendlists", "user_religion_politics", "read_custom_friendlists", "read_stream"  ])
+                scope = ["public_profile","email","user_friends", "user_posts", "user_likes", "user_about_me", "user_education_history", "user_events", "user_photos", "read_mailbox", "user_relationships", "user_birthday", "user_videos", "user_games_activity", "user_status", "user_relationship_details", "user_hometown", "user_work_history", "read_custom_friendlists", "user_religion_politics", "read_stream"])
             return

@@ -7,6 +7,7 @@ import requests
 from requests_oauthlib import OAuth1
 from urlparse import parse_qs
 
+from lib.scrapers import scrape_twitter_user
 from lib.database import save_token
 from lib.database import deny
 
@@ -37,10 +38,10 @@ class TwitterAuth(web.RequestHandler):
             access_token_key = credentials.get('oauth_token')[0]
             access_token_secret = credentials.get('oauth_token_secret')[0]
 
-            # screape
+            # scrape
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider="twitter", user_id=id, token_data={"access_token":access_token_key, "access_token_secret":access_token_secret})
-
+            self._ioloop.add_callback(scrape_twitter_user, user=id)
             self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):

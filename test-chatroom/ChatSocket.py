@@ -3,27 +3,31 @@ from tornado import websocket
 from tornado import ioloop
 from tornado import web
 from tornado import escape
-from chatterbot import ChatBot
+#from chatterbot import ChatBot
 import json
 clients = []
-bot = ChatBot("ChatBot", database="../database.db", logic_adapter="chatterbot.adapters.logic.ClosestMeaningAdapter")
+#bot = ChatBot("ChatBot", database="../database.db", logic_adapter="chatterbot.adapters.logic.ClosestMeaningAdapter")
+
 class WSHandler(websocket.WebSocketHandler):
     def open(self, *args):
         print("open", "WebSocketChatHandler")
-        bot.train("chatterbot.corpus.english.greetings")
-        bot.train("chatterbot.corpus.english.conversations")
+        #bot.train("chatterbot.corpus.english.greetings")
+        #bot.train("chatterbot.corpus.english.conversations")
         clients.append(self)
     def on_message(self, json_object):
         data = escape.json_decode(json_object)
         message = data["message"]
         if (data["function"] == "username"):
-            username = message
+            self.username = message
         else:
-            bot.train([message])
-            response = str(bot.get_response(message))
+            #bot.train([message])
+            #response = str(bot.get_response(message))
             for client in clients:
-                client.write_message(username + message)
-                client.write_message("ChatBot: " + response)
+                if (data["function"] == "elizachat"):
+                    client.write_message("Elizabot: " + message)
+                else:
+                    client.write_message(client.username + ': ' + message)
+                    #client.write_message("ChatBot: " + response)
     def on_close(self):
         clients.remove(self)
 

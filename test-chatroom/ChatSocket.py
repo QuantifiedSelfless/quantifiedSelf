@@ -1,17 +1,18 @@
+import ipdb
 from tornado import httpserver
 from tornado import websocket
 from tornado import ioloop
 from tornado import web
 from tornado import escape
 from nltk import chat
+import re
 #from chatterbot import ChatBot
 import json
 from room import Room
 #clients = []
 rooms = []
-chatbots = [chat.eliza]
 #bot = ChatBot("ChatBot", database="../database.db", logic_adapter="chatterbot.adapters.logic.ClosestMeaningAdapter")
-
+break_p = ipdb.set_trace 
 class WSHandler(websocket.WebSocketHandler):
     def open(self, *args):
         print("open", "WebSocketChatHandler")
@@ -28,11 +29,10 @@ class WSHandler(websocket.WebSocketHandler):
                 room.add_person(self)
                 return
         print("created new room")
-        self.current_room = Room(2)
+        new_room = Room(2)
+        self.current_room = new_room
         self.current_room.add_person(self)
-        rooms.append(self.current_room)
-
-        #clients.append(self)
+        rooms.append(new_room)
     def on_message(self, json_object):
         data = escape.json_decode(json_object)
         message = data["message"]
@@ -41,16 +41,23 @@ class WSHandler(websocket.WebSocketHandler):
         else:
             #bot.train([message])
             #response = str(bot.get_response(message))
-            #for client in clients:
-            print(len(self.current_room.people))
+            try:
+                private_check = re.search('private', message)
+                private_check.group(0)
+                message = re.sub('private: ', '', message, 1)
+                self.write_message(self.username + ': ' + '(Private Message) ' + message)
+                return
+            except AttributeError:
+                pass
+            if (data["function"] == "private_elizachat"):
+                self.write_message("Private Elizabot: " + message)
+                return
             for person in self.current_room.people:
                 if (data["function"] == "elizachat"):
                     person.write_message("Elizabot: " + message)
                 else:
                     person.write_message(self.username + ': ' + message)
-                    #client.write_message("ChatBot: " + response)
     def on_close(self):
-        #self.current_room.remove_person
         self.current_room.remove_person(self)
 
 class IndexHandler(web.RequestHandler):

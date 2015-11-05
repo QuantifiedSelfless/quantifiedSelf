@@ -39,16 +39,15 @@ var Deauth = React.createClass({
             $.ajax({
                 type: 'GET',
                 url: '/deauth?email='+data.email,
-                data: data,
                 success: function() {
-                    window.location.replace('/deauth#email');
+                    window.location.replace('/leave#email');
                 },
                 error: function(xhr) {
-                    alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                    alert("User was not found in our database: " + xhr.status + " " + xhr.statusText);
                 }
             });
         } else {
-            alert('Please enter valid email address');
+            alert('Please enter a valid email address');
         }
     },
     

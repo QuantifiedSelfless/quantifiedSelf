@@ -25,7 +25,7 @@ class UserDeauth(web.RequestHandler):
             else:
                 raise web.HTTPError(
                         404,
-                        'Not found.')
+                        'User is either already deleted or not in DB')
 
         elif (self.get_argument('token', None)):
             #pop the request

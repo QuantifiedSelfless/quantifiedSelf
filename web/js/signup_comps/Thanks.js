@@ -15,7 +15,7 @@ var Thanks = React.createClass({
             <div className="white">
                 <h2>Thank you!</h2>
                 <p>We will be emailing you about your ticket shortly.</p>
-                <p>If you decide not to come, you can delete your account at <a href="https://iamadatapoint.com/leave">www.iamadatapoint.com/leave</a></p>
+                <p>If you decide not to come, you can delete your account at <a href="/leave">www.iamadatapoint.com/leave</a></p>
             </div>
         );
     }

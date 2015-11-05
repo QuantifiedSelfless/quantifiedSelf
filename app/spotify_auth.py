@@ -14,10 +14,10 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
     @gen.coroutine
     def get(self):
         if self.get_argument('error', None):
-            raise web.HTTPError(
-                    '500',
-                    'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
-                    )
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='spotify', share="login deny", user_id=id)
+            self.redirect("{0}/signup#twitter".format(self.application.settings['base_url']));
+            return
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
                     redirect_uri= '{0}/auth/spotify'.format(self.application.settings['base_url']),

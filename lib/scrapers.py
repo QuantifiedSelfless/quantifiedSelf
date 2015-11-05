@@ -20,7 +20,7 @@ def scrape_google_user(http=None, user_id=None):
     raise gen.Return(user)
 
 
-def @gen.coroutine
+@gen.coroutine
 def scrape_twitter_user(user=None):
     assert user is not None, "need user id to continue"
     #Pull user token from DB

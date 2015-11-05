@@ -22,10 +22,10 @@ class InstagramAuth(web.RequestHandler):
             redirect_uri="{0}/auth/instagram".format(self.application.settings['base_url']))
 
         if self.get_argument('error', None):
-            raise web.HTTPError(
-                    '500',
-                    'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
-                    )
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='instagram', share="login deny", user_id=id)
+            self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
+            return
         if self.get_argument('code', None):
             code = self.get_argument('code')
             access_info = api.exchange_code_for_access_token(code)

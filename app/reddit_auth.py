@@ -18,10 +18,10 @@ class RedditAuth(web.RequestHandler):
                                   client_secret=self.application.settings['reddit_oauth']['secret'],
                                   redirect_uri="{0}/auth/reddit".format(self.application.settings['base_url']))
         if self.get_argument('error', None):
-            raise web.HTTPError(
-                    '500',
-                    'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
-                    )
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='reddit', share="login deny", user_id=id)
+            self.redirect("{0}/signup#tumblr".format(self.application.settings['base_url']));
+            return
         if self.get_argument('code', None):
             access_info = reddit.get_access_information(self.get_argument('code',None))
             reddit.set_access_credentials(**access_info)

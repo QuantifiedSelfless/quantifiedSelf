@@ -35,10 +35,10 @@ class TumblrAuth(web.RequestHandler):
         #                           client_secret=self.application.settings['reddit_oauth']['secret'],
         #                           redirect_uri="{0}/auth/reddit".format(self.application.settings['base_url']))
         if self.get_argument('error', None):
-            raise web.HTTPError(
-                    '500',
-                    'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
-                    )
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='tumblr', share="login deny", user_id=id)
+            self.redirect("{0}/signup#instagram".format(self.application.settings['base_url']));
+            return
         if self.get_argument('oauth_token', None):
             oauth_verifier     = self.get_argument('oauth_verifier', None)
             oauth_token        = self.get_argument('oauth_token', None)

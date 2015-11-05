@@ -19,11 +19,10 @@ class TwitterAuth(web.RequestHandler):
         consumer_key = self.application.settings['twitter_oauth']['key']
         consumer_secret = self.application.settings['twitter_oauth']['secret']
         if self.get_argument('error', None):
-            raise web.HTTPError(
-                    '500',
-                    'Error: {0}\nReason: {1}\nDescription: {2}'.format(self.get_argument('error'), self.get_argument('error_reason','na'), self.get_argument('error_description', 'na'))
-                    )
-
+            id = self.get_secure_cookie("user_id")
+            self._ioloop.add_callback(deny, provider='twitter', share="login deny", user_id=id)
+            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']));
+            return
         if self.get_argument('oauth_verifier', None): #access token
             oauth = OAuth1(consumer_key,
                     consumer_secret,

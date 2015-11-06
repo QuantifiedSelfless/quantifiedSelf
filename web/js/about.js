@@ -33,7 +33,7 @@ var Desc = React.createClass({
                     <p>For this to work, when attendees RSVP for a ticket, they share with us their online data, which is available through the applications they use (e.g., Google, YouTube, Facebook). We use that data to generate a profile on you similar to those your online services have. That profile allows us to personalize the theater and art so that the audience is directly integrated into the piece.</p>
                     <p>We also will be holding public events in libraries, museums, and corporate offices that will involve discussion between technologists and users. Our art exhibits will provide a neutral object to direct conversations around privacy, online rights, inferences made about users, etc.</p>
                     <h3>Dates</h3>
-                    <p>Right now our first production is slated to run <span className="elec">April 13-17, 2016</span> in University of Colorado - Boulder's Blackbox Theater. We are currently working on adding more dates and a list of public events. Stay tuned.</p>
+                    <p>Right now our first production is slated to run <span className="elec">April 25-28, 2016</span> in University of Colorado - Boulder's Blackbox Theater. We are currently working on adding more dates and a list of public events. Stay tuned.</p>
                     <h3>Contact</h3>
                     <p>You can contact our team at: quantifiedselfless [at] gmail [dot] com</p>
                     <p>For media inquiries please contact our project lead at: michael [dot] skirpan [at] gmail [dot] com</p>

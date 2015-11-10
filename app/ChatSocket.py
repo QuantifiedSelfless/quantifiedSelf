@@ -5,6 +5,8 @@ clients = []
 bot = ChatBot("ChatBot", database="../database.db")
 class WSHandler(websocket.WebSocketHandler):
     def open(self, *args):
+        #bot.train("chatterbot.corpus.english.greetings")
+        #bot.train("chatterbot.corpus.english.conversations")
         clients.append(self)
     def on_message(self, message):
         bot.train([str(message)])

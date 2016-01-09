@@ -184,3 +184,7 @@ Outputs: Topic-related videos that were pre-added, come from an online stream or
 Display: ?Screen or projector?
 ```
 
+Still need confirmation:
+
+- JP's Music/Mood game?
+- Jiffer's Solenoid Kitchen Music (set; not exhibit)

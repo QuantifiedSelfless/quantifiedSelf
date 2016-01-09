@@ -11,13 +11,13 @@ var gutil = require('gulp-util');
 var _ = require('lodash');
 
 var path = {
-    HTML: ['index.html', 'home.html','signup.html'],
+    HTML: ['html/home.html','html/policy.html', 'html/chat.html', 'html/signup.html', 'html/index.html', 'html/about.html', 'html/deauth.html'],
     FINAL_HTML: '../templates',
-    ALL: ['js/*.js', 'js/**/*.js', 'home.html', 'signup.html'],
-    REACT_JS: ['js/*.js', 'js/components/*.js'],
+    ALL: ['js/*.js', 'js/**/*.js', 'html/*.html'],
+    REACT_JS: ['js/*.js'],
     JS_LIB: ['js/lib/*.js'],
     CSS: ['css/*'],
-    IMG: ['img/*'],
+    IMG: ['img/**/*'],
     OUT: 'build.js',
     MINIFIED_OUT: 'build.min.js',
     DEST_BUILD: 'public/static',
@@ -28,7 +28,7 @@ var path = {
     DEST_BUILD_IMG: 'public/static/img',
     DEST_FINAL_IMG: '../static/img',
     DEST: 'public',
-    ENTRIES: ['js/home.js', 'js/signup.js']
+    ENTRIES: ['js/home.js', 'js/signup.js', 'js/policy.js', 'js/about.js', 'js/deauth.js']
     };
 
 
@@ -116,10 +116,10 @@ gulp.task('build', function(){
 
 // Remember use <!-- build:js --> and <!-- endbuild --> for stuff that needs replaced
 gulp.task('replaceHTML', function(){
-    _.each(path.HTML, function(page) {
+    _.forEach(path.HTML, function(page) {
         gulp.src(page)
             .pipe(htmlreplace({
-                'js': 'static/js/' + page.split('.')[0] + path.MINIFIED_OUT
+                'js': 'static/js/' + page.split('.')[0].split('/')[1] + path.MINIFIED_OUT
             }))
             .pipe(gulp.dest(path.FINAL_HTML));
     })

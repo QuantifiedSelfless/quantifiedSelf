@@ -11,8 +11,8 @@
                             }
                 },
 
-                { "Google" : { "fields" : 
-                            
+                { "Google" : { "Gmail" : Bool, 
+                                "test" : 123  
                             }
                 },
 

@@ -18,7 +18,9 @@ var Sign = React.createClass({
     render: function() {
         return (
           <div className="mx-auto">
-            <button className="btn btn-outline mb2 aqua rsvp">Get a Ticket</button>
+            <a href="/signup">
+                <button className="btn btn-outline mb2 aqua rsvp">Get a Ticket</button>
+            </a>
           </div>
         );
     }

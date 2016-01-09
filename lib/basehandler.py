@@ -16,3 +16,10 @@ class BaseHandler(web.RequestHandler):
         })
         self.set_status(code, reason)
         self.finish()
+
+    def error(self, code, reason=None, body=None):
+        self.add_header("Access-Control-Allow-Origin", "*")
+        if body:
+            self.write(body)
+        self.set_status(code, reason)
+        self.finish()

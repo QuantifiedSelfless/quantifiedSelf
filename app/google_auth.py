@@ -1,7 +1,6 @@
 from tornado import web
 from tornado import gen
 from tornado import auth
-from tornado import ioloop
 from tornado import httpclient
 
 import ujson as json
@@ -13,44 +12,7 @@ from apiclient.discovery import build
 from lib import scrapers
 from lib.database import deny
 from lib.database import save_token
-
-class OAuthRequestHandler(web.RequestHandler):
-
-    def setProvider(self, provider):
-        self.provider = provider
-
-    _ioloop = ioloop.IOLoop().instance()
-    @web.asynchronous
-    @gen.coroutine
-    def get(self):
-        if self.get_argument('error', None):
-            id = self.get_secure_cookie("user_id")
-            self._ioloop.add_callback(deny, provider=self.provider, share="login deny", user_id=id)
-            self.finishAuthRequest("failed")
-            return
-
-        if self.get_argument('code', None):
-            code=self.get_argument('code')
-            id = self.get_secure_cookie("user_id")
-            self.handleAuthCallBack(code, id)
-            self.finishAuthRequest("success")
-            return
-
-        elif self.get_argument('share', None):
-            reason = self.get_argument('share', None)
-            id = self.get_secure_cookie("user_id")
-            self._ioloop.add_callback(deny, provider=self.provider, share=reason, user_id=id)
-            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
-            return
-
-        else:
-            self.set_cookie("auth-result", "inprogress")
-            self.startFlow()
-            return
-
-    def finishAuthRequest(self, status):
-        self.set_cookie("auth-result", status)
-        self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+from lib.basehandler import OAuthRequestHandler
 
 class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
     def initialize(self):

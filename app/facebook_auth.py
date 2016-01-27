@@ -15,7 +15,8 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='facebook', share="login deny", user_id=id)
-            self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']));
+            # self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
@@ -27,13 +28,13 @@ class FacebookAuth(web.RequestHandler, auth.FacebookGraphMixin):
             id = self.get_secure_cookie('user_id')
             self._ioloop.add_callback(save_token, provider='facebook', user_id=id, token_data=access)
             print access
-            self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']))
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='facebook', share=reason, user_id=id)
-            self.redirect("{0}/signup#spotify".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             yield self.authorize_redirect(

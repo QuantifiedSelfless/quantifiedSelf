@@ -20,11 +20,36 @@ var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
 var SocialAuth = React.createClass({
+    getInitialState: function () {
+      return {}
+    },
+    authorize: function () {
+      this.state.loginWindow = window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      this.state.loginWindowTimer = setInterval(this.tick, 1000)
+    },
+    noshare: function () {
+      window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      $("#noshareButton").css("background-color", "red")
+    },
+    nouse: function () {
+      window.open(this.props.url + "?share=noacct", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      $("#nouseButton").css("background-color", "yellow")
+    },
+    tick: function () {
+      console.log('Still Checking: ')
+      console.log(this.state)
+      if(this.state.loginWindow.closed) {
+        clearInterval(this.state.loginWindowTimer)
+        $("#authorizeButton").css("background-color", "green")
+      }
+    },
     render: function () {
       return (
         <div className="row social">
           <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
-          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
+          <div id="authorizeButton" className="col-xs-4 col-sm-4 col-md-4 col-lg-4" onClick={this.authorize}>Authorize</div>
+          <div id="noshareButton" className="col-xs-2 col-sm-2 col-md-2 col-lg-2" onClick={this.noshare}>Will not share</div>
+          <div id="nouseButton" className="col-xs-2 col-sm-2 col-md-2 col-lg-2" onClick={this.nouse}>Do not use</div>
         </div>)
     }
 })
@@ -41,7 +66,7 @@ React.render(
 
 React.render(
         <div className="container center">
-            <SocialAuth name="Facebook"/>
+            <SocialAuth name="Facebook" url="/auth/facebook"/>
         </div>,
         document.getElementById('start')
 );

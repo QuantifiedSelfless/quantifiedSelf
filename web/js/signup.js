@@ -29,23 +29,25 @@ var SocialAuth = React.createClass({
     },
     noshare: function () {
       window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
-      $("#noshareButton").css("background-color", "red")
+      $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("background-color", "red")
     },
     nouse: function () {
       window.open(this.props.url + "?share=noacct", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
-      $("#nouseButton").css("background-color", "yellow")
+      $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("background-color", "yellow")
     },
     tick: function () {
       console.log('Still Checking: ')
       console.log(this.state)
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer)
-        $("#authorizeButton").css("background-color", "green")
+        $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")
       }
     },
     render: function () {
+      var id = this.props.name + "-SocialAuthElement"
+      console.log(id)
       return (
-        <div className="row social">
+        <div id={id} className="row social">
           <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
           <div id="authorizeButton" className="col-xs-4 col-sm-4 col-md-4 col-lg-4" onClick={this.authorize}>Authorize</div>
           <div id="noshareButton" className="col-xs-2 col-sm-2 col-md-2 col-lg-2" onClick={this.noshare}>Will not share</div>
@@ -67,6 +69,7 @@ React.render(
 React.render(
         <div className="container center">
             <SocialAuth name="Facebook" url="/auth/facebook"/>
+            <SocialAuth name="Google" url="/auth/google"/>
         </div>,
         document.getElementById('start')
 );

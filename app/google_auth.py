@@ -22,7 +22,8 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='google', share="login deny", user_id=id)
-            self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
+            # self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
@@ -45,13 +46,13 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider='google', user_id=id, token_data=access)
             self._ioloop.add_callback(scrapers.scrape_google_user, http=http, user_id=id)
-            self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='google', share=reason, user_id=id)
-            self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             flow = client.OAuth2WebServerFlow(

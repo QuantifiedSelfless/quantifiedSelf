@@ -19,6 +19,16 @@ var TumblrAuth = require('./signup_comps/TumblrAuth.js');
 var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
+var SocialAuth = React.createClass({
+    render: function () {
+      return (
+        <div className="row social">
+          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
+          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
+        </div>)
+    }
+})
+
 React.render(
         <Nav />,
         document.getElementById('sign-head')
@@ -30,8 +40,8 @@ React.render(
 );
 
 React.render(
-        <div className="center">
-            <Agree />
+        <div className="container center">
+            <SocialAuth name="Facebook"/>
         </div>,
         document.getElementById('start')
 );

@@ -3,11 +3,11 @@
 }
 
 
-
 #nav {
     font-family: 'Arvo', sans-serif;
     background-color: #37483e;
     font-size: 20px;
+    color: white;
 }
 
 #nav a:hover {
@@ -15,10 +15,11 @@
 }
 
 #lander {
-    background-color: #72655b;
+    background-color: #312f2f;
     font-family: 'Quicksand', sans-serif;
     font-size: 34px;
     height: 80%;
+    color: white;
 }
 
 #lander h1 {
@@ -42,17 +43,20 @@
     background-color: #37483e;
     font-size: 26px;
     font-family: 'Quicksand', sans-serif;
+    color: white;
 }
 
 #block2 {
-    background-color: #72655b;
+    background-color: #312f2f;
     font-size: 26px;
     font-family: 'Quicksand', sans-serif;
+    color: white;
 }
 
 #block3 {
     background-color: #37483e;
     font-size: 26px;
+    color: white;
 }
 
 #block3 h2 {
@@ -64,9 +68,52 @@
 }
 
 #sponsors {
-    background-color: #72655b;
+
+    color: white;
+    background-color: #312f2f;
 }
 
 #sponsors h1 {
     font-family: 'Arvo', sans-serif;
+}
+
+#policy {
+    background-color: #312f2f;
+    font-family: 'Arvo', sans-serif;
+    font-size: 20px;
+    height: 80%;
+    color: white;
+}
+
+#lander h1 {
+    font-family: 'Arvo', sans-serif;
+    font-size: 28px;
+}
+
+#lander h2 {
+    font-family: 'Arvo', sans-serif;
+    font-size: 24px;
+}
+
+#about-land {
+    background-color: #312f2f;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#overview {
+    background-color: #312f2f;
+    font-family: 'Quicksand', sans-serif;   
+}
+
+#overview .border-bottom {
+    border-color: white;
+}
+
+#team {
+    background-color: #37483e;
+    font-family: 'Quicksand', sans-serif;   
+}
+
+#team .border-bottom {
+    border-color: white;
 }

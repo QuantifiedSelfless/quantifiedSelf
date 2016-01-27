@@ -11,8 +11,14 @@ import datetime
 
 class OAuthRequestHandler(web.RequestHandler):
 
+    def initialize(self):
+        self.setCallBackArgumentName("code") # The default
+
     def setProvider(self, provider):
         self.provider = provider
+
+    def setCallBackArgumentName(self, name):
+        self.callBackArgumentName = name
 
     _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
@@ -24,8 +30,8 @@ class OAuthRequestHandler(web.RequestHandler):
             self.finishAuthRequest("failed")
             return
 
-        if self.get_argument('code', None):
-            code=self.get_argument('code')
+        if self.get_argument(self.callBackArgumentName, None):
+            code=self.get_argument(self.callBackArgumentName)
             id = self.get_secure_cookie("user_id")
             self.handleAuthCallBack(code, id)
             self.finishAuthRequest("success")

@@ -50,7 +50,7 @@ var SocialAuth = React.createClass({
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer)
         if(getCookie("auth-result") == "success") {
-          $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")  
+          $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")
         }
       }
     },

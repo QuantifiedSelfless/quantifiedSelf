@@ -19,6 +19,53 @@ var TumblrAuth = require('./signup_comps/TumblrAuth.js');
 var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
+var SocialAuth = React.createClass({
+    getInitialState: function () {
+      return {}
+    },
+    authorize: function () {
+      this.state.loginWindow = window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      this.state.loginWindowTimer = setInterval(this.tick, 200)
+    },
+    noshare: function () {
+      window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("background-color", "red")
+    },
+    nouse: function () {
+      window.open(this.props.url + "?share=noacct", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
+      $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("background-color", "yellow")
+    },
+    tick: function () {
+      if(this.state.loginWindow.closed) {
+        clearInterval(this.state.loginWindowTimer)
+        if(getCookie("auth-result") == "success") {
+          $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")
+        }
+      }
+    },
+    render: function () {
+      var id = this.props.name + "-SocialAuthElement"
+      return (
+        <div id={id} className="row social">
+          <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
+          <div id="authorizeButton" className="col-xs-4 col-sm-4 col-md-4 col-lg-4" onClick={this.authorize}>Authorize</div>
+          <div id="noshareButton" className="col-xs-2 col-sm-2 col-md-2 col-lg-2" onClick={this.noshare}>Will not share</div>
+          <div id="nouseButton" className="col-xs-2 col-sm-2 col-md-2 col-lg-2" onClick={this.nouse}>Do not use</div>
+        </div>)
+    }
+})
+
 React.render(
         <Nav />,
         document.getElementById('sign-head')
@@ -30,8 +77,14 @@ React.render(
 );
 
 React.render(
-        <div className="center">
-            <Agree />
+        <div className="container center">
+            <SocialAuth name="Facebook" url="/auth/facebook"/>
+            <SocialAuth name="Google" url="/auth/google"/>
+            <SocialAuth name="Instagram" url="/auth/instagram"/>
+            <SocialAuth name="Reddit" url="/auth/reddit"/>
+            <SocialAuth name="Spotify" url="/auth/spotify"/>
+            <SocialAuth name="Twitter" url="/auth/twitter"/>
+            <SocialAuth name="Tumblr" url="/auth/tumblr"/>
         </div>,
         document.getElementById('start')
 );

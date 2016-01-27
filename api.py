@@ -45,6 +45,10 @@ class AboutHandler(web.RequestHandler):
     def get(self):
         self.render("about.html")
 
+class CloseWindow(web.RequestHandler):
+    def get(self):
+        self.render("closewindow.html")
+
 class UserUnauth(web.RequestHandler):
     def get(self):
         self.render("deauth.html")
@@ -71,6 +75,7 @@ if __name__ == "__main__":
                  ( r'/auth/reddit'    , RedditAuth    )  ,
                  ( r'/auth/tumblr'    , TumblrAuth    )  ,
                  ( r'/auth/instagram' , InstagramAuth )  ,
+                 ( r'/auth/close'     , CloseWindow   )  ,
                  ( r'/chat'           , EchoWebSocket )  ,
                  ( r'/chatroom'       , ChatHandler   )  ,
             ( r"/favicon.ico" , web.StaticFileHandler , {"path":""} )  ,

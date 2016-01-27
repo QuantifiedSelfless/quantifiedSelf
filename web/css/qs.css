@@ -1,29 +1,75 @@
-#intro {
-    width: 100%;
-    height: 100%;
-    font-size: 200%;
-    line-height: 150%;
-}
-
-.elec {
-    color: #C7EEFF;
-}
-
-.rsvp {
-    width: 20em;
-    height: auto;
-}
-
 :root {
     --container-width: 100%;
 }
 
-.center {
-    margin: auto;
-    width: 60%;
-    padding: 10px;
+.social {
+  background-color: white;
+  width: 800px
 }
 
-wow {
-    -vendor-animation-delay: 2s;
+#nav {
+    font-family: 'Arvo', sans-serif;
+    background-color: #37483e;
+    font-size: 20px;
+}
+
+#nav a:hover {
+    color: gray;
+}
+
+#lander {
+    background-color: #72655b;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 34px;
+    height: 80%;
+}
+
+#lander h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 40px;
+}
+
+#lander .title {
+    color: #88aeae;
+}
+
+#lander .learn .btn-primary{
+    background-color: #d2bb5d;
+}
+
+#lander .flex p {
+    border-width: 3px;
+}
+
+#block1 {
+    background-color: #37483e;
+    font-size: 26px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#block2 {
+    background-color: #72655b;
+    font-size: 26px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#block3 {
+    background-color: #37483e;
+    font-size: 26px;
+}
+
+#block3 h2 {
+    font-family: 'Arvo', sans-serif;
+}
+
+#block3 .btn {
+    background-color: #d2bb5d;
+}
+
+#sponsors {
+    background-color: #72655b;
+}
+
+#sponsors h1 {
+    font-family: 'Arvo', sans-serif;
 }

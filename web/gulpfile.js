@@ -11,8 +11,8 @@ var gutil = require('gulp-util');
 var _ = require('lodash');
 
 var path = {
-    HTML: ['html/home.html','html/policy.html', 'html/chat.html', 'html/signup.html', 'html/index.html', 'html/about.html', 'html/deauth.html'],
-    FINAL_HTML: '../templates',
+    HTML: ['html/home.html','html/policy.html', 'html/chat.html', 'html/signup.html', 'html/index.html', 'html/about.html', 'html/deauth.html', 'html/closewindow.html'],
+    FINAL_HTML: '../templates/',
     ALL: ['js/*.js', 'js/**/*.js', 'html/*.html'],
     REACT_JS: ['js/*.js'],
     JS_LIB: ['js/lib/*.js'],
@@ -125,4 +125,4 @@ gulp.task('replaceHTML', function(){
     })
 });
 
-gulp.task('production', ['replaceHTML', 'build', 'css-prod', 'js-prod', 'img-prod']);
+gulp.task('production', ['copy-prod', 'replaceHTML','build', 'css-prod', 'js-prod', 'img-prod']);

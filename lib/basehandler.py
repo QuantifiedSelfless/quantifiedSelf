@@ -2,6 +2,8 @@ from tornado import web
 from tornado import gen
 from tornado import ioloop
 
+from lib.database import deny
+
 import ujson as json
 from cStringIO import StringIO
 import time

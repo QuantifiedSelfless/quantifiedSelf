@@ -25,7 +25,7 @@ var SocialAuth = React.createClass({
     },
     authorize: function () {
       this.state.loginWindow = window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
-      this.state.loginWindowTimer = setInterval(this.tick, 1000)
+      this.state.loginWindowTimer = setInterval(this.tick, 200)
     },
     noshare: function () {
       window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")
@@ -36,16 +36,16 @@ var SocialAuth = React.createClass({
       $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("background-color", "yellow")
     },
     tick: function () {
-      console.log('Still Checking: ')
-      console.log(this.state)
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer)
+        console.log(this.state.loginWindow.location)
+        console.log(this.state.loginWindow.pathname)
         $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")
+        alert(document.cookie)
       }
     },
     render: function () {
       var id = this.props.name + "-SocialAuthElement"
-      console.log(id)
       return (
         <div id={id} className="row social">
           <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">{this.props.name}</div>
@@ -70,6 +70,11 @@ React.render(
         <div className="container center">
             <SocialAuth name="Facebook" url="/auth/facebook"/>
             <SocialAuth name="Google" url="/auth/google"/>
+            <SocialAuth name="Instagram" url="/auth/instagram"/>
+            <SocialAuth name="Reddit" url="/auth/reddit"/>
+            <SocialAuth name="Spotify" url="/auth/spotify"/>
+            <SocialAuth name="Twitter" url="/auth/twitter"/>
+            <SocialAuth name="Tumblr" url="/auth/tumblr"/>
         </div>,
         document.getElementById('start')
 );

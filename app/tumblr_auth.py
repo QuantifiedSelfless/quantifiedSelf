@@ -37,7 +37,7 @@ class TumblrAuth(web.RequestHandler):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='tumblr', share="login deny", user_id=id)
-            self.redirect("{0}/signup#instagram".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('oauth_token', None):
             oauth_verifier     = self.get_argument('oauth_verifier', None)
@@ -78,13 +78,13 @@ class TumblrAuth(web.RequestHandler):
 
             print client.info() # Grabs the current user information
 
-            self.redirect('{0}/signup#instagram'.format(self.application.settings['base_url']))
+            self.redirect('{0}/auth/close'.format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='tumblr', share=reason, user_id=id)
-            self.redirect("{0}/signup#instagram".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             resp, content = client.request(request_token_url, "POST")

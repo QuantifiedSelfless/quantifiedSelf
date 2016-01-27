@@ -18,9 +18,12 @@ class UserAuth(BaseHandler):
         name = self.get_argument('name', None)
         email = self.get_argument('email', None)
 
+        print name
+        print email
+
         user = yield get_user_from_email(email)
         if(user != None):
-            self.set_secure_cookie("user_id", user.id)
+            self.set_secure_cookie("user_id", user['id'])
             return
 
         if name == None or email == None:

@@ -20,7 +20,7 @@ class RedditAuth(web.RequestHandler):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='reddit', share="login deny", user_id=id)
-            self.redirect("{0}/signup#tumblr".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('code', None):
             access_info = reddit.get_access_information(self.get_argument('code',None))
@@ -35,13 +35,13 @@ class RedditAuth(web.RequestHandler):
             #evenutually do an async fetch
             user = reddit.get_me()
             print user
-            self.redirect('{0}/signup#tumblr'.format(self.application.settings['base_url']))
+            self.redirect('{0}/auth/close'.format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='reddit', share=reason, user_id=id)
-            self.redirect("{0}/signup#tumblr".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             url = reddit.get_authorize_url('uniqueKey', 'identity,flair,history,mysubreddits,privatemessages', True)

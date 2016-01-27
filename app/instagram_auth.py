@@ -24,7 +24,7 @@ class InstagramAuth(web.RequestHandler):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='instagram', share="login deny", user_id=id)
-            self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('code', None):
             code = self.get_argument('code')
@@ -36,7 +36,7 @@ class InstagramAuth(web.RequestHandler):
             self._ioloop.add_callback(save_token, provider="instagram", token_data=access_info)
             user = yield get_user(id)
             self._ioloop.add_callback(send_confirmation, user=user['email'], name=user['name'])
-            self.redirect('{0}/signup#thankyou'.format(self.application.settings['base_url']))
+            self.redirect('{0}/auth/close'.format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
@@ -46,12 +46,8 @@ class InstagramAuth(web.RequestHandler):
             # Confirmation
             user = yield get_user(id)
             self._ioloop.add_callback(send_confirmation, user=user['email'], name=user['name'])
-            self.redirect("{0}/signup#thankyou".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             self.redirect(api.get_authorize_login_url(scope=['basic','comments','likes','relationships']))
             return
-    #
-    # def SendConfirmationEmail(self, id):
-    #     user = yield get_user(id)
-    #     self._ioloop.add_callback(send_confirmation, user=user['email'], name=user['name'])

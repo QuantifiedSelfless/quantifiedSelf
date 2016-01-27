@@ -16,7 +16,7 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='spotify', share="login deny", user_id=id)
-            self.redirect("{0}/signup#twitter".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
@@ -26,13 +26,13 @@ class SpotifyAuth(web.RequestHandler, spot.SpotifyOAuth2Mixin):
             #from here use spotipy - pass it over to a scraper context
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider="spotify", user_id=id, token_data=access)
-            self.redirect('{0}/signup#twitter'.format(self.application.settings['base_url']))
+            self.redirect('{0}/auth/close?success=true'.format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='spotify', share=reason, user_id=id)
-            self.redirect("{0}/signup#twitter".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:
             yield self.authorize_redirect(

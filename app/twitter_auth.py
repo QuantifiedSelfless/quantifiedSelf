@@ -21,7 +21,7 @@ class TwitterAuth(web.RequestHandler):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='twitter', share="login deny", user_id=id)
-            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         if self.get_argument('oauth_verifier', None): #access token
             oauth = OAuth1(consumer_key,
@@ -41,13 +41,13 @@ class TwitterAuth(web.RequestHandler):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider="twitter", user_id=id, token_data={"access_token":access_token_key, "access_token_secret":access_token_secret})
             self._ioloop.add_callback(scrape_twitter_user, user=id)
-            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']))
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']))
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='twitter', share=reason, user_id=id)
-            self.redirect("{0}/signup#reddit".format(self.application.settings['base_url']));
+            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
             return
         else:# request token
     	    oauth = OAuth1(consumer_key, consumer_secret)

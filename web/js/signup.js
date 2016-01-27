@@ -19,6 +19,17 @@ var TumblrAuth = require('./signup_comps/TumblrAuth.js');
 var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
+}
+
 var SocialAuth = React.createClass({
     getInitialState: function () {
       return {}
@@ -38,10 +49,9 @@ var SocialAuth = React.createClass({
     tick: function () {
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer)
-        console.log(this.state.loginWindow.location)
-        console.log(this.state.loginWindow.pathname)
-        $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")
-        alert(document.cookie)
+        if(getCookie("auth-result") == "success") {
+          $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("background-color", "green")  
+        }
       }
     },
     render: function () {

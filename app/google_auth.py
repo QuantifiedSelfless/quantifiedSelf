@@ -14,7 +14,12 @@ from lib import scrapers
 from lib.database import deny
 from lib.database import save_token
 
-class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
+class OAuthRequestHandler(web.RequestHandler):
+    def finishAuthRequest(self, status):
+        self.set_cookie("auth-result", status)
+        self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+
+class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
     _ioloop = ioloop.IOLoop().instance()
     @web.asynchronous
     @gen.coroutine
@@ -22,8 +27,9 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
         if self.get_argument('error', None):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(deny, provider='google', share="login deny", user_id=id)
-            # self.redirect("{0}/signup#facebook".format(self.application.settings['base_url']));
-            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+            # self.set_cookie("auth-result", "failed")
+            # self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+            super(GoogleAuth, self).finishAuthRequest("failed")
             return
         if self.get_argument('code', None):
             access = yield self.get_authenticated_user(
@@ -46,7 +52,10 @@ class GoogleAuth(web.RequestHandler, auth.GoogleOAuth2Mixin):
             id = self.get_secure_cookie("user_id")
             self._ioloop.add_callback(save_token, provider='google', user_id=id, token_data=access)
             self._ioloop.add_callback(scrapers.scrape_google_user, http=http, user_id=id)
-            self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+
+            # self.set_cookie("auth-result", "success")
+            # self.redirect("{0}/auth/close".format(self.application.settings['base_url']));
+            super(GoogleAuth, self).finishAuthRequest("success")
             return
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)

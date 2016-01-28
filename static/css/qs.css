@@ -2,6 +2,10 @@
     --container-width: 100%;
 }
 
+.social {
+  background-color: white;
+  width: 800px
+}
 
 #nav {
     font-family: 'Arvo', sans-serif;
@@ -15,8 +19,9 @@
 }
 
 #lander {
-    background-color: #312f2f;
+    background-color: #333030;
     font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
     font-size: 34px;
     height: 80%;
     color: white;
@@ -31,18 +36,22 @@
     color: #88aeae;
 }
 
-#lander .learn .btn-primary{
-    background-color: #d2bb5d;
+#lander .learn .btn-outline {
+    border-color: #d2bb5d;
+    color: #d2bb5d;
+    font-family: 'Arvo', sans-serif;
 }
 
 #lander .flex p {
     border-width: 3px;
 }
 
+
 #block1 {
     background-color: #37483e;
     font-size: 26px;
     font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
     color: white;
 }
 
@@ -64,7 +73,9 @@
 }
 
 #block3 .btn {
-    background-color: #d2bb5d;
+    font-family: 'Arvo', sans-serif;
+    border-color: #d2bb5d;
+    color: #d2bb5d;
 }
 
 #sponsors {

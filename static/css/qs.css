@@ -2,6 +2,10 @@
     --container-width: 100%;
 }
 
+.social {
+  background-color: white;
+  width: 800px
+}
 
 #nav {
     font-family: 'Arvo', sans-serif;

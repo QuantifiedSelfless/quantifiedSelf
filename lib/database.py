@@ -19,18 +19,28 @@ def init():
     try:
         print "Creating tables"
         conn.use('pilot')
-        yield r.table_create('deauth').run(conn)
-        yield r.table_create('instagram').run(conn)
-        yield r.table_create('tumblr').run(conn)
-        yield r.table_create('reddit').run(conn)
-        yield r.table_create('twitter').run(conn)
-        yield r.table_create('spotify').run(conn)
-        yield r.table_create('facebook').run(conn)
-        yield r.table_create('users').run(conn)
-        yield r.table_create('google').run(conn)
+        tryCreateTable(conn, 'deauth')
+        tryCreateTable(conn, 'instagram')
+        tryCreateTable(conn, 'tumblr')
+        tryCreateTable(conn, 'reddit')
+        tryCreateTable(conn, 'twitter')
+        tryCreateTable(conn, 'spotify')
+        tryCreateTable(conn, 'facebook')
+        tryCreateTable(conn, 'users')
+        tryCreateTable(conn, 'google')
+        tryCreateTable(conn, 'showtimes')
     except:
         print "tables already exist"
+
 ioloop.IOLoop().instance().add_callback(init)
+
+@gen.coroutine
+def tryCreateTable(conn, tableName):
+    try:
+        yield r.table_create(tableName).run(conn)
+        print "created table {0}".format(tableName)
+    except:
+        print "table {0} already exists".format(tableName)
 
 @gen.coroutine
 def user_insert(data):

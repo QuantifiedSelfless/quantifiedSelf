@@ -6,7 +6,7 @@ var Thanks = React.createClass({
 
 
         return {
-            ticket: '12390890efj'
+            ticket: 'just a second...'
         };
     },
 

@@ -46,10 +46,17 @@ def tryCreateTable(conn, tableName):
 @gen.coroutine
 def create_ticket_reservation(ticket_id, user_id):
     conn = yield connection
-    data = {"ticket_id": ticket_id, "user_id": user_id, "confirmation_code": ""}
+    data = {"ticket_id": ticket_id, "user_id": user_id, "confirmation_code": "", "reserved_on": r.now()}
+    yield r.table('reservations').filter({"user_id": user_id}).delete().run(conn)
     result = yield r.table('reservations').insert(
             data,
             conflict = "update").run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_reservations_for_showtime(id):
+    conn = yield connection
+    result = yield r.table('reservations').filter({"showtime_id": id}).run(conn)
     raise gen.Return(result)
 
 @gen.coroutine
@@ -59,6 +66,15 @@ def confirm_ticket_reservation(id, confirmation_code):
         "confirmation_code": confirmation_code
     }).run(conn)
     raise gen.Return(result)
+
+@gen.coroutine
+def get_reservation_for_user(id):
+    conn = yield connection
+    result = yield r.table('showtimes').filter({"user_id":id}).run(conn)
+    if(len(result.items)>0):
+        raise gen.Return(result.items[0])
+    else:
+        raise gen.Return(None)
 
 @gen.coroutine
 def get_reservations():
@@ -72,6 +88,12 @@ def get_showtimes():
     conn = yield connection
     result = yield r.table('showtimes').run(conn)
     result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_showtime(id):
+    conn = yield connection
+    result = yield r.table('showtimes').get(id).run(conn)
     raise gen.Return(result)
 
 @gen.coroutine

@@ -13,13 +13,6 @@ var Agree = require('./signup_comps/Agree.js');
 var Start = require('./signup_comps/Start.js');
 var Info = require('./signup_comps/Info.js');
 var Auth = require('./signup_comps/Auth.js');
-var FacebookAuth = require('./signup_comps/FacebookAuth.js');
-var SpotifyAuth = require('./signup_comps/SpotifyAuth.js');
-var TwitterAuth = require('./signup_comps/TwitterAuth.js');
-var User = require('./signup_comps/User.js');
-var RedditAuth = require('./signup_comps/RedditAuth.js');
-var TumblrAuth = require('./signup_comps/TumblrAuth.js');
-var InstagramAuth = require('./signup_comps/InstagramAuth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
 function getCookie(cname) {

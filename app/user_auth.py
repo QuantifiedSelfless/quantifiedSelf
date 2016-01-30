@@ -20,11 +20,9 @@ class UserAuth(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def post(self):
-
-        params = escape.json_decode(self.request.body)
-        name = self.safe_get_argument(params, "name")
-        email = self.safe_get_argument(params, "email")
-        showtime_id = self.safe_get_argument(params, "showtime_id")
+        name = self.get_argument("name", None)
+        email = self.get_argument("email", None)
+        showtime_id = self.get_argument("showtime_id", None)
 
         # Validate the show time
         if showtime_id == None:

@@ -3,6 +3,8 @@ from tornado import gen
 from tornado import ioloop
 import random
 
+from datetime import datetime, timedelta
+
 r.set_loop_type("tornado")
 connection = r.connect(db='pilot', host='localhost', port=28015)
 
@@ -19,18 +21,99 @@ def init():
     try:
         print "Creating tables"
         conn.use('pilot')
-        yield r.table_create('deauth').run(conn)
-        yield r.table_create('instagram').run(conn)
-        yield r.table_create('tumblr').run(conn)
-        yield r.table_create('reddit').run(conn)
-        yield r.table_create('twitter').run(conn)
-        yield r.table_create('spotify').run(conn)
-        yield r.table_create('facebook').run(conn)
-        yield r.table_create('users').run(conn)
-        yield r.table_create('google').run(conn)
+        tryCreateTable(conn, 'deauth')
+        tryCreateTable(conn, 'instagram')
+        tryCreateTable(conn, 'tumblr')
+        tryCreateTable(conn, 'reddit')
+        tryCreateTable(conn, 'twitter')
+        tryCreateTable(conn, 'spotify')
+        tryCreateTable(conn, 'facebook')
+        tryCreateTable(conn, 'users')
+        tryCreateTable(conn, 'google')
+        tryCreateTable(conn, 'showtimes')
+        tryCreateTable(conn, 'reservations')
     except:
         print "tables already exist"
+
 ioloop.IOLoop().instance().add_callback(init)
+
+@gen.coroutine
+def tryCreateTable(conn, tableName):
+    try:
+        yield r.table_create(tableName).run(conn)
+        print "created table {0}".format(tableName)
+    except:
+        print "table {0} already exists".format(tableName)
+
+@gen.coroutine
+def create_ticket_reservation(showtime_id, user_id):
+    conn = yield connection
+    data = {"showtime_id": showtime_id, "user_id": user_id, "confirmation_code": "", "reserved_on": r.now()}
+    yield r.table('reservations').filter({"user_id": user_id}).delete().run(conn)
+    result = yield r.table('reservations').insert(
+            data,
+            conflict = "update").run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_reservations_for_showtime(id):
+    conn = yield connection
+    result = yield r.table('reservations').filter({"showtime_id": id}).run(conn)
+    result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def remove_expired_tickets():
+    conn = yield connection
+    safeDate = datetime.now() - timedelta(seconds=10)
+    safeDate = r.epoch_time(long(safeDate.strftime("%s")))
+    result = yield r.table('reservations').filter(r.row['reserved_on'] < safeDate).delete().run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def confirm_ticket_reservation(id, confirmation_code):
+    conn = yield connection
+    result = yield r.table('reservations').get(id).update({
+        "confirmation_code": confirmation_code
+    }).run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_reservation_for_user(id):
+    conn = yield connection
+    result = yield r.table('showtimes').filter({"user_id":id}).run(conn)
+    if(len(result.items)>0):
+        raise gen.Return(result.items[0])
+    else:
+        raise gen.Return(None)
+
+@gen.coroutine
+def get_reservations():
+    conn = yield connection
+    result = yield r.table('reservations').run(conn)
+    result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_showtimes():
+    conn = yield connection
+    result = yield r.table('showtimes').run(conn)
+    result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_showtime(id):
+    conn = yield connection
+    result = yield r.table('showtimes').get(id).run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def dump_cursor(data):
+    data_filter = []
+    while (yield data.fetch_next()):
+        item = yield data.next()
+        data_filter.append(item)
+    raise gen.Return(data_filter)
 
 @gen.coroutine
 def user_insert(data):

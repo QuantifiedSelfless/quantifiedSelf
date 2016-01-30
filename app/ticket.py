@@ -5,6 +5,7 @@ from tornado import httpclient
 
 from lib.database import get_showtimes
 from lib.database import get_reservations
+from lib.database import remove_expired_tickets
 from lib.basehandler import BaseHandler
 
 from dateutil import tz
@@ -15,11 +16,15 @@ class TicketHandler(BaseHandler):
     @gen.coroutine
     def get(self):
         # inefficient databse query, figure out how to perform this query in db.
+
+        # remove all expired tickets
+        yield remove_expired_tickets()
+
         showtimes = yield get_showtimes()
         reservations = yield get_reservations()
         map = {}
         for reservation in reservations:
-            ticket_id = reservation["ticket_id"]
+            ticket_id = reservation["showtime_id"]
             if ticket_id in map:
                 map[ ticket_id ] += 1
             else:

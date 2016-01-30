@@ -3,6 +3,8 @@ from tornado import gen
 from tornado import ioloop
 import random
 
+from datetime import datetime, timedelta
+
 r.set_loop_type("tornado")
 connection = r.connect(db='pilot', host='localhost', port=28015)
 
@@ -58,6 +60,14 @@ def get_reservations_for_showtime(id):
     conn = yield connection
     result = yield r.table('reservations').filter({"showtime_id": id}).run(conn)
     result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def remove_expired_tickets():
+    conn = yield connection
+    safeDate = datetime.now() - timedelta(seconds=10)
+    safeDate = r.epoch_time(long(safeDate.strftime("%s")))
+    result = yield r.table('reservations').filter(r.row['reserved_on'] < safeDate).delete().run(conn)
     raise gen.Return(result)
 
 @gen.coroutine

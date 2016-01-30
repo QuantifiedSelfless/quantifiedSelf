@@ -28,7 +28,7 @@ var path = {
     DEST_BUILD_IMG: 'public/static/img',
     DEST_FINAL_IMG: '../static/img',
     DEST: 'public',
-    ENTRIES: ['js/home.js', 'js/signup.js', 'js/policy.js', 'js/about.js', 'js/deauth.js']
+    ENTRIES: ['js/signup.js','js/deauth.js']
     };
 
 

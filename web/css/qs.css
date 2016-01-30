@@ -2,10 +2,6 @@
     --container-width: 100%;
 }
 
-.social {
-  background-color: white;
-  width: 800px
-}
 
 #nav {
     font-family: 'Arvo', sans-serif;
@@ -143,4 +139,66 @@
 
 #team .border-bottom {
     border-color: white;
+}
+
+#start {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+}
+
+#start h1 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#privacy {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+}
+
+#privacy h2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#privacy .btn-outline {
+    border-color: #d2bb5d;
+    color: #d2bb5d;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#info {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+}
+
+#info h2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#info li {
+    text-align: left;
+}
+
+#info .btn-outline {
+    border-color: #d2bb5d;
+    color: #d2bb5d;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#auth {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+}
+
+
+.social .btn{
+    color: #d2bb5d;
+    border-color: #d2bb5d;
+}
+
+.done .btn-primary {
+    background-color: #37483e;
 }

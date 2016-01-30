@@ -14,6 +14,7 @@ from app.reddit_auth import RedditAuth
 from app.tumblr_auth import TumblrAuth
 from app.instagram_auth import InstagramAuth
 from app.user_deauth import UserDeauth
+from app.ticket import TicketHandler
 from app.creds import *
 
 #Set basic options
@@ -76,6 +77,7 @@ if __name__ == "__main__":
                  ( r'/auth/tumblr'    , TumblrAuth    )  ,
                  ( r'/auth/instagram' , InstagramAuth )  ,
                  ( r'/auth/close'     , CloseWindow   )  ,
+                 ( r'/tickets'        , TicketHandler )  ,
                  ( r'/chat'           , EchoWebSocket )  ,
                  ( r'/chatroom'       , ChatHandler   )  ,
             ( r"/favicon.ico" , web.StaticFileHandler , {"path":""} )  ,

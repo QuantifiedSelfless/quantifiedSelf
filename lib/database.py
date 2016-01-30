@@ -29,6 +29,7 @@ def init():
         tryCreateTable(conn, 'users')
         tryCreateTable(conn, 'google')
         tryCreateTable(conn, 'showtimes')
+        tryCreateTable(conn, 'reservations')
     except:
         print "tables already exist"
 
@@ -41,6 +42,45 @@ def tryCreateTable(conn, tableName):
         print "created table {0}".format(tableName)
     except:
         print "table {0} already exists".format(tableName)
+
+@gen.coroutine
+def create_ticket_reservation(ticket_id, user_id):
+    conn = yield connection
+    data = {"ticket_id": ticket_id, "user_id": user_id, "confirmation_code": ""}
+    result = yield r.table('reservations').insert(
+            data,
+            conflict = "update").run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def confirm_ticket_reservation(id, confirmation_code):
+    conn = yield connection
+    result = yield r.table('reservations').get(id).update({
+        "confirmation_code": confirmation_code
+    }).run(conn)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_reservations():
+    conn = yield connection
+    result = yield r.table('reservations').run(conn)
+    result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def get_showtimes():
+    conn = yield connection
+    result = yield r.table('showtimes').run(conn)
+    result = yield dump_cursor(result)
+    raise gen.Return(result)
+
+@gen.coroutine
+def dump_cursor(data):
+    data_filter = []
+    while (yield data.fetch_next()):
+        item = yield data.next()
+        data_filter.append(item)
+    raise gen.Return(data_filter)
 
 @gen.coroutine
 def user_insert(data):

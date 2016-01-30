@@ -17,6 +17,7 @@ class OAuthRequestHandler(web.RequestHandler):
     def setProvider(self, provider):
         self.provider = provider
 
+
     def setCallBackArgumentName(self, name):
         self.callBackArgumentName = name
 

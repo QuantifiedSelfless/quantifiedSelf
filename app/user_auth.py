@@ -36,7 +36,7 @@ class UserAuth(BaseHandler):
             self.error(404, "Could not find the selected showtime.")
             return
 
-        if not self.isShowTimeAvailable(showtime):
+        if not (yield self.isShowTimeAvailable(showtime)):
             self.error(404, "The showtime is sold out.")
             return
 
@@ -47,7 +47,6 @@ class UserAuth(BaseHandler):
 
         # Grab or create a user
         user = yield get_user_from_email(email)
-        print user
         if user != None:
             user_id = user['id']
             self.set_secure_cookie("user_id", user_id)
@@ -67,10 +66,9 @@ class UserAuth(BaseHandler):
         return
 
     @gen.coroutine
-    def isShowTimeAvailable(showtime):
+    def isShowTimeAvailable(self, showtime):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
-        yield (len(allReservations)+40 < showtime["max_booking"])
-        return
+        raise gen.Return(len(allReservations) < showtime["max_booking"])
 
     def safe_get_argument(self, object, key):
         if key in object:

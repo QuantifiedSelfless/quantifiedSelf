@@ -44,9 +44,9 @@ def tryCreateTable(conn, tableName):
         print "table {0} already exists".format(tableName)
 
 @gen.coroutine
-def create_ticket_reservation(ticket_id, user_id):
+def create_ticket_reservation(showtime_id, user_id):
     conn = yield connection
-    data = {"ticket_id": ticket_id, "user_id": user_id, "confirmation_code": "", "reserved_on": r.now()}
+    data = {"showtime_id": showtime_id, "user_id": user_id, "confirmation_code": "", "reserved_on": r.now()}
     yield r.table('reservations').filter({"user_id": user_id}).delete().run(conn)
     result = yield r.table('reservations').insert(
             data,
@@ -57,6 +57,7 @@ def create_ticket_reservation(ticket_id, user_id):
 def get_reservations_for_showtime(id):
     conn = yield connection
     result = yield r.table('reservations').filter({"showtime_id": id}).run(conn)
+    result = yield dump_cursor(result)
     raise gen.Return(result)
 
 @gen.coroutine

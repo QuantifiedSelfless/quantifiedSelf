@@ -50,12 +50,14 @@ var SocialAuth = React.createClass({
           </div>
           <div className="flex-auto"></div>
           <div className="sm-flex col-8">
-            <div id="authorizeButton" className="flex-auto btn btn-outline px1" onClick={this.authorize}>
+            <div id="authorizeButton" className="flex-auto btn btn-outline" onClick={this.authorize}>
                 Authorize
             </div>
+            <div className="flex-auto"></div>
 
             <div id="noshareButton" className="flex-auto btn btn-outline" onClick={this.noshare}>
                 Will not share</div>
+            <div className="flex-auto"></div>
             <div id="nouseButton" className="flex-auto btn btn-outline" onClick={this.nouse}>
                 Do not use
             </div>

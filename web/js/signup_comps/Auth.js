@@ -1,10 +1,14 @@
 var SocialAuth = React.createClass({
     getInitialState: function () {
-      return {}
+      return {
+        loginWindow: '',
+        loginWindowTimer: null
+
+      }
     },
     authorize: function () {
-      this.state.loginWindow = window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
-      this.state.loginWindowTimer = setInterval(this.tick, 200);
+      this.setState({loginWindow: window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")});
+      this.setState({loginWindowTimer: setInterval(this.tick, 200)});
     },
     noshare: function () {
       window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
@@ -19,12 +23,23 @@ var SocialAuth = React.createClass({
     tick: function () {
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer);
-        if(getCookie("auth-result") == "success") {
+        if(this.getCookie("auth-result") == "success") {
           $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("border-color", "green");
           $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("color", "green");
         }
       }
     },
+    getCookie: function () {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i<ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1);
+          if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+      }
+      return "";
+    },
+
     render: function () {
       var id = this.props.name + "-SocialAuthElement"
       return (

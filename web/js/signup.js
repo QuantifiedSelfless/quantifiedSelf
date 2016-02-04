@@ -15,16 +15,6 @@ var Info = require('./signup_comps/Info.js');
 var Auth = require('./signup_comps/Auth.js');
 var Thanks = require('./signup_comps/Thanks.js');
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return "";
-}
 
 React.render(
   <div>

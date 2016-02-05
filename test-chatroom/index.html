@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Tornado chat</title>
+        <script type="text/javascript" src="elizabot.js"></script>
+        <script type="text/javascript" src="elizadata.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script language="Javascript" type="text/javascript">
+        function myUsername() {
+            var username = prompt("Please enter a username");
+            if (username != null) {
+                data = {"function" : "username",
+                        "message" : username 
+                };
+                ws.send(JSON.stringify(data))
+            }
+        }
+        var eliza = new ElizaBot();
+        var private_eliza = new ElizaBot();
+
+        function elizaStep() {
+            var userinput =  $('#m').val();
+            if (userinput != '') {
+                data = {"function" : "elizachat",
+                        "message" : eliza.transform(userinput)
+                };
+                ws.send(JSON.stringify(data));
+            }
+        }
+        function private_elizaStep() {
+            var userinput =  $('#m').val();
+            if (userinput != '') {
+                data = {"function" : "private_elizachat",
+                        "message" : private_eliza.transform(userinput)
+                };
+                ws.send(JSON.stringify(data));
+            }
+        }
+    
+        </script>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font: 13px Helvetica, Arial; }
+            form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+            form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+            form button { width: 9%; background: #e9be00; border: none; color: #fff; padding: 10px; }
+            #messages { list-style-type: none; margin: 10; padding-bottom: 50px; overflow-y: scroll;}
+            #messages li { padding: 5px 10px; }
+            #messages li:nth-child(odd) { background: #eee; }
+        </style>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+        <script language="Javascript" type="text/javascript">
+        var ws = new WebSocket("ws://localhost:8888/ws");
+        window.onload = myUsername()
+        $('form').submit(function() {
+            if ($('#m').val().search('private') == 0) {
+                data = {"function" : "private",
+                        "message" : $('#m').val()
+                };
+                ws.send(JSON.stringify(data))
+                private_elizaStep()
+            }
+            else {     
+                data = {"function" : "chat",
+                        "message" : $('#m').val()
+                }; 
+                ws.send(JSON.stringify(data));
+                elizaStep();
+            }
+            $('#m').val('');
+            return false;
+        });
+        ws.onopen = function() {
+             $('#messages').append($('<li>').text('User connected'));
+        };
+        ws.onmessage = function(msg) {
+            $('#messages').append($('<li>').text(msg.data));
+            $('body').scrollTop($('ul li').last().position().top + $('ul li').last().height()); 
+        };
+        ws.onclose = function() {
+            $('#messages').append($('<li>').text('User disconnected')); 
+        }; 
+        </script>    
+    </body>
+</html>

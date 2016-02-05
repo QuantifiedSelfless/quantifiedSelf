@@ -13,3 +13,5 @@ praw
 chatterbot
 python-Levenshtein
 python-dateutil
+pycrypto
+git+https://github.com/mynameisfiber/secret-sharing.git

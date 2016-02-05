@@ -63,8 +63,3 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
             user_id=user_id,
             token_data=access,
         )
-        self._ioloop.add_callback(
-            scrapers.scrape_google_user,
-            http=http,
-            user_id=user_id
-        )

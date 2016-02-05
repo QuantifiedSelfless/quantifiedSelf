@@ -29,14 +29,8 @@ def init():
     print("Creating tables")
     conn.use('pilot')
     tryCreateTable(conn, 'deauth')
-    tryCreateTable(conn, 'instagram')
-    tryCreateTable(conn, 'tumblr')
-    tryCreateTable(conn, 'reddit')
-    tryCreateTable(conn, 'twitter')
-    tryCreateTable(conn, 'spotify')
-    tryCreateTable(conn, 'facebook')
     tryCreateTable(conn, 'users')
-    tryCreateTable(conn, 'google')
+    tryCreateTable(conn, 'auth')
     tryCreateTable(conn, 'showtimes')
     tryCreateTable(conn, 'reservations')
 
@@ -104,8 +98,7 @@ def get_reservation_for_user(id):
         filter({"user_id": id}).run(conn)
     if result.items:
         return result.items[0]
-    else:
-        return None
+    return None
 
 
 @gen.coroutine
@@ -163,38 +156,34 @@ def get_user_from_email(email):
     result = yield r.table('users').filter({"email": email}).run(conn)
     if result.items:
         return result.items[0]
-    else:
-        return None
+    return None
 
 
 @gen.coroutine
 def save_token(provider, user_id, token_data):
     conn = yield connection
-    data = {"user_id": user_id, "token": token_data}
-    result = yield r.table(provider).insert(
+    data = {
+        "user_id": user_id,
+        provider: {
+            "token": token_data,
+        }
+    }
+    result = yield r.table('auth').insert(
             data,
             conflict='update').run(conn)
     return result
 
 
 @gen.coroutine
-def google_user(data):
-    conn = yield connection
-    # start grabbing user ID
-    result = yield r.table('google').insert(
-            data,
-            conflict='update',
-            ).run(conn)
-    return result
-
-
-@gen.coroutine
 def deny(provider, share, user_id):
     conn = yield connection
-    result = yield r.table(provider).insert(
-            {"id": user_id, "missing_reason": share},
-            conflict='update',
-            ).run(conn)
+    result = yield r.table('auth').insert({
+        "id": user_id,
+        provider: {
+            "error": share,
+            "token": None,
+        }
+    }, conflict='update',).run(conn)
     return result
 
 
@@ -219,13 +208,6 @@ def create_deauth_request(id, user_id):
 @gen.coroutine
 def delete_user_data(id):
     conn = yield connection
-    tables = ['google', 'facebook', 'spotify', 'reddit',
-              'tumblr', 'instagram', 'twitter']
-    lastResult = None
-    for table in tables:
-        print(table)
-        lastResult = yield r.table(table). \
-            filter({'user_id': id}).delete().run(conn)
-        print(lastResult)
-    lastResult = yield r.table('users').get(id).delete().run(conn)
-    return lastResult
+    auth = yield r.table('auth').get(id).delete().run(conn)
+    user = yield r.table('users').get(id).delete().run(conn)
+    return auth, user

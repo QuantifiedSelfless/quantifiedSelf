@@ -4,10 +4,14 @@ facebook-sdk
 tornado
 python-linkedin
 TwitterAPI
-pytumblr
+git+https://github.com/dianakhuang/pytumblr.git@diana/python-3-support
 rethinkdb
 requests
 ujson
 spotipy
 praw
 chatterbot
+python-Levenshtein
+python-dateutil
+pycrypto
+git+https://github.com/mynameisfiber/secret-sharing.git

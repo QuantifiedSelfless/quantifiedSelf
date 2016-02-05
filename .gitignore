@@ -1,6 +1,10 @@
 */creds.py
 *.pyc
-*.swp
-*log*
+*.sw*
+*/log/*
 */node_modules/*
+*.DS_Store*
 */.module-cache/*
+templates
+static
+config.conf

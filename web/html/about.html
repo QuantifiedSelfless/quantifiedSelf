@@ -11,24 +11,57 @@
     <meta property="og:site_name" content="Quantified Self"/>
     <!-- <meta property="og:image" content="/blah/image placeholder"> -->
     <!--- CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/css/basscss.min.css">
-    <link rel="stylesheet" href="/static/css/qs.css">
+    <link rel="stylesheet" href="/static/css/qs.css">    
     
 </head>
-<body class="bg-black">
-    <div id="nav"></div>
-    <div class="container" id="about"></div>
-    <div id="footer"></div>
-    
+<body>
+    <div class="p1" id="nav">
+        <div class="flex flex-center center">
+            <a href="/news" class="flex-auto btn">News</a>
+            <a href="/signup" class="flex-auto btn">Tickets</a>
+            <a href="/"/><img src="/static/img/Yellow-Tree-logo.svg" alt="DesignCraft Logo" width="30%" /></a>
+            <a href="/about" class="flex-auto btn">About</a>
+            <a href="/policy" class="flex-auto btn">Privacy</a>
+        </div>
+    </div>
 
+    <div class="p2" id="about-land">
+        <h1 class="center white">About Our Project</h1>
+        <div class="center white">
+            <a class="border-right" href="#overview">Overview</a>
+            <a class="border-right" href="#team">Team</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </div>
+
+    <div class="p1" id="overview">
+        <h2 class="ml3 border-bottom white">Overview</h2>
+        <div class="clearfix">
+            <div class="col-8 mx-auto white">
+                <p class="py1">We are an immersive theater and interactive art project currently housed at University of Colorado in the Department of Computer Science. Our project received support from the <a href="https://www.newschallenge.org/challenge/data/semi-finalists/quantified-self-data-experience-understanding-your-data-and-the-world-it-creates/">John S. and James L. Knight Foundation’s Knight News Challenge</a> and CU-Boulder's Enginnering Excellence Fund.</p>
+                <p class="py1">Our project's goal is to engage a broad audience of people who are interested in the future and ethics of data sharing online. More than simply privacy, we aim to show people the possibilities around product development, research, artificial intelligence, and human inference given the amounts of data owned by third-parties. To achieve this, we ask people to share their data with us for the duration of the show so that we can meet guests at the level of their actual lives, only to then take them somewhere else to expand their imagination.</p>
+                <p class="py1">Our first show will happen April 28 - May 1, 2016 in Boulder, CO at ATLAS's Blackbox Theater. We intend to move the show into other locations and run public events that open public dialogue around the ethical considerations we have placed in the performance. If you are interested in seeing this production come to your location or to collaborate on a run of it, please contact our project lead at: michael[dot]skirpan[at]colorado[dot]edu</p> 
+            </div>
+        </div>
+    </div>
+    <div class="p1" id="team">
+        <h2 class="ml3 border-bottom white">Team</h2>
+        <div class="clearfix">
+            <div class="col-8 mx-auto white">
+                <h3 class="center">~Project Leads~</h3>
+                <p class="py1 center"><b>Michael Skirpan</b> - <em>Writer, Producer, Interaction Design, Creative Lead</em><br/><a href="mwskirpan.com">mwskirpan.com</a> | michael[dot]skirpan[at]colorado[dot]edu | <a href="www.github.com/wannabeCitizen">github</a> | <a href="www.twitter.com/mwskirpan">@mwskirpan</a></p>
+                <p class="py1 center"><b>Jacqueline Cameron</b> - <em>Project Coordinator, Producer, Design</em><br/><a href="jjcameron.com">jjcameron.com</a> | jacqueline[dot]cameron[at]colorado[dot]edu</p>
+                <p class="py1 center"><b>William Lewis</b> - <em>Director, Producer</em><br/><a href="www.level16.org">level16.org</a> | william[dot]lewis-2[at]colorado[dot]edu</p>
+                <p class="py1 center"><b>Micha Gorelick</b> - <em>Chief Data Engineer</em><br/><a href="http://micha.codes">micha.codes</a> | micha[at]fastforwardlabs[dot]com | <a href="www.github.com/mynameisfiber">github</a> | <a href="www.twitter.com/mynameisfiber">@mynameisfiber</a></p>
+            </div>
+        </div>
+    </div>
     
-    <!--- JS -->
-    <script src="https://fb.me/react-0.13.3.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.1/jquery.fullPage.min.js"></script>
-    <!-- build:js -->
-    <script src="/static/js/aboutbuild.js"></script>
-    <!-- endbuild -->
+
 </body>
 </html>
 

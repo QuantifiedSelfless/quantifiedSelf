@@ -1,0 +1,131 @@
+[   {
+        "exhibit_name: "vanity",
+        "description": "It is a two-way mirror that places a data display on Amelia's vanity mirror.",
+        "data": {
+                "friend_names": ["Jonathan Tyson", "Shameeka Ray", "Terri Gross"],
+                "encouragement": ["You're looking great today", "It'll be great to see everyone at DesignCraft today!", "Remember to eat some fresh fruit today!"],
+                "to_do": ["Clean water", "Meditate", "Message Felicia", "Soak air plants"], 
+                "headlines": ["Sanders wins New Hampshire!", "Drone Strike Kills 9 in Yemen"]
+            },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "personalized news",
+        "description": "Person signs in and sees their catered version of the news article about DesignCraft.",
+        "data": {
+            "category": 3
+            },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "job interview",
+        "description": "Don talks to a few people about working at DesignCraft and looks up data on them.",
+        "data": {
+            "stats" : ["1300 Messages a day", "Mentioned being drunk 4 times", "Follows communism on reddit"]
+            },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "romantic match",
+        "description": "Rate the match/compatibility between two people.",
+        "data": {
+            },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "mental health",
+        "description": "",
+        "data": {
+            "facebook" : [{ 
+                "date": timestamp,
+                "description": "Went to the zoo"
+                },
+            ],
+            "text" : ["I loved her so much", "It was sad to see him in such a bad place", "Seriously, best day, ever!!"]
+        },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "highly recommended",
+        "description": "recommender system for you that you do quick questions against",
+        "data": {
+            "recs": ["12A", "16B", "22B", "42B", "7A", "29B"]
+            },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "own up",
+        "description": "quotes are shown and the person who said it can decide to own up or not",
+        "data": {
+            "players" : [{
+                "Joe Mitchell": ["I love that little dog you are kissing", "Barbecues kind of freak me out", "Meat is only good when smoked or dried", "If Taco Bell advertises to me again, I'll die laughing"],
+                "Poncho Malley": ["Real men eat beef", "Don't sweat bullshit you asshole", "I've been to way to many things to believe this shit"]
+                "Brian Johnson": ["This isn't real is it?", "Totally baked at BFDUBSSSS", "Star Wars = Boner"],
+                "Tara Yook": ["Postmodernism has ruined us", "I hope someone chokes on one of these cinnabuns", "Does anyone else think the new Colbert show sucks?"]
+            }]
+        },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "poopy butthole",
+        "description": "show user images infused with friends whose faces swapped or Amelia is swapped in and ask them about their memories",
+        "data": {
+            "images": [{
+                "photo": "http://data.iamadatapoint.com/9208rndj",
+                "who": "Amelia" or "friend",
+                "description": "Party at Sandy's"
+                },]
+        },
+        "user": UserBlob,
+        "priority": 2
+    },
+    {
+        "exhibit_name": "sooth sayer",
+        "description": "Ask questions to a soothsayer using categories then selecting which question you want answered",
+        "data": {
+            "categories":
+                {
+                    "love": {
+                        "horoscope": ("question", "response"),
+                        "computed": ("question", "response")
+                    },
+                    "work": {},
+                    "health": {},
+                    "luck": {},
+                    "emotion": {},
+                },
+            },
+        "user": UserBlob,
+        "priority": 2
+    },
+    {
+        "exhibit_name": "",
+        "description": "",
+        "data": {
+            },
+        "user": UserBlob
+    },
+    {
+        "exhibit_name": "",
+        "description": "",
+        "data": {
+            },
+        "user": UserBlob
+    },
+    {
+        "exhibit_name": "",
+        "description": "",
+        "data": {
+            },
+        "user": UserBlob
+    },
+
+]
+    

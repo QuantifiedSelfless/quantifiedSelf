@@ -28,7 +28,7 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
         return
 
     def handleAuthCallBack(self, code, user_id):
-        access = yield from self.get_authenticated_user(
+        access = yield self.get_authenticated_user(
             redirect_uri="{0}/auth/facebook".format(
                 self.application.settings['base_url']),
             client_id=self.application.settings['facebook_oauth']['key'],

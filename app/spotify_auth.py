@@ -29,7 +29,7 @@ class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
     def handleAuthCallBack(self, code, user_id):
         redir_uri = '{0}/auth/spotify'.format(
             self.application.settings['base_url'])
-        access = yield from self.get_authenticated_user(
+        access = yield self.get_authenticated_user(
                 redirect_uri=redir_uri,
                 code=code)
         print(access)

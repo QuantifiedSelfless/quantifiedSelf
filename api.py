@@ -104,4 +104,4 @@ if __name__ == "__main__":
 
     app.listen(port, protocol='https')
     print("Listening on port: " + str(port))
-    ioloop.IOLoop.instance().start()
+    ioloop.IOLoop.current().start()

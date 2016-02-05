@@ -2,14 +2,15 @@ import smtplib
 from tornado import gen
 from email.mime.text import MIMEText
 
-from config import CONFIG
+from .config import CONFIG
+
 
 class EmailSender:
     def __init__(self, username, password, server="smtp.gmail.com", port=465):
         self.username = username
         self.password = password
-        self.server   = server
-        self.port     = port
+        self.server = server
+        self.port = port
         self.client = smtplib.SMTP_SSL(self.server, self.port)
         self.client.login(self.username, self.password)
 
@@ -36,16 +37,17 @@ class EmailSender:
 @gen.coroutine
 def send_confirmation(user, name):
     sender = EmailSender(
-        CONFIG.get('EMAIL_ADDRESS'), 
+        CONFIG.get('EMAIL_ADDRESS'),
         CONFIG.get('EMAIL_PASS')
     )
     conf = sender.SendConfirmation(user, name)
     raise gen.Return(conf)
 
+
 @gen.coroutine
 def send_deauthorization(user, name, link):
     sender = EmailSender(
-        CONFIG.get('EMAIL_ADDRESS'), 
+        CONFIG.get('EMAIL_ADDRESS'),
         CONFIG.get('EMAIL_PASS')
     )
     conf = sender.SendDeauthorizationEmail(user, name, link)

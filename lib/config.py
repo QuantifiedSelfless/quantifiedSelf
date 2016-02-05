@@ -2,6 +2,7 @@ import configparser
 
 CONFIG = None
 
+
 def read_config(debug):
     global CONFIG
     config = configparser.ConfigParser()

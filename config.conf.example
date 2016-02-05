@@ -1,0 +1,29 @@
+[default]
+google_client_id = "" 
+google_client_secret = ""
+facebook_client_id = ""
+facebook_client_secret = "" 
+spotify_client_id = ""
+spotify_client_secret = ""
+reddit_client_id = "" 
+reddit_client_secret = ""
+twitter_client_id = ""
+twitter_client_secret = ""
+tumblr_client_id = ""
+tumblr_client_secret = ""
+instagram_client_id = ""
+instagram_client_secret = ""
+email_address = ""
+email_pass = ""
+
+[dev]
+base_url = "http://iamadatapoint.com:8085"
+rethink_db = ''
+rethink_host = ''
+rethink_port = 
+
+[prod]
+base_url = "https://iamadatapoint.com"
+rethink_db = ''
+rethink_host = ''
+rethink_port = 

@@ -3,7 +3,6 @@ from tornado import auth
 from oauth2client import client
 import httplib2
 
-from lib import scrapers
 from lib.database import save_token
 from lib.basehandler import OAuthRequestHandler
 

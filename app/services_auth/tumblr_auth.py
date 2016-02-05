@@ -34,7 +34,7 @@ class TumblrAuth(OAuthRequestHandler):
 
     def startFlow(self):
         resp, content = self.client.request(self.request_token_url, "POST")
-        request_token = urllib.parse.parse_qs(content)
+        request_token = urllib.parse.parse_qs(content.decode())
         auth_session_id = self.auth_session_id()
         secrets[auth_session_id] = request_token['oauth_token_secret'][0]
         self.set_secure_cookie("auth-session-id", auth_session_id)

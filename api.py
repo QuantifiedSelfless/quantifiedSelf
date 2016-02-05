@@ -3,15 +3,15 @@ from tornado import web
 from tornado import options
 
 from app.user_auth import UserAuth
-from app.google_auth import GoogleAuth
-from app.facebook_auth import FacebookAuth
-from app.spotify_auth import SpotifyAuth
-from app.twitter_auth import TwitterAuth
-from app.reddit_auth import RedditAuth
-from app.tumblr_auth import TumblrAuth
-from app.instagram_auth import InstagramAuth
 from app.user_deauth import UserDeauth
 from app.ticket import TicketHandler
+from app.services_auth.google_auth import GoogleAuth
+from app.services_auth.facebook_auth import FacebookAuth
+from app.services_auth.spotify_auth import SpotifyAuth
+from app.services_auth.twitter_auth import TwitterAuth
+from app.services_auth.reddit_auth import RedditAuth
+from app.services_auth.tumblr_auth import TumblrAuth
+from app.services_auth.instagram_auth import InstagramAuth
 
 from lib import config
 
@@ -19,7 +19,7 @@ from lib import config
 # Set basic options
 options.define("port", default=6060, type=int, help="What port to run on")
 options.define("debug", default=False, type=bool, help="Debug Mode")
-options.define("config", default='default',
+options.define("config", default='dev',
                type=str, help="Section of config file to read")
 
 

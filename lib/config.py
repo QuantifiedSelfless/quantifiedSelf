@@ -8,4 +8,5 @@ def read_config(mode):
     print("Loading config with mode: {}".format(mode))
     config = configparser.ConfigParser()
     config.read('config.conf')
+    CONFIG.update(config['default'])
     CONFIG.update(config[mode])

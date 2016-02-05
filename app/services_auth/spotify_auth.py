@@ -1,6 +1,5 @@
-import app.spotifyMix as spot
+from . import spotifyMix as spot
 from lib.database import save_token
-
 from lib.basehandler import OAuthRequestHandler
 
 

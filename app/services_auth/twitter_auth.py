@@ -2,7 +2,6 @@ import requests
 from requests_oauthlib import OAuth1
 from urllib.parse import parse_qs
 
-from lib.scrapers import scrape_twitter_user
 from lib.database import save_token
 
 from lib.basehandler import OAuthRequestHandler
@@ -58,4 +57,3 @@ class TwitterAuth(OAuthRequestHandler):
             user_id=user_id,
             token_data=token_data,
         )
-        self._ioloop.add_callback(scrape_twitter_user, user=id)

@@ -1,5 +1,6 @@
-[   {
-        "exhibit_name: "vanity",
+[   
+    {
+        "exhibit_name": "vanity",
         "description": "It is a two-way mirror that places a data display on Amelia's vanity mirror.",
         "data": {
                 "friend_names": ["Jonathan Tyson", "Shameeka Ray", "Terri Gross"],
@@ -41,12 +42,48 @@
         "description": "",
         "data": {
             "facebook" : [{ 
-                "date": timestamp,
+                "date": 01-12-2016,
                 "description": "Went to the zoo"
                 },
             ],
             "text" : ["I loved her so much", "It was sad to see him in such a bad place", "Seriously, best day, ever!!"]
         },
+        "user": UserBlob,
+        "priority": 1
+    },
+    
+    {
+        "exhibit_name": "how you're tracked",
+        "description": "shows someone who logs in a feed of information from social media and news sites then tracks how you browse around to finally show you what data was collected and who would use it",
+        "data": {
+            "friends": ["Joe Stanton", "Brian Johnson", "Jules Thoompson"],
+            "feed" : [{
+                "event": "Jane just liked your facebook post",
+                "link": "www.facebook.com/209840983"
+                }],
+            "articles" : [{
+                "headline": "Crane collapses in Times Square.",
+                "link": "http://nyt.com/thatonetime"
+                },
+            ]
+        },
+        "user": UserBlob,
+        "priority": 1
+    },
+    {
+        "exhibit_name": "terms of service",
+        "description": "This game is simple a list of rights you slowly have to give up from terms of service until you disagree",
+        "data": {
+            },
+        "user": UserBlob,
+        "priority": 1
+
+    },
+    {
+        "exhibit_name": "neural paintings",
+        "description": "This is fully pre-processed but should take images and repaint them in the style of paintings we have in a bank",
+        "data": {
+            },
         "user": UserBlob,
         "priority": 1
     },
@@ -57,7 +94,7 @@
             "recs": ["12A", "16B", "22B", "42B", "7A", "29B"]
             },
         "user": UserBlob,
-        "priority": 1
+        "priority": 2
     },
     {
         "exhibit_name": "own up",
@@ -71,7 +108,7 @@
             }]
         },
         "user": UserBlob,
-        "priority": 1
+        "priority": 2
     },
     {
         "exhibit_name": "poopy butthole",
@@ -93,39 +130,57 @@
             "categories":
                 {
                     "love": {
-                        "horoscope": ("question", "response"),
-                        "computed": ("question", "response")
-                    },
+                        "horoscope": {
+                            "question": "what will your future love life look like?",
+                            "response": "you are seeking love so you'll find it"
+                        },
+                        "computed": {
+                            "question": "what is your average relationship time",
+                            "response": "you have averaged 14.5 months per relationship."
+                        }
+                },
                     "work": {},
                     "health": {},
                     "luck": {},
-                    "emotion": {},
-                },
+                    "emotions": {},
+                    "frienship": {},
+                    "family": {},
+            },
+        },
+        "user": UserBlob,
+        "priority": 2
+    },
+    {
+        "exhibit_name": "truth game",
+        "description": "you have to decide which numbers about you and the world are real and what's been fudged",
+        "data": {
+            "facts": ["You have up voted 12,000 reddit posts", "You've said the word 'pasta' at least 137 times online."],
+            "false": ["You have looked at Jamie McMatthews profile 24 times", "The current government debt is $32 trillion."]
             },
         "user": UserBlob,
         "priority": 2
     },
     {
-        "exhibit_name": "",
-        "description": "",
+        "exhibit_name": "pr0n",
+        "description": "porn and sexy photos are shown to you that are matched from faces we analyzed within your known network. At the end, youre told who you are most attracted to.",
         "data": {
+            "sexy_photos": [{
+                "img" : "http://porhub.com/halk3095r",
+                "friend_match": 145
             },
-        "user": UserBlob
+            ]
+        },
+        "user": UserBlob,
+        "priority": 2
     },
     {
-        "exhibit_name": "",
-        "description": "",
+        "exhibit_name": "Amelia's music experience",
+        "description": "Lights off booth where you listen to and feel music in a chair with transducers",
         "data": {
-            },
-        "user": UserBlob
-    },
-    {
-        "exhibit_name": "",
-        "description": "",
-        "data": {
-            },
-        "user": UserBlob
-    },
-
+            "play_list": ["http://api.iamadatapoint.com/song/130980", "spotify.com/398488"]
+        },
+        "user": UserBlob,
+        "priority": 2
+    }
 ]
     

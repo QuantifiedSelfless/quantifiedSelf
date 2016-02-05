@@ -1,7 +1,7 @@
 */creds.py
 *.pyc
+log/*.log
 *.sw*
-*/log/*
 */node_modules/*
 *.DS_Store*
 */.module-cache/*

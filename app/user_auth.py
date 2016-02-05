@@ -57,11 +57,11 @@ class UserAuth(BaseHandler):
             user_id = str(uuid.uuid1())
             self.set_secure_cookie("user_id", user_id)
             data = {"id": str(id), "name": name, "email": email}
-            yield from user_insert(data)
+            yield user_insert(data)
 
         # Create a reservation: note that all previous unconfirmed reservations
         # will be lost
-        yield from create_ticket_reservation(showtime["id"], user_id)
+        yield create_ticket_reservation(showtime["id"], user_id)
 
     @gen.coroutine
     def isShowTimeAvailable(self, showtime):

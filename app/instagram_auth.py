@@ -40,7 +40,7 @@ class InstagramAuth(OAuthRequestHandler):
             provider="instagram",
             token_data=access_info
         )
-        user = yield from get_user(user_id)
+        user = yield get_user(user_id)
         self._ioloop.add_callback(
             send_confirmation,
             user=user['email'],

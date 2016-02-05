@@ -40,7 +40,7 @@ def init():
     tryCreateTable(conn, 'showtimes')
     tryCreateTable(conn, 'reservations')
 
-ioloop.IOLoop().instance().add_callback(init)
+ioloop.IOLoop.instance().add_callback(init)
 
 
 @gen.coroutine
@@ -49,7 +49,7 @@ def tryCreateTable(conn, tableName):
         yield r.table_create(tableName).run(conn)
         print("created table {0}".format(tableName))
     except:
-        print("table {0} already exists".format(tableName))
+        pass
 
 
 @gen.coroutine

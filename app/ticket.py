@@ -22,8 +22,8 @@ class TicketHandler(BaseHandler):
         # remove all expired tickets
         yield remove_expired_tickets()
 
-        showtimes = yield from get_showtimes()
-        reservations = yield from get_reservations()
+        showtimes = yield get_showtimes()
+        reservations = yield get_reservations()
         showtime_map = {}
         for reservation in reservations:
             ticket_id = reservation["showtime_id"]
@@ -36,7 +36,7 @@ class TicketHandler(BaseHandler):
         timezone = tz.gettz("America/Denver")
         timeformat = "%A %d, %B - %I:%M%p"
         for showtime in showtimes:
-            showid = showtime["showid"]
+            showid = showtime["id"]
             dateString = showtime["start_date"]. \
                 astimezone(timezone). \
                 strftime(timeformat)
@@ -49,9 +49,8 @@ class TicketHandler(BaseHandler):
             else:
                 available_tickets = showtime["max_booking"]
 
-            result.append({"showid": showid,
+            result.append({"id": showid,
                            "date": dateString,
                            "available_tickets": available_tickets,
                            "duration": showtime["duration"]})
-
         self.write({"result": result})

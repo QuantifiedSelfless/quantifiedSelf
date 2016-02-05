@@ -17,7 +17,7 @@ class UserDeauth(web.RequestHandler):
     def get(self):
         if self.get_argument('email', None):
             # pull user from database
-            user = yield from get_user_from_email(
+            user = yield get_user_from_email(
                 self.get_argument('email', None))
             if user is not None:
                 token = str(uuid.uuid1())
@@ -35,7 +35,7 @@ class UserDeauth(web.RequestHandler):
 
         elif (self.get_argument('token', None)):
             # pop the request
-            request = yield from pop_deauth_request(
+            request = yield pop_deauth_request(
                     self.get_argument('token', None))
             if request is not None:
                 self._ioloop.add_callback(

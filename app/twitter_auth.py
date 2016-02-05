@@ -1,11 +1,6 @@
-from tornado import web
-from tornado import gen
-from tornado import ioloop
-from tornado import httpclient
-import ujson as json
 import requests
 from requests_oauthlib import OAuth1
-from urlparse import parse_qs
+from urllib.parse import parse_qs
 
 from lib.scrapers import scrape_twitter_user
 from lib.database import save_token
@@ -37,8 +32,8 @@ class TwitterAuth(OAuthRequestHandler):
         #Make async
         r = requests.post(url='https://api.twitter.com/oauth/access_token', auth=oauth)
         credentials = parse_qs(r.content)
-        print "\n\ncreds:"
-        print credentials
+        print("\n\ncreds:")
+        print(credentials)
         access_token_key = credentials.get('oauth_token')[0]
         access_token_secret = credentials.get('oauth_token_secret')[0]
 

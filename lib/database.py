@@ -1,25 +1,32 @@
 import rethinkdb as r
 from tornado import gen
 from tornado import ioloop
-import random
 
 from datetime import datetime, timedelta
 
+from config import CONFIG
+
 r.set_loop_type("tornado")
-connection = r.connect(db='pilot', host='localhost', port=28015)
+connection = None
 
 @gen.engine
 def init():
+    global connection
+    connection = r.connect(
+        db=CONFIG.get('rethink_db'),
+        host=CONFIG.get('rethink_host'),
+        port=CONFIG.get('rethink_port')
+    )
     conn = yield connection
-    print "Connecting"
+    print("Connecting")
     try:
-        print "Creating DB"
+        print("Creating DB")
         yield r.db_create("pilot").run(conn)
     except:
-        print "database already exists"
+        print("database already exists")
 
     try:
-        print "Creating tables"
+        print("Creating tables")
         conn.use('pilot')
         tryCreateTable(conn, 'deauth')
         tryCreateTable(conn, 'instagram')
@@ -33,7 +40,7 @@ def init():
         tryCreateTable(conn, 'showtimes')
         tryCreateTable(conn, 'reservations')
     except:
-        print "tables already exist"
+        print("tables already exist")
 
 ioloop.IOLoop().instance().add_callback(init)
 
@@ -41,9 +48,9 @@ ioloop.IOLoop().instance().add_callback(init)
 def tryCreateTable(conn, tableName):
     try:
         yield r.table_create(tableName).run(conn)
-        print "created table {0}".format(tableName)
+        print("created table {0}".format(tableName))
     except:
-        print "table {0} already exists".format(tableName)
+        print("table {0} already exists".format(tableName))
 
 @gen.coroutine
 def create_ticket_reservation(showtime_id, user_id):
@@ -190,8 +197,8 @@ def delete_user_data(id):
     tables = ['google','facebook','spotify','reddit','tumblr','instagram','twitter']
     lastResult = None
     for table in tables:
-        print table
+        print(table)
         lastResult = yield r.table(table).filter({'user_id':id}).delete().run(conn)
-        print lastResult
+        print(lastResult)
     lastResult = yield r.table('users').get(id).delete().run(conn)
     raise gen.Return(lastResult)

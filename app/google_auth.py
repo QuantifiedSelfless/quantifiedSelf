@@ -41,7 +41,7 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
         access = yield self.get_authenticated_user(
                 redirect_uri= "{0}/auth/google".format(self.application.settings['base_url']),
                 code=code)
-        print access
+        print(access)
         #Set Cookie, Eventually (change cookie_secret)
         creds = client.OAuth2Credentials(
                 access_token=access['access_token'],

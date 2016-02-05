@@ -1,0 +1,29 @@
+[default]
+GOOGLE_CLIENT_ID = "" 
+GOOGLE_CLIENT_SECRET = ""
+FACEBOOK_CLIENT_ID = ""
+FACEBOOK_CLIENT_SECRET = "" 
+SPOTIFY_CLIENT_ID = ""
+SPOTIFY_CLIENT_SECRET = ""
+REDDIT_CLIENT_ID = "" 
+REDDIT_CLIENT_SECRET = ""
+TWITTER_CLIENT_ID = ""
+TWITTER_CLIENT_SECRET = ""
+TUMBLR_CLIENT_ID = ""
+TUMBLR_CLIENT_SECRET = ""
+INSTAGRAM_CLIENT_ID = ""
+INSTAGRAM_CLIENT_SECRET = ""
+EMAIL_ADDRESS = ""
+EMAIL_PASS = ""
+
+[dev]
+BASE_URL = "http://iamadatapoint.com:8085"
+rethink_db = ''
+rethink_host = ''
+rethink_port = 
+
+[prod]
+BASE_URL = "https://iamadatapoint.com"
+rethink_db = ''
+rethink_host = ''
+rethink_port = 

@@ -2,8 +2,7 @@ from tornado import auth
 from tornado import escape
 
 import functools
-import urlparse
-import urllib as urllib_parse
+import urllib.parse
 
 class SpotifyOAuth2Mixin(auth.OAuth2Mixin, auth.OAuthMixin):
     """Spotify authentication using OAuth2.
@@ -25,7 +24,7 @@ class SpotifyOAuth2Mixin(auth.OAuth2Mixin, auth.OAuthMixin):
         client_id = self.application.settings['spotify_oauth']['key']
         client_secret = self.application.settings['spotify_oauth']['secret']
         http = self.get_auth_http_client()
-        body = urllib_parse.urlencode({
+        body = urllib.parse.urlencode({
             "redirect_uri": redirect_uri,
             "code": code,
             "client_id": client_id, 

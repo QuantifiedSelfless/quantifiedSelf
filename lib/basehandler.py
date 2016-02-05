@@ -4,10 +4,6 @@ from tornado import ioloop
 
 from lib.database import deny
 
-import ujson as json
-from cStringIO import StringIO
-import time
-import datetime
 
 class OAuthRequestHandler(web.RequestHandler):
 

@@ -26,7 +26,7 @@ class InstagramAuth(OAuthRequestHandler):
 
     def handleAuthCallBack(self, code, user_id):
         access_info = self.api.exchange_code_for_access_token(code)
-        print access_info
+        print(access_info)
 
         # Confirmation & Saving token
         self._ioloop.add_callback(save_token, provider="instagram", token_data=access_info)

@@ -14,7 +14,7 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
         super(FacebookAuth, self).setProvider("facebook")
 
     def startFlow(self):
-        print 'here'
+        print('here')
         self.authorize_redirect(
             redirect_uri= "{0}/auth/facebook".format(self.application.settings['base_url']),
             client_id=self.application.settings['facebook_oauth']['key'],
@@ -30,4 +30,4 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
                 code=code)
 
         self._ioloop.add_callback(save_token, provider='facebook', user_id=user_id, token_data=access)
-        print access
+        print(access)

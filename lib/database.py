@@ -16,7 +16,7 @@ def init():
     connection = r.connect(
         db=CONFIG.get('rethink_db'),
         host=CONFIG.get('rethink_host'),
-        port=CONFIG.get('rethink_port')
+        port=int(CONFIG.get('rethink_port'))
     )
     conn = yield connection
     print("Connecting")

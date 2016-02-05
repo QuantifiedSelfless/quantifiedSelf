@@ -19,7 +19,7 @@ from lib import config
 # Set basic options
 options.define("port", default=6060, type=int, help="What port to run on")
 options.define("debug", default=False, type=bool, help="Debug Mode")
-options.define("config", default='DEFAULT',
+options.define("config", default='default',
                type=str, help="Section of config file to read")
 
 
@@ -104,4 +104,4 @@ if __name__ == "__main__":
 
     print("Listening on port: " + str(port))
     app.listen(port, protocol='https')
-    ioloop.IOLoop.current().start()
+    ioloop.IOLoop().instance().start()

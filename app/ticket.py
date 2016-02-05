@@ -53,4 +53,4 @@ class TicketHandler(BaseHandler):
                            "date": dateString,
                            "available_tickets": available_tickets,
                            "duration": showtime["duration"]})
-        self.write({"result": result})
+        self.api_response({"result": result})

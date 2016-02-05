@@ -47,7 +47,7 @@ class TumblrAuth(OAuthRequestHandler):
         oauth_verifier = self.get_argument('oauth_verifier', None)
         oauth_token = self.get_argument('oauth_token', None)
         auth_session_id = self.get_secure_cookie("auth-session-id", None)
-        oauth_token_secret = secrets[auth_session_id]
+        oauth_token_secret = secrets[auth_session_id.decode()]
 
         # Clear cookies and dictionary
         self.clear_cookie("auth-session-id")
@@ -59,7 +59,7 @@ class TumblrAuth(OAuthRequestHandler):
         self.client = oauth.Client(self.consumer, token)
 
         resp, content = self.client.request(self.access_token_url, "POST")
-        access_token = urllib.parse.parse_qs(content)
+        access_token = urllib.parse.parse_qs(content.decode())
 
         access_info = {
             'consumer_key':         self.consumer_key,

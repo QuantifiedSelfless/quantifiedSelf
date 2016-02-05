@@ -12,10 +12,10 @@ _connection = None
 @gen.coroutine
 def connection():
     global _connection
-    print("getting connection")
     if _connection is None:
         _connection = yield init()
-    return _connection
+    conn = yield _connection
+    return conn
 
 
 @gen.coroutine

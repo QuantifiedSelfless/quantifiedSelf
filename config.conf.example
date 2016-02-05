@@ -1,29 +1,29 @@
 [default]
-GOOGLE_CLIENT_ID = "" 
-GOOGLE_CLIENT_SECRET = ""
-FACEBOOK_CLIENT_ID = ""
-FACEBOOK_CLIENT_SECRET = "" 
-SPOTIFY_CLIENT_ID = ""
-SPOTIFY_CLIENT_SECRET = ""
-REDDIT_CLIENT_ID = "" 
-REDDIT_CLIENT_SECRET = ""
-TWITTER_CLIENT_ID = ""
-TWITTER_CLIENT_SECRET = ""
-TUMBLR_CLIENT_ID = ""
-TUMBLR_CLIENT_SECRET = ""
-INSTAGRAM_CLIENT_ID = ""
-INSTAGRAM_CLIENT_SECRET = ""
-EMAIL_ADDRESS = ""
-EMAIL_PASS = ""
+google_client_id = "" 
+google_client_secret = ""
+facebook_client_id = ""
+facebook_client_secret = "" 
+spotify_client_id = ""
+spotify_client_secret = ""
+reddit_client_id = "" 
+reddit_client_secret = ""
+twitter_client_id = ""
+twitter_client_secret = ""
+tumblr_client_id = ""
+tumblr_client_secret = ""
+instagram_client_id = ""
+instagram_client_secret = ""
+email_address = ""
+email_pass = ""
 
 [dev]
-BASE_URL = "http://iamadatapoint.com:8085"
+base_url = "http://iamadatapoint.com:8085"
 rethink_db = ''
 rethink_host = ''
 rethink_port = 
 
 [prod]
-BASE_URL = "https://iamadatapoint.com"
+base_url = "https://iamadatapoint.com"
 rethink_db = ''
 rethink_host = ''
 rethink_port = 

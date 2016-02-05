@@ -69,8 +69,8 @@ if __name__ == "__main__":
     CONFIG = config.CONFIG
     for service in services.split():
         oauth_creds[service + '_oauth'] = {
-            "key": CONFIG.get("{}_CLIENT_ID".format(service.upper())),
-            "secret": CONFIG.get("{}_CLIENT_SECRET".format(service.upper())),
+            "key": CONFIG.get("{}_client_id".format(service)),
+            "secret": CONFIG.get("{}_client_secret".format(service)),
         }
 
     app = web.Application(
@@ -98,10 +98,11 @@ if __name__ == "__main__":
         static_path="./static/",
         debug=debug,
         cookie_secret="weareseriouslyquantifyingyousohard&**@8274djfkaJJ%%93823#9djdk$<PP?",
-        base_url=CONFIG.get('BASE_URL'),
+        base_url=CONFIG.get('base_url'),
         **oauth_creds
     )
 
     app.listen(port, protocol='https')
+    print("Using base url: " + CONFIG.get('base_url'))
     print("Listening on port: " + str(port))
     ioloop.IOLoop.current().start()

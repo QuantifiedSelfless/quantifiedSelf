@@ -22,7 +22,7 @@ class TwitterAuth(OAuthRequestHandler):
             url='https://api.twitter.com/oauth/request_token',
             auth=oauth
         )
-        credentials = parse_qs(r.content)
+        credentials = parse_qs(r.content.decode())
         request_key = credentials.get('oauth_token')[0]
         request_secret = credentials.get('oauth_token_secret')[0]
         base_url = 'https://api.twitter.com/oauth/authorize?oauth_token={0}&oauth_secret={1}'
@@ -41,7 +41,7 @@ class TwitterAuth(OAuthRequestHandler):
             url='https://api.twitter.com/oauth/access_token',
             auth=oauth
         )
-        credentials = parse_qs(r.content)
+        credentials = parse_qs(r.content.decode())
         print("\n\ncreds:")
         print(credentials)
         access_token_key = credentials.get('oauth_token')[0]

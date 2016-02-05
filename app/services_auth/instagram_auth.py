@@ -5,6 +5,13 @@ from lib.database import save_token
 
 from lib.basehandler import OAuthRequestHandler
 
+# hack because the instagram team won't get their shit together and merge a
+# year-old issue on their codebase
+# (https://github.com/Instagram/python-instagram/pull/139)
+import instagram.oauth2
+from httplib2 import Http
+instagram.oauth2.Http = lambda *args, **kwargs: Http()
+
 
 class InstagramAuth(OAuthRequestHandler):
     scope = [

@@ -37,8 +37,8 @@ class EmailSender:
 @gen.coroutine
 def send_confirmation(user, name):
     sender = EmailSender(
-        CONFIG.get('EMAIL_ADDRESS'),
-        CONFIG.get('EMAIL_PASS')
+        CONFIG.get('email_address'),
+        CONFIG.get('email_pass')
     )
     conf = sender.SendConfirmation(user, name)
     raise gen.Return(conf)
@@ -47,8 +47,8 @@ def send_confirmation(user, name):
 @gen.coroutine
 def send_deauthorization(user, name, link):
     sender = EmailSender(
-        CONFIG.get('EMAIL_ADDRESS'),
-        CONFIG.get('EMAIL_PASS')
+        CONFIG.get('email_address'),
+        CONFIG.get('email_pass')
     )
     conf = sender.SendDeauthorizationEmail(user, name, link)
     raise gen.Return(conf)

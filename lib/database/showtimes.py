@@ -28,3 +28,19 @@ def get_showtime(id):
     conn = yield connection()
     result = yield r.table('showtimes').get(id).run(conn)
     return result
+
+
+@gen.coroutine
+def create_showtime(date, available_tickets=40, duration=2):
+    conn = yield connection()
+    dedup_shows = yield r.table('showtimes').\
+        filter(r.row['date'] == date).count().run(conn)
+    if dedup_shows:
+        raise Exception("Show already exists")
+    data = {
+        'date': date,
+        'available_tickets': available_tickets,
+        'duration': duration,
+    }
+    result = yield r.table('showtimes').insert(data).run(conn)
+    return result['generated_keys']

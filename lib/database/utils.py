@@ -16,5 +16,5 @@ def try_create_table(conn, tableName):
     try:
         yield r.table_create(tableName).run(conn)
         print("created table {0}".format(tableName))
-    except:
-        pass
+    except Exception as e:
+        print("Didn't create table {}: {}".format(tableName, e))

@@ -8,3 +8,4 @@
 templates
 static
 config.conf
+rethinkdb_data/

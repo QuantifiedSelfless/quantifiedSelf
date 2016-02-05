@@ -41,4 +41,6 @@ def init():
     yield try_create_table(conn, 'auth')
     yield try_create_table(conn, 'showtimes')
     yield try_create_table(conn, 'reservations')
+    yield try_create_table(conn, 'encryption_show')
+    yield try_create_table(conn, 'encryption_user')
     return connection

@@ -10,47 +10,12 @@ var Start = React.createClass({
     },
 
     getDates: function () {
-        // $.get("/tickets", function ( data ){
-            
-        //     this.setState(times: data['result']);
-
-        // });
-
-        data = [
-            {
-            date: "Saturday 30, April - 08:00PM",
-            duration: 2,
-            available_tickets: 4,
-            id: "b1852ec4-71e1-42a2-8521-1b67c4cef04d"
-            },
-            {
-            date: "Sunday 01, May - 08:00PM",
-            duration: 2,
-            available_tickets: 1,
-            id: "f89079e0-1163-42a6-a3e4-62ac8cc6a0e1"
-            },
-            {
-            date: "Monday 02, May - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "fba663e8-a5f0-40a1-bb28-98df3ba7a024"
-            },
-            {
-            date: "Sunday 01, May - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "d3da1b13-a479-4e5d-bb47-8e2838f40ead"
-            },
-            {
-            date: "Saturday 30, April - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "e4f77fb0-1676-4e3e-ba52-0a3ea22c6423"
-            }
-            ];
-        
-        this.setState({times: data});
-
+        $.get("/api/showtimes", function ( data ){
+            goods = data['data']
+            this.setState({ 
+                times: goods
+            });
+        });
     },
 
     componentWillMount: function () {

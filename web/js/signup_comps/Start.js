@@ -10,12 +10,11 @@ var Start = React.createClass({
     },
 
     getDates: function () {
-        var goods;
+        var me = this;
         $.get("/api/showtimes", function ( data ){
-            goods = data['data']
-        });
-
-        this.setState({ times: goods });
+            me.setState({times: data['data']})
+            console.log(data['data']);
+        }).fail(function () { alert('call to api/showtimes failed');});
     },
 
     componentWillMount: function () {

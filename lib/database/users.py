@@ -15,9 +15,9 @@ def user_insert(data):
 
 
 @gen.coroutine
-def get_user(id):
+def get_user(uid):
     conn = yield connection()
-    result = yield r.table('users').get(id).run(conn)
+    result = yield r.table('users').get(uid).run(conn)
     return result
 
 

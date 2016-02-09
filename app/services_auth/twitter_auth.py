@@ -1,3 +1,5 @@
+from tornado import gen
+
 import requests
 from requests_oauthlib import OAuth1
 from urllib.parse import parse_qs
@@ -28,6 +30,7 @@ class TwitterAuth(OAuthRequestHandler):
         base_url = 'https://api.twitter.com/oauth/authorize?oauth_token={0}&oauth_secret={1}'
         self.redirect(base_url.format(request_key, request_secret))
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         oauth = OAuth1(
             self.consumer_key,

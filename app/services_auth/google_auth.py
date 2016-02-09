@@ -1,4 +1,5 @@
 from tornado import auth
+from tornado import gen
 
 from oauth2client import client
 import httplib2
@@ -34,6 +35,7 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
 
         self.redirect(flow.step1_get_authorize_url())
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         redir_uri = "{0}/auth/google".format(
             self.application.settings['base_url'])

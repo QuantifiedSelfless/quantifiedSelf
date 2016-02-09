@@ -1,3 +1,4 @@
+from tornado import gen
 import oauth2 as oauth
 import pytumblr
 import urllib.parse
@@ -43,11 +44,12 @@ class TumblrAuth(OAuthRequestHandler):
             request_token['oauth_token'][0]
         ))
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         oauth_verifier = self.get_argument('oauth_verifier', None)
         oauth_token = self.get_argument('oauth_token', None)
         auth_session_id = self.get_secure_cookie("auth-session-id", None)
-        oauth_token_secret = secrets[auth_session_id.decode()]
+        oauth_token_secret = secrets[auth_session_id]
 
         # Clear cookies and dictionary
         self.clear_cookie("auth-session-id")

@@ -1,3 +1,4 @@
+from tornado import gen
 from tornado import auth
 
 from lib.database import save_token
@@ -27,6 +28,7 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
             scope=self.scope)
         return
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         access = yield self.get_authenticated_user(
             redirect_uri="{0}/auth/facebook".format(

@@ -1,3 +1,5 @@
+from tornado import gen
+
 from . import spotifyMix as spot
 from lib.database import save_token
 from lib.basehandler import OAuthRequestHandler
@@ -25,6 +27,7 @@ class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
                 scope=self.scope,
                 )
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         redir_uri = '{0}/auth/spotify'.format(
             self.application.settings['base_url'])

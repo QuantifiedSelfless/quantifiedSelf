@@ -1,3 +1,4 @@
+from tornado import gen
 import praw
 
 from lib.database import save_token
@@ -27,14 +28,14 @@ class RedditAuth(OAuthRequestHandler):
         )
         self.redirect(url)
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
+        print('handle auth callback: ', code, user_id)
         access_info = self.reddit.get_access_information(code)
         self.reddit.set_access_credentials(**access_info)
-        print(access_info)
 
         # save the token
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="reddit",
             user_id=user_id,
             token_data=access_info

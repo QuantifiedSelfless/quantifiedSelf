@@ -2,6 +2,8 @@ from tornado import gen
 import rethinkdb as r
 
 from .connection import connection
+from .encryption import get_user_publickey
+from .. import crypto_helper
 
 
 @gen.coroutine
@@ -32,11 +34,13 @@ def delete_user_data(id):
 
 @gen.coroutine
 def save_token(provider, user_id, token_data):
+    publickey = yield get_user_publickey(user_id)
+    token_data_enc = crypto_helper.encrypt_blob(publickey, token_data)
     conn = yield connection()
     data = {
         "id": user_id,
         provider: {
-            "token": token_data,
+            "token": token_data_enc,
         }
     }
     result = yield r.table('auth').insert(data, conflict='update').run(conn)

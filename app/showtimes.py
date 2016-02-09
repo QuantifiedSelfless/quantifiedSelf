@@ -57,7 +57,6 @@ class ListShowtimesHandler(BaseHandler):
         timezone = tz.gettz(CONFIG.get('timezone'))
         timeformat = "%A %d, %B - %I:%M%p"
         for showtime in showtimes:
-            print(showtime)
             showid = showtime["id"]
             dateString = showtime["date"]. \
                 astimezone(timezone). \

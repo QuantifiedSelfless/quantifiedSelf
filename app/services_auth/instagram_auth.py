@@ -1,3 +1,4 @@
+from tornado import gen
 from instagram.client import InstagramAPI
 from lib.email_sender import send_confirmation
 from lib.database import get_user
@@ -37,16 +38,13 @@ class InstagramAuth(OAuthRequestHandler):
     def startFlow(self):
         self.redirect(self.api.get_authorize_login_url(scope=self.scope))
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         access_info = self.api.exchange_code_for_access_token(code)
 
         # Confirmation & Saving token
         yield save_token(
             provider="instagram",
+            user_id = user_id,
             token_data=access_info
-        )
-        user = yield get_user(user_id)
-        yield send_confirmation(
-            user=user['email'],
-            name=user['name']
         )

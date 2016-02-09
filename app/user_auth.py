@@ -56,8 +56,7 @@ class UserAuth(BaseHandler):
         else:
             user_id = str(uuid.uuid1())
             self.set_secure_cookie("user_id", user_id)
-            data = {"id": str(id), "name": name, "email": email}
-            yield user_insert(data)
+            yield user_insert(user_id, name, email, showtime_id)
 
         # Create a reservation: note that all previous unconfirmed reservations
         # will be lost

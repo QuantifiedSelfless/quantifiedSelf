@@ -31,7 +31,7 @@ def get_showtime(id):
 
 
 @gen.coroutine
-def create_showtime(date, available_tickets=40, duration=2):
+def create_showtime(date, available_tickets=40):
     conn = yield connection()
     dedup_shows = yield r.table('showtimes').\
         filter(r.row['date'] == date).count().run(conn)
@@ -40,7 +40,7 @@ def create_showtime(date, available_tickets=40, duration=2):
     data = {
         'date': date,
         'available_tickets': available_tickets,
-        'duration': duration,
+        'max_booking' : available_tickets,
     }
     result = yield r.table('showtimes').insert(data).run(conn)
     return result['generated_keys']

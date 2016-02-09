@@ -34,14 +34,12 @@ def delete_user_data(id):
 def save_token(provider, user_id, token_data):
     conn = yield connection()
     data = {
-        "user_id": user_id,
+        "id": user_id,
         provider: {
             "token": token_data,
         }
     }
-    result = yield r.table('auth').insert(
-            data,
-            conflict='update').run(conn)
+    result = yield r.table('auth').insert(data, conflict='update').run(conn)
     return result
 
 

@@ -51,8 +51,7 @@ class TwitterAuth(OAuthRequestHandler):
             "access_token": access_token_key,
             "access_token_secret": access_token_secret,
         }
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="twitter",
             user_id=user_id,
             token_data=token_data,

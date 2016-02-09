@@ -22,7 +22,6 @@ def connection():
 def init():
     print("starting db init")
     connection = r.connect(
-        db=CONFIG.get('rethink_db'),
         host=CONFIG.get('rethink_host'),
         port=int(CONFIG.get('rethink_port'))
     )
@@ -30,7 +29,7 @@ def init():
     print("Connecting")
     try:
         print("Creating DB")
-        yield r.db_create("pilot").run(conn)
+        yield r.db_create(CONFIG.get('rethink_db')).run(conn)
     except:
         print("database already exists")
 

@@ -26,6 +26,10 @@ def create_keypair(passphrase=None, length=4096):
     return public_exp, private_exp
 
 
+def import_key(key_pem):
+    return RSA.importKey(key_pem)
+
+
 def generate_passphrase(length=32):
     pass_raw = get_random_bytes(length//2)
     return pass_raw.hex()

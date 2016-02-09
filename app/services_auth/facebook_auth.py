@@ -36,10 +36,8 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
             code=code,
         )
 
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider='facebook',
             user_id=user_id,
             token_data=access
         )
-        print(access)

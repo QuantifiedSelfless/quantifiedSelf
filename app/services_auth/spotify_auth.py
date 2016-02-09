@@ -33,8 +33,7 @@ class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
                 code=code)
         print(access)
         # from here use spotipy - pass it over to a scraper context
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="spotify",
             user_id=user_id,
             token_data=access

@@ -75,8 +75,7 @@ class TumblrAuth(OAuthRequestHandler):
             access_info['oauth_token'],
             access_info['oauth_token_secret']
         )
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="tumblr",
             user_id=user_id,
             token_data={

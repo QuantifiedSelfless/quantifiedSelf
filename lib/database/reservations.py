@@ -2,6 +2,7 @@ from tornado import gen
 import rethinkdb as r
 from datetime import datetime, timedelta
 
+from ..config import CONFIG
 from .utils import dump_cursor
 from .connection import connection
 
@@ -26,7 +27,8 @@ def create_ticket_reservation(showtime_id, user_id):
 @gen.coroutine
 def remove_expired_tickets():
     conn = yield connection()
-    safeDate = datetime.now() - timedelta(seconds=10)
+    expiration_time = int(CONFIG.get('ticket_expiration'))
+    safeDate = datetime.now() - timedelta(seconds=expiration_time)
     safeDate = r.epoch_time(int(safeDate.strftime("%s")))
     result = yield r.table('reservations').\
         filter(r.row['reserved_on'] < safeDate).delete().run(conn)

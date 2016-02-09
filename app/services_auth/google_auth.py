@@ -41,7 +41,6 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
             redirect_uri=redir_uri,
             code=code
         )
-        print(access)
         # Set Cookie, Eventually (change cookie_secret)
         creds = client.OAuth2Credentials(
             access_token=access['access_token'],
@@ -56,8 +55,7 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
 
         http = httplib2.Http()
         http = creds.authorize(http)
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider='google',
             user_id=user_id,
             token_data=access,

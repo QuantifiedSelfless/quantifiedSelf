@@ -75,4 +75,4 @@ class ListShowtimesHandler(BaseHandler):
                 "date": dateString,
                 "available_tickets": available_tickets,
             })
-        self.api_response({"result": result})
+        self.api_response(result)

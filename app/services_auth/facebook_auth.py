@@ -19,7 +19,6 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
         super(FacebookAuth, self).setProvider("facebook")
 
     def startFlow(self):
-        print('here')
         self.authorize_redirect(
             redirect_uri="{0}/auth/facebook".format(
                 self.application.settings['base_url']),

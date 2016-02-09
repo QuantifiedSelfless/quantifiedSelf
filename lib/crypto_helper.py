@@ -28,7 +28,7 @@ def create_keypair(passphrase=None, length=4096):
 
 
 def import_key(key_pem, passphrase=None):
-    return RSA.importKey(key_pem, passphrase=None)
+    return RSA.importKey(key_pem, passphrase)
 
 
 def generate_passphrase(length=32):

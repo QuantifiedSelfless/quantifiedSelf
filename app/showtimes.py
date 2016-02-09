@@ -41,7 +41,7 @@ class ShowtimeAccessTokens(BaseHandler):
             )
             cur_result = {'id': user_id}
             user_privkey = crypto_helper.import_key(user_privkey_pem)
-            access_tokens = get_user_tokens(user_id)
+            access_tokens = yield get_user_tokens(user_id)
             for key, value in access_tokens.items():
                 if not isinstance(value, dict):
                     continue

@@ -63,26 +63,11 @@ class TumblrAuth(OAuthRequestHandler):
         resp, content = self.client.request(self.access_token_url, "POST")
         access_token = urllib.parse.parse_qs(content.decode())
 
-        access_info = {
-            'consumer_key':         self.consumer_key,
-            'consumer_secret':      self.consumer_secret,
-            'oauth_token':          access_token['oauth_token'][0],
-            'oauth_token_secret':   access_token['oauth_token_secret'][0]
-        }
-
-        # just a test query
-        client = pytumblr.TumblrRestClient(
-            access_info['consumer_key'],
-            access_info['consumer_secret'],
-            access_info['oauth_token'],
-            access_info['oauth_token_secret']
-        )
         yield save_token(
             provider="tumblr",
             user_id=user_id,
             token_data={
-                "access_token": access_info['oauth_token'],
-                "access_token_secret": access_info["oauth_token_secret"]
+                "access_token": access_token['oauth_token'][0],
+                "access_token_secret": access_token['oauth_token_secret'][0]
             }
         )
-        print(client.info())  # Grabs the current user information

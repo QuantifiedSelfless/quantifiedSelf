@@ -34,7 +34,6 @@ class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
         access = yield self.get_authenticated_user(
                 redirect_uri=redir_uri,
                 code=code)
-        print(access)
         # from here use spotipy - pass it over to a scraper context
         yield save_token(
             provider="spotify",

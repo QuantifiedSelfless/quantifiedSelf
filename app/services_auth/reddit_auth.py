@@ -30,7 +30,6 @@ class RedditAuth(OAuthRequestHandler):
 
     @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
-        print('handle auth callback: ', code, user_id)
         access_info = self.reddit.get_access_information(code)
         self.reddit.set_access_credentials(**access_info)
 
@@ -42,5 +41,4 @@ class RedditAuth(OAuthRequestHandler):
         )
 
         # evenutually do an async fetch
-        user = self.reddit.get_me()
-        print(user)
+        # user = self.reddit.get_me()

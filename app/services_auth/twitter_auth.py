@@ -45,8 +45,6 @@ class TwitterAuth(OAuthRequestHandler):
             auth=oauth
         )
         credentials = parse_qs(r.content.decode())
-        print("\n\ncreds:")
-        print(credentials)
         access_token_key = credentials.get('oauth_token')[0]
         access_token_secret = credentials.get('oauth_token_secret')[0]
 

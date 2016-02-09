@@ -2,6 +2,7 @@ from tornado import gen
 import rethinkdb as r
 
 from .connection import connection
+from .utils import dump_cursor
 from .. import crypto_helper
 
 
@@ -10,7 +11,6 @@ def create_showtime_keys(showid, passphrase=None):
     if passphrase is None:
         passphrase = crypto_helper.generate_passphrase()
     shares = crypto_helper.split_passphrase(passphrase)
-    print(showid, passphrase, shares)
     public_key, private_key = crypto_helper.create_keypair(passphrase)
     conn = yield connection()
     data = {
@@ -55,7 +55,6 @@ def get_show_privatekey(showid, passphrase=None):
     conn = yield connection()
     privatekey = yield r.table('encryption_show'). \
         get(showid).get_field('private_key').run(conn)
-    print(privatekey)
     return crypto_helper.import_key(privatekey, passphrase)
 
 
@@ -73,4 +72,5 @@ def get_user_privatekey_from_showid(showid):
     result = yield r.table('encryption_user').filter({
         "showid": showid,
     }).run(conn)
+    result = yield dump_cursor(result)
     return result

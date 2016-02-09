@@ -1,20 +1,28 @@
 from tornado import web
 from tornado import gen
 from tornado import ioloop
+import json
 
 from lib.database import deny
 
 import time
 
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+        return json.JSONEncoder.default(self, obj)
+
+
 class BaseHandler(web.RequestHandler):
     def api_response(self, data, code=200, reason=None):
         self.add_header("Access-Control-Allow-Origin", "*")
-        self.write({
+        self.write(json.dumps({
             "status_code": code,
             "timestamp": time.time(),
             "data": data,
-        })
+        }, cls=JSONEncoder))
         self.set_status(code, reason)
         self.finish()
 

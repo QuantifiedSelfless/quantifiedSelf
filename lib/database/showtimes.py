@@ -1,7 +1,7 @@
 from tornado import gen
 import rethinkdb as r
 
-from .utils import dump_cursor
+from .encryption import create_showtime_keys
 from .connection import connection
 
 
@@ -18,15 +18,14 @@ def get_reservation_for_user(id):
 @gen.coroutine
 def get_showtimes():
     conn = yield connection()
-    result = yield r.table('showtimes').run(conn)
-    result = yield dump_cursor(result)
+    result = yield r.table('showtimes').order_by('date').run(conn)
     return result
 
 
 @gen.coroutine
-def get_showtime(id):
+def get_showtime(showid):
     conn = yield connection()
-    result = yield r.table('showtimes').get(id).run(conn)
+    result = yield r.table('showtimes').get(showid).run(conn)
     return result
 
 
@@ -40,7 +39,9 @@ def create_showtime(date, available_tickets=40):
     data = {
         'date': date,
         'available_tickets': available_tickets,
-        'max_booking' : available_tickets,
+        'max_booking': available_tickets,
     }
     result = yield r.table('showtimes').insert(data).run(conn)
-    return result['generated_keys']
+    show_id = result['generated_keys'][0]
+    yield create_showtime_keys(show_id)
+    return show_id

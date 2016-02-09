@@ -2,18 +2,16 @@ from tornado import gen
 import rethinkdb as r
 
 from .connection import connection
-from .showtimes import get_showtime
 from .. import crypto_helper
 
 
 @gen.coroutine
 def create_showtime_keys(showid, passphrase=None):
-    show = yield get_showtime(showid)
     if passphrase is None:
         passphrase = crypto_helper.generate_passphrase()
-    public_key, private_key = crypto_helper.create_keypair(passphrase)
     shares = crypto_helper.split_passphrase(passphrase)
-
+    print(showid, passphrase, shares)
+    public_key, private_key = crypto_helper.create_keypair(passphrase)
     conn = yield connection()
     data = {
         'public_key': public_key,
@@ -24,18 +22,15 @@ def create_showtime_keys(showid, passphrase=None):
     if not result['errors']:
         # email_sender.send_shares(show, shares)
         # TODO: this
-        print(shares)
+        pass
     return result
 
 
 @gen.coroutine
 def create_user_keys(userid, showid):
     conn = yield connection()
-    show_publickey_pem = yield r.table('encryption_show'). \
-        get(showid).pluck(['public_key']).run(conn)
     public_key, private_key = crypto_helper.create_keypair()
-
-    show_publickey = crypto_helper.import_key(show_publickey_pem)
+    show_publickey = yield get_show_publickey(showid)
     enc_priv_key = crypto_helper.encrypt_blob(show_publickey, private_key)
     data = {
         'public_key': public_key,
@@ -48,8 +43,34 @@ def create_user_keys(userid, showid):
 
 
 @gen.coroutine
+def get_show_publickey(showid):
+    conn = yield connection()
+    publickey = yield r.table('encryption_show'). \
+        get(showid).get_field('public_key').run(conn)
+    return crypto_helper.import_key(publickey)
+
+
+@gen.coroutine
+def get_show_privatekey(showid, passphrase=None):
+    conn = yield connection()
+    privatekey = yield r.table('encryption_show'). \
+        get(showid).get_field('private_key').run(conn)
+    print(privatekey)
+    return crypto_helper.import_key(privatekey, passphrase)
+
+
+@gen.coroutine
 def get_user_publickey(userid):
     conn = yield connection()
     publickey = yield r.table('encryption_user'). \
-        get(userid).pluck('public_key').run(conn)
+        get(userid).get_field('public_key').run(conn)
     return crypto_helper.import_key(publickey)
+
+
+@gen.coroutine
+def get_user_privatekey_from_showid(showid):
+    conn = yield connection()
+    result = yield r.table('encryption_user').filter({
+        "showid": showid,
+    }).run(conn)
+    return result

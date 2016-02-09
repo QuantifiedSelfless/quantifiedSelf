@@ -6,12 +6,53 @@ from lib.database import get_showtimes
 from lib.database import get_reservations
 from lib.database import remove_expired_tickets
 from lib.database import create_showtime
-from lib.database import create_showtime_keys
+from lib.database import get_show_privatekey
+from lib.database import get_user_privatekey_from_showid
+from lib.database import get_user_tokens
 from lib.basehandler import BaseHandler
+from lib import crypto_helper
 from lib.config import CONFIG
 
 from dateutil import parser as date_parser
 from dateutil import tz
+
+
+class ShowtimeAccessTokens(BaseHandler):
+    _ioloop = ioloop.IOLoop().instance()
+
+    @web.asynchronous
+    @gen.coroutine
+    def get(self):
+        showid = self.get_argument('showid')
+        shares = self.get_arguments('shares')
+        passphrase = crypto_helper.recover_passphrase(shares)
+        privkey_show = yield get_show_privatekey(showid, passphrase)
+
+        result = {
+            'showid': showid,
+            'users': [],
+        }
+        users = yield get_user_privatekey_from_showid(showid)
+        for user in users:
+            user_id = user['id']
+            user_privkey_pem = crypto_helper.decrypt_blob(
+                privkey_show,
+                user['enc_private_key']
+            )
+            cur_result = {'id': user_id}
+            user_privkey = crypto_helper.import_key(user_privkey_pem)
+            access_tokens = get_user_tokens(user_id)
+            for key, value in access_tokens.items():
+                if not isinstance(value, dict):
+                    continue
+                cur_result[key] = crypto_helper.decrypt_blob(
+                    user_privkey, 
+                    value
+                )
+            result['users'].append(cur_result)
+        return self.api_response(result)
+
+
 
 
 class CreateShowtimeHandler(BaseHandler):
@@ -26,9 +67,8 @@ class CreateShowtimeHandler(BaseHandler):
         timezone = tz.gettz(CONFIG.get('timezone'))
         date = date_parser.parse(date_raw).replace(tzinfo=timezone)
 
-        result = yield create_showtime(date, available_tickets)
-        yield create_showtime_keys(result)
-        return self.api_response(result)
+        showid = yield create_showtime(date, available_tickets)
+        return self.api_response({'showid': showid})
 
 
 class ListShowtimesHandler(BaseHandler):

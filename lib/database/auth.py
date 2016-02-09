@@ -39,11 +39,16 @@ def save_token(provider, user_id, token_data):
     conn = yield connection()
     data = {
         "id": user_id,
-        provider: {
-            "token": token_data_enc,
-        }
+        provider: token_data_enc,
     }
     result = yield r.table('auth').insert(data, conflict='update').run(conn)
+    return result
+
+
+@gen.coroutine
+def get_user_tokens(user_id):
+    conn = yield connection()
+    result = yield r.table('auth').get(user_id).run(conn)
     return result
 
 

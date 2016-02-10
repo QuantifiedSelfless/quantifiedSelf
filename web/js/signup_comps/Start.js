@@ -60,12 +60,12 @@ var Start = React.createClass({
 
     render: function () {
         var myTimes = [];
+        myTimes.push({"id": 99999, "date": "Please Choose a Date"});
         for (var i in this.state.times) {
             if (this.state.times[i]['available_tickets'] > 0){
                 myTimes.push(this.state.times[i]);
             }
         }
-
         return (
             <div className="clearfix mb3">
                 <div className="col-10 mx-auto white">
@@ -78,8 +78,12 @@ var Start = React.createClass({
                         <form name="user-form">
                             <label>Ticket Date</label>
                             <select onChange={this.changeDate} className="block mb2 mx-auto field">
-                                {myTimes.map(function ( atime ) {
-                                    return <option value={atime.id}>{atime.date}</option>;
+                                {myTimes.map(function ( atime, i ) {
+                                    if (i == 0) {
+                                        return <option value={atime.id} selected>{atime.date}</option>;
+                                    } else {
+                                        return <option value={atime.id}>{atime.date}</option>;
+                                    }
                                 })}
                             </select>
                             <label>Full Name</label>

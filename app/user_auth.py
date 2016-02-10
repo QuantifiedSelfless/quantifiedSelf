@@ -54,10 +54,8 @@ class UserAuth(BaseHandler):
                     "Sorry, you already have a ticket for the show."
                 )
         else:
-            user_id = str(uuid.uuid1())
+            user_id = yield user_insert(name, email, showtime_id)
             self.set_secure_cookie("user_id", user_id)
-            data = {"id": str(id), "name": name, "email": email}
-            yield user_insert(data)
 
         # Create a reservation: note that all previous unconfirmed reservations
         # will be lost

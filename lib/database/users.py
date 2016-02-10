@@ -2,22 +2,25 @@ from tornado import gen
 import rethinkdb as r
 
 from .connection import connection
+from .encryption import create_user_keys
 
 
 @gen.coroutine
-def user_insert(data):
+def user_insert(name, email, showid):
     conn = yield connection()
-    result = yield r.table('users').insert(
-            data,
-            conflict="update",
-            ).run(conn)
-    return result
+    result = yield r.table('users').insert({
+        "name": name,
+        "email": email,
+    }, conflict="update").run(conn)
+    user_id = result['generated_keys'][0]
+    yield create_user_keys(user_id, showid)
+    return user_id
 
 
 @gen.coroutine
-def get_user(id):
+def get_user(uid):
     conn = yield connection()
-    result = yield r.table('users').get(id).run(conn)
+    result = yield r.table('users').get(uid).run(conn)
     return result
 
 
@@ -28,3 +31,5 @@ def get_user_from_email(email):
     if result.items:
         return result.items[0]
     return None
+
+

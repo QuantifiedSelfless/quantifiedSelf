@@ -1,3 +1,4 @@
+from tornado import gen
 from tornado import auth
 
 from lib.database import save_token
@@ -18,7 +19,6 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
         super(FacebookAuth, self).setProvider("facebook")
 
     def startFlow(self):
-        print('here')
         self.authorize_redirect(
             redirect_uri="{0}/auth/facebook".format(
                 self.application.settings['base_url']),
@@ -27,6 +27,7 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
             scope=self.scope)
         return
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         access = yield self.get_authenticated_user(
             redirect_uri="{0}/auth/facebook".format(
@@ -36,10 +37,8 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
             code=code,
         )
 
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider='facebook',
             user_id=user_id,
             token_data=access
         )
-        print(access)

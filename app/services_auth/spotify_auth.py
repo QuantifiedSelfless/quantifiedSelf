@@ -1,3 +1,5 @@
+from tornado import gen
+
 from . import spotifyMix as spot
 from lib.database import save_token
 from lib.basehandler import OAuthRequestHandler
@@ -25,16 +27,15 @@ class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
                 scope=self.scope,
                 )
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         redir_uri = '{0}/auth/spotify'.format(
             self.application.settings['base_url'])
         access = yield self.get_authenticated_user(
                 redirect_uri=redir_uri,
                 code=code)
-        print(access)
         # from here use spotipy - pass it over to a scraper context
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="spotify",
             user_id=user_id,
             token_data=access

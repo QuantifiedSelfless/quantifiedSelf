@@ -1,3 +1,4 @@
+from tornado import gen
 import oauth2 as oauth
 import pytumblr
 import urllib.parse
@@ -43,11 +44,12 @@ class TumblrAuth(OAuthRequestHandler):
             request_token['oauth_token'][0]
         ))
 
+    @gen.coroutine
     def handleAuthCallBack(self, code, user_id):
         oauth_verifier = self.get_argument('oauth_verifier', None)
         oauth_token = self.get_argument('oauth_token', None)
         auth_session_id = self.get_secure_cookie("auth-session-id", None)
-        oauth_token_secret = secrets[auth_session_id.decode()]
+        oauth_token_secret = secrets[auth_session_id]
 
         # Clear cookies and dictionary
         self.clear_cookie("auth-session-id")
@@ -61,27 +63,11 @@ class TumblrAuth(OAuthRequestHandler):
         resp, content = self.client.request(self.access_token_url, "POST")
         access_token = urllib.parse.parse_qs(content.decode())
 
-        access_info = {
-            'consumer_key':         self.consumer_key,
-            'consumer_secret':      self.consumer_secret,
-            'oauth_token':          access_token['oauth_token'][0],
-            'oauth_token_secret':   access_token['oauth_token_secret'][0]
-        }
-
-        # just a test query
-        client = pytumblr.TumblrRestClient(
-            access_info['consumer_key'],
-            access_info['consumer_secret'],
-            access_info['oauth_token'],
-            access_info['oauth_token_secret']
-        )
-        self._ioloop.add_callback(
-            save_token,
+        yield save_token(
             provider="tumblr",
             user_id=user_id,
             token_data={
-                "access_token": access_info['oauth_token'],
-                "access_token_secret": access_info["oauth_token_secret"]
+                "access_token": access_token['oauth_token'][0],
+                "access_token_secret": access_token['oauth_token_secret'][0]
             }
         )
-        print(client.info())  # Grabs the current user information

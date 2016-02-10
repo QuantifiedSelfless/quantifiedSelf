@@ -21,9 +21,14 @@ def create_keypair(passphrase=None, length=4096):
     rsa1 = RSA.generate(length)
     private_key = rsa1
     public_key = rsa1.publickey()
-    private_exp = private_key.exportKey('PEM', passphrase=passphrase)
+    private_exp = private_key. \
+        exportKey('PEM', passphrase=passphrase)
     public_exp = public_key.exportKey('PEM')
     return public_exp, private_exp
+
+
+def import_key(key_pem, passphrase=None):
+    return RSA.importKey(key_pem, passphrase)
 
 
 def generate_passphrase(length=32):
@@ -61,15 +66,14 @@ def encrypt_blob(public_key, data, aes_bytes=32, aes_mode=AES_MODE):
     data_enc = aes_crypto.encrypt(pad_data(data_pickle))
 
     aes_key_enc = public_crypto.encrypt(aes_key)
-    return aes_iv + len(aes_key_enc) + aes_key_enc + data_enc
+    return aes_iv + aes_key_enc + data_enc
 
 
 def decrypt_blob(private_key, data, aes_mode=AES_MODE):
     try:
         iv = data[:16]
-        aes_length = data[16]
-        aes_key_enc = data[17:17+aes_length]
-        data_enc_padded = data[17+aes_length:]
+        aes_key_enc = data[16:16+512]
+        data_enc_padded = data[16+512:]
     except IndexError:
         raise InvalidBlob
 
@@ -77,9 +81,9 @@ def decrypt_blob(private_key, data, aes_mode=AES_MODE):
     aes_key = private_crypto.decrypt(aes_key_enc)
     aes_crypto = AES.new(aes_key, aes_mode, iv)
 
-    data_enc = data_enc_padded[:-data_enc_padded[-1]]
-    data = aes_crypto.decrypt(data_enc)
+    data_padded = aes_crypto.decrypt(data_enc_padded)
+    data = data_padded[:-data_padded[-1]]
     try:
-        return pickle.loads(data_enc)
+        return pickle.loads(data)
     except Exception:
         raise InvalidData

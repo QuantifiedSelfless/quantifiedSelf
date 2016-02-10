@@ -10,47 +10,10 @@ var Start = React.createClass({
     },
 
     getDates: function () {
-        // $.get("/tickets", function ( data ){
-            
-        //     this.setState(times: data['result']);
-
-        // });
-
-        data = [
-            {
-            date: "Saturday 30, April - 08:00PM",
-            duration: 2,
-            available_tickets: 4,
-            id: "b1852ec4-71e1-42a2-8521-1b67c4cef04d"
-            },
-            {
-            date: "Sunday 01, May - 08:00PM",
-            duration: 2,
-            available_tickets: 1,
-            id: "f89079e0-1163-42a6-a3e4-62ac8cc6a0e1"
-            },
-            {
-            date: "Monday 02, May - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "fba663e8-a5f0-40a1-bb28-98df3ba7a024"
-            },
-            {
-            date: "Sunday 01, May - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "d3da1b13-a479-4e5d-bb47-8e2838f40ead"
-            },
-            {
-            date: "Saturday 30, April - 01:30AM",
-            duration: 2,
-            available_tickets: 40,
-            id: "e4f77fb0-1676-4e3e-ba52-0a3ea22c6423"
-            }
-            ];
-        
-        this.setState({times: data});
-
+        var me = this;
+        $.getJSON("/api/showtimes", function ( data ){
+            me.setState({times: data['data']});
+        }).fail(function () { alert('call to api/showtimes failed');});
     },
 
     componentWillMount: function () {
@@ -97,12 +60,12 @@ var Start = React.createClass({
 
     render: function () {
         var myTimes = [];
+        myTimes.push({"id": 99999, "date": "Please Choose a Date"});
         for (var i in this.state.times) {
             if (this.state.times[i]['available_tickets'] > 0){
                 myTimes.push(this.state.times[i]);
             }
         }
-
         return (
             <div className="clearfix mb3">
                 <div className="col-10 mx-auto white">
@@ -115,8 +78,12 @@ var Start = React.createClass({
                         <form name="user-form">
                             <label>Ticket Date</label>
                             <select onChange={this.changeDate} className="block mb2 mx-auto field">
-                                {myTimes.map(function ( atime ) {
-                                    return <option value={atime.id}>{atime.date}</option>;
+                                {myTimes.map(function ( atime, i ) {
+                                    if (i == 0) {
+                                        return <option value={atime.id} selected>{atime.date}</option>;
+                                    } else {
+                                        return <option value={atime.id}>{atime.date}</option>;
+                                    }
                                 })}
                             </select>
                             <label>Full Name</label>

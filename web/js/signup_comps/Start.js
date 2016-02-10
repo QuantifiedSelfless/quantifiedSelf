@@ -14,6 +14,7 @@ var Start = React.createClass({
         $.get("/api/showtimes", function ( data ){
             me.setState({times: data['data']});
         }).fail(function () { alert('call to api/showtimes failed');});
+        me.forceUpdate();
     },
 
     componentWillMount: function () {

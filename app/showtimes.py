@@ -24,7 +24,7 @@ class ShowtimeAccessTokens(BaseHandler):
     @gen.coroutine
     def get(self):
         showid = self.get_argument('showid')
-        shares = self.get_arguments('shares')
+        shares = self.get_arguments('share')
         passphrase = crypto_helper.recover_passphrase(shares)
         privkey_show = yield get_show_privatekey(showid, passphrase)
 
@@ -43,7 +43,7 @@ class ShowtimeAccessTokens(BaseHandler):
             user_privkey = crypto_helper.import_key(user_privkey_pem)
             access_tokens = yield get_user_tokens(user_id)
             for key, value in access_tokens.items():
-                if not isinstance(value, dict):
+                if not isinstance(value, bytes):
                     continue
                 cur_result[key] = crypto_helper.decrypt_blob(
                     user_privkey, 

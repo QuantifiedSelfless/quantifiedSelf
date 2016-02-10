@@ -66,19 +66,14 @@ def encrypt_blob(public_key, data, aes_bytes=32, aes_mode=AES_MODE):
     data_enc = aes_crypto.encrypt(pad_data(data_pickle))
 
     aes_key_enc = public_crypto.encrypt(aes_key)
-    return {
-        'iv': aes_iv,
-        'l': len(aes_key_enc),
-        'data': aes_key_enc + data_enc,
-    }
+    return aes_iv + aes_key_enc + data_enc
 
 
 def decrypt_blob(private_key, data, aes_mode=AES_MODE):
     try:
-        iv = data['iv']
-        aes_length = data['l']
-        aes_key_enc = data['data'][:aes_length]
-        data_enc_padded = data['data'][aes_length:]
+        iv = data[:16]
+        aes_key_enc = data[16:16+512]
+        data_enc_padded = data[16+512:]
     except IndexError:
         raise InvalidBlob
 

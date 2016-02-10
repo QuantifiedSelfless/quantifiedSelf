@@ -17,6 +17,7 @@ class JSONEncoder(json.JSONEncoder):
 
 class BaseHandler(web.RequestHandler):
     def api_response(self, data, code=200, reason=None):
+        self.set_header("Content-Type", "application/json")
         self.add_header("Access-Control-Allow-Origin", "*")
         self.write(json.dumps({
             "status_code": code,

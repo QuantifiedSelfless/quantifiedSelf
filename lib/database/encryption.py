@@ -20,6 +20,7 @@ def create_showtime_keys(showid, passphrase=None):
     }
     result = yield r.table('encryption_show').insert(data).run(conn)
     if not result['errors']:
+        print(showid, shares)
         # email_sender.send_shares(show, shares)
         # TODO: this
         pass

@@ -11,10 +11,9 @@ var Start = React.createClass({
 
     getDates: function () {
         var me = this;
-        $.get("/api/showtimes", function ( data ){
+        $.getJSON("/api/showtimes", function ( data ){
             me.setState({times: data['data']});
         }).fail(function () { alert('call to api/showtimes failed');});
-        me.forceUpdate();
     },
 
     componentWillMount: function () {

@@ -12,8 +12,7 @@ var Start = React.createClass({
     getDates: function () {
         var me = this;
         $.get("/api/showtimes", function ( data ){
-            me.setState({times: data['data']})
-            console.log(data['data']);
+            me.setState({times: data['data']});
         }).fail(function () { alert('call to api/showtimes failed');});
     },
 

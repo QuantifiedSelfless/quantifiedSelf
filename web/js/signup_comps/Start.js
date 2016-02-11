@@ -74,6 +74,7 @@ var Start = React.createClass({
                     <p><b>Location: </b>University of Colorado, ATLAS Blackbox Theater</p>
                     <p><b>Price: </b><em>Free!</em> Due to kind donations from the John S. and James L. Knight Foundation and CU-Boulder's Engineering Excellence Fund our first show will be free. Though due to high demand and limited space we ask you to cancel early if you decide not to come.</p>
                     <p>Since our show is an immersive, interactive performance, we are asking that you'll share some information with us during your reservation process. We anticipate that this RSVP process will take you 2-4 minutes. Once you hit the submit button below, we will hold your ticket for 15 minutes. If you do not finish your RSVP within 15 minutes you will need to start over.</p>
+                    <p className="red">We are not yet taking RSVPs, but will open for reservations the first week of March</p>
                     
                     <div className="center">
                         <form name="user-form">

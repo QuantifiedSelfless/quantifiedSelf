@@ -57,6 +57,10 @@ class UserUnauth(web.RequestHandler):
     def get(self):
         self.render("deauth.html")
 
+class NewsHandler(web.RequestHandler):
+    def get(self):
+        self.render("news.html")
+
 
 if __name__ == "__main__":
     options.parse_command_line()
@@ -77,6 +81,7 @@ if __name__ == "__main__":
         [
             (r'/', MainHandler),
             (r'/test', TestHandler),
+            (r'/news', NewsHandler),
             (r'/signup', SignupHandler),
             (r'/user/info', UserAuth),
             (r'/deauth', UserDeauth),

@@ -141,6 +141,23 @@
     border-color: white;
 }
 
+#faq {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;  
+}
+
+#faq h3 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#faq .border-bottom {
+    border-color: white;
+}
+
+#faq p {
+    margin-left: 15px;
+}
+
 #start {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
@@ -211,4 +228,37 @@
 
 #thankyou h2 {
     font-family: 'Quicksand', sans-serif;
+}
+
+#news {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+#news h1 {
+    font-family: 'Arvo', sans-serif;
+}
+
+.news-stub {
+    border-bottom: 3px dashed #37483e;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.news-stub h2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.news-stub p {
+    margin-left: 1em;
+}
+
+.news-stub a {
+    text-decoration: none;
+}
+
+.date {
+    font-size: 14px;
 }

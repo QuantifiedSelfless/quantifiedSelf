@@ -11,7 +11,7 @@ var gutil = require('gulp-util');
 var _ = require('lodash');
 
 var path = {
-    HTML: ['html/home.html','html/policy.html', 'html/chat.html', 'html/signup.html', 'html/index.html', 'html/about.html', 'html/deauth.html', 'html/closewindow.html'],
+    HTML: ['html/home.html','html/policy.html', 'html/chat.html', 'html/signup.html', 'html/index.html', 'html/about.html', 'html/deauth.html', 'html/closewindow.html', 'html/news.html'],
     FINAL_HTML: '../templates/',
     ALL: ['js/*.js', 'js/**/*.js', 'html/*.html'],
     REACT_JS: ['js/*.js'],

@@ -65,9 +65,3 @@ class UserAuth(BaseHandler):
     def isShowTimeAvailable(self, showtime):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
         return len(allReservations) < showtime["max_booking"]
-
-    def safe_get_argument(self, object, key):
-        if key in object:
-            return object[key]
-        else:
-            return None

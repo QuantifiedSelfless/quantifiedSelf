@@ -1,9 +1,9 @@
 from tornado import gen
 import rethinkdb as r
+import cryptohelper
 
 from .connection import connection
 from .encryption import get_user_publickey
-from .. import crypto_helper
 
 
 @gen.coroutine
@@ -35,7 +35,7 @@ def delete_user_data(id):
 @gen.coroutine
 def save_token(provider, user_id, token_data):
     publickey = yield get_user_publickey(user_id)
-    token_data_enc = crypto_helper.encrypt_blob(publickey, token_data)
+    token_data_enc = cryptohelper.encrypt_blob(publickey, token_data)
     conn = yield connection()
     data = {
         "id": user_id,

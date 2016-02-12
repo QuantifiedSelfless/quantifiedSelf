@@ -14,41 +14,49 @@ class EmailSender:
         self.client = smtplib.SMTP_SSL(self.server, self.port)
         self.client.login(self.username, self.password)
 
-    def SendConfirmation(self, email, name):
-        fp = open('lib/email_templates/confirmation.html', 'rb')
-        msg = MIMEText(fp.read().format(name), 'html')
-        fp.close()
-        msg['Subject'] = 'Ticket Confirmation - Quantified Self'
-        msg['From'] = self.username
-        msg['To'] = email
-        self.client.sendmail(msg['From'], [msg['To']], msg.as_string())
-        # client.close()
-
-    def SendDeauthorizationEmail(self, email, name, link):
-        fp = open('lib/email_templates/deauthorization.html', 'rb')
-        msg = MIMEText(fp.read().format(name, link), 'html')
-        fp.close()
-        msg['Subject'] = 'Deauthorize - Quantified Self'
+    def send_email(self, email, subject, template, meta):
+        with open('lib/email_templates/' + template, 'rb') as fp:
+            msg = MIMEText(fp.read().format(meta), 'html')
+        msg['Subject'] = subject
         msg['From'] = self.username
         msg['To'] = email
         self.client.sendmail(msg['From'], [msg['To']], msg.as_string())
 
 
 @gen.coroutine
-def send_confirmation(user, name):
+def send_confirmation(email, name):
     sender = EmailSender(
         CONFIG.get('email_address'),
         CONFIG.get('email_pass')
     )
-    conf = sender.SendConfirmation(user, name)
-    raise gen.Return(conf)
+    sender.send_email(
+        email,
+        name,
+        'Ticket Confirmation - Quantified Self',
+        'confirmation.html',
+        {'name': name}
+    )
 
 
 @gen.coroutine
-def send_deauthorization(user, name, link):
+def send_deauthorization(email, name, link):
     sender = EmailSender(
         CONFIG.get('email_address'),
         CONFIG.get('email_pass')
     )
-    conf = sender.SendDeauthorizationEmail(user, name, link)
-    raise gen.Return(conf)
+    sender.send_email(
+        email,
+        name,
+        'Deauthorize - Quantified Self',
+        'deauthorization.html',
+        {'name': name, 'link': link}
+    )
+
+
+@gen.coroutine
+def send_email(email, name, subject, template, meta):
+    sender = EmailSender(
+        CONFIG.get('email_address'),
+        CONFIG.get('email_pass')
+    )
+    sender.send_email(email, name, subject, template, meta)

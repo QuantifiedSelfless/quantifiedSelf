@@ -78,7 +78,6 @@ if __name__ == "__main__":
             (r'/', MainHandler),
             (r'/test', TestHandler),
             (r'/signup', SignupHandler),
-            (r'/user/info', UserAuth),
             (r'/deauth', UserDeauth),
             (r'/leave', UserUnauth),
             (r'/policy', PolicyHandler),
@@ -91,6 +90,8 @@ if __name__ == "__main__":
             (r'/auth/tumblr', TumblrAuth),
             (r'/auth/instagram', InstagramAuth),
             (r'/auth/close', CloseWindow),
+
+            (r'/user/info', UserAuth),
 
             (r'/api/showtimes', ListShowtimesHandler),
             (r'/api/showtimes/access_tokens', ShowtimeAccessTokens),

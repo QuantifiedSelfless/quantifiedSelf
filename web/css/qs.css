@@ -2,6 +2,10 @@
     --container-width: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: #d3bb5b;
+}
 
 #nav {
     font-family: 'Arvo', sans-serif;
@@ -74,6 +78,11 @@
     color: #d2bb5d;
 }
 
+.tiny {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+}
+
 #sponsors {
 
     color: white;
@@ -87,7 +96,7 @@
 #policy {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     height: 80%;
     color: white;
 }
@@ -164,7 +173,14 @@
 }
 
 #start h1 {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Arvo', sans-serif;
+}
+
+.user-block {
+    border-bottom: 3px dashed #37483e;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    display: none;
 }
 
 #privacy {

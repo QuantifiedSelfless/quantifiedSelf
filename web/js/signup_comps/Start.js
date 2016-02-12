@@ -71,12 +71,12 @@ var Start = React.createClass({
             <div className="clearfix mb3">
                 <div className="col-10 mx-auto white">
                     <h1 className="center py1">Quantified Self Ticketing</h1>
-                    <p><b>Location: </b>University of Colorado, ATLAS Blackbox Theater</p>
+                    <p><b>Location: </b>University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>
                     <p><b>Price: </b><em>Free!</em> Due to kind donations from the John S. and James L. Knight Foundation and CU-Boulder's Engineering Excellence Fund our first show will be free. Though due to high demand and limited space we ask you to cancel early if you decide not to come.</p>
-                    <p>Since our show is an immersive, interactive performance, we are asking that you'll share some information with us during your reservation process. We anticipate that this RSVP process will take you 2-4 minutes. Once you hit the submit button below, we will hold your ticket for 15 minutes. If you do not finish your RSVP within 15 minutes you will need to start over.</p>
-                    <p className="red">We are not yet taking RSVPs, but will open for reservations the first week of March</p>
+                    <p>Since our show is an immersive, interactive performance, we are asking that you share some information with us during your reservation process. We anticipate that this RSVP process will take you 2-4 minutes. Once you hit the submit button below, we will hold your ticket for 15 minutes. If you do not finish your RSVP within 15 minutes you will need to start over. You will be required to show valid government ID at the door on the night of the show that proves your identity and that you are over 18.</p>
+                    <p className="red">We are not yet taking RSVPs, please return the first week of March to make a reservation.</p>
                     
-                    <div className="center">
+                    <div className="center border-bottom user-block">
                         <form name="user-form">
                             <label>Ticket Date</label>
                             <select onChange={this.changeDate} className="block mb2 mx-auto field">
@@ -94,10 +94,21 @@ var Start = React.createClass({
                             <input type="email" ref="useremail" size="60" className="block mb2 field mx-auto" placeholder="email@domain.com" onChange={this.handleEmailChange} />
                             <button onClick={this.submitVals} type="submit" className="block btn btn-primary mx-auto">Submit</button>
                         </form>
+                        <br />
+                    </div>
+                    <div className="center py2 social">
+                        <p>Tickets sold out or not in your location? Find out when we announce new dates or public events by joining our mailing list.</p>
+                        <form action="http://www.freelists.org/cgi-bin/subscription.cgi" method="post"> 
+                            <input className="block col-6 field rounded-top y-group-item mx-auto mb1"type="text" placeholder="email@domain.com" name="email"/> 
+                            <input type="hidden" name="list" value="quantifiedself" /> 
+                            <input type="hidden" name="url_or_message" value="Thanks for subscribing! Please check your email to confirm your subscription. Hope to see you at one of our shows."/> 
+                            <input type="hidden" name="action" value="subscribe" /> 
+                            <input className="btn btn-outline py2" type="submit" value="Sign Up" />
+                        </form>
+                        <p className="tiny py1">We do not share your information with anyone, and will only contact you to announce new dates and events for our production.</p>
                     </div>
                 </div>
             </div>
-                    
 
         )
     },

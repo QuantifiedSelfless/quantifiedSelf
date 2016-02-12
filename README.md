@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/QuantifiedSelfless/quantifiedSelf.png?label=ready&title=Ready)](https://waffle.io/QuantifiedSelfless/quantifiedSelf)
 # Quantified Self
 
 ## Install

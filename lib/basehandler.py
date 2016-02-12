@@ -1,9 +1,9 @@
 from tornado import web
 from tornado import gen
-import json
 
 from lib.database import deny
 
+import json
 import time
 
 
@@ -11,6 +11,8 @@ class JSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, set):
             return list(obj)
+        elif isinstance(obj, bytes):
+            return obj.decode('utf8')
         return json.JSONEncoder.default(self, obj)
 
 

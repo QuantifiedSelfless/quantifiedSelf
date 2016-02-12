@@ -68,7 +68,7 @@ def get_user_publickey(userid):
 
 
 @gen.coroutine
-def get_user_privatekey_from_showid(showid):
+def get_user_keypair_from_showid(showid):
     conn = yield connection()
     result = yield r.table('encryption_user').filter({
         "showid": showid,

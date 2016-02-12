@@ -80,6 +80,7 @@ var Auth = React.createClass({
             <div className="clearfix white py3">
                 <div className="col-10 mx-auto">
                     <p className="center">Please go through our list of providers and share with us as many as possible. We only store what is necessary for the show. We also encrypt all information and delete all of your shared information after your visit. The more information you provide, the better the experience.</p>
+                    <p className="center">Commonly people ask us about GMail data use so we want to tell you here that no human EVER looks at your raw gmail data. For more info <a href="/about#faq">see our FAQ page</a></p>
                 </div>
                 <div className="col-8 mx-auto py1">
                     <div className="social flex flex-column">

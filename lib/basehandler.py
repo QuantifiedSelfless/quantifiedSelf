@@ -1,6 +1,5 @@
 from tornado import web
 from tornado import gen
-from tornado import ioloop
 import json
 
 from lib.database import deny
@@ -40,8 +39,6 @@ class BaseHandler(web.RequestHandler):
 
 
 class OAuthRequestHandler(BaseHandler):
-    _ioloop = ioloop.IOLoop().instance()
-
     def setProvider(self, provider):
         self.provider = provider
         self.setCallBackArgumentName("code")
@@ -54,11 +51,10 @@ class OAuthRequestHandler(BaseHandler):
     def get(self):
         user_id = self.get_secure_cookie("user_id", None)
         if self.get_argument('error', None):
-            self._ioloop.add_callback(
-                deny,
+            yield deny(
                 provider=self.provider,
-                share="login deny",
-                user_id=user_id
+                user_id=user_id,
+                reason="login deny",
             )
             return self.finishAuthRequest("failed")
 
@@ -71,11 +67,10 @@ class OAuthRequestHandler(BaseHandler):
             return self.finishAuthRequest("success")
         elif self.get_argument('share', None):
             reason = self.get_argument('share', None)
-            self._ioloop.add_callback(
-                deny,
+            yield deny(
                 provider=self.provider,
-                share=reason,
-                user_id=user_id
+                user_id=user_id,
+                reason=reason,
             )
             print("no share provided")
             return self.redirect("{0}/auth/close".format(

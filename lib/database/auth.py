@@ -46,20 +46,13 @@ def save_token(provider, user_id, token_data):
 
 
 @gen.coroutine
-def get_user_tokens(user_id):
-    conn = yield connection()
-    result = yield r.table('auth').get(user_id).run(conn)
-    return result
+def deny(provider, user_id, reason):
+    data = {"denied": reason}
+    return (yield save_token(provider, user_id,  data))
 
 
 @gen.coroutine
-def deny(provider, share, user_id):
+def get_user_tokens(user_id):
     conn = yield connection()
-    result = yield r.table('auth').insert({
-        "id": user_id,
-        provider: {
-            "error": share,
-            "token": None,
-        }
-    }, conflict='update',).run(conn)
+    result = yield r.table('auth').get(user_id).run(conn)
     return result

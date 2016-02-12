@@ -1,7 +1,7 @@
 from tornado import gen
 
 from . import spotifyMix as spot
-from lib.database import save_token
+from lib.database.auth import save_token
 from lib.basehandler import OAuthRequestHandler
 
 

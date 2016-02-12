@@ -2,13 +2,13 @@ from tornado import gen
 from tornado import web
 from tornado import ioloop
 
-from lib.database import get_showtimes
-from lib.database import get_reservations
-from lib.database import remove_expired_tickets
-from lib.database import create_showtime
-from lib.database import get_show_privatekey
-from lib.database import get_user_keypair_from_showid
-from lib.database import get_user_tokens
+from lib.database.showtimes import get_showtimes
+from lib.database.reservations import get_reservations
+from lib.database.reservations import remove_expired_tickets
+from lib.database.showtimes import create_showtime
+from lib.database.encryption import get_show_privatekey
+from lib.database.encryption import get_user_keypair_from_showid
+from lib.database.auth import get_user_tokens
 from lib.basehandler import BaseHandler
 from lib.config import CONFIG
 

@@ -1,7 +1,7 @@
 from tornado import web
 from tornado import gen
 
-from lib.database import deny
+from lib.database.auth import deny
 
 import json
 import time

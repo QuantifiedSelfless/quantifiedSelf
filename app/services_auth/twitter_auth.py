@@ -4,7 +4,7 @@ import requests
 from requests_oauthlib import OAuth1
 from urllib.parse import parse_qs
 
-from lib.database import save_token
+from lib.database.auth import save_token
 
 from lib.basehandler import OAuthRequestHandler
 

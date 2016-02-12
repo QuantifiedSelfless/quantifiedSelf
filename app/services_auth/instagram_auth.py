@@ -1,6 +1,6 @@
 from tornado import gen
 from instagram.client import InstagramAPI
-from lib.database import save_token
+from lib.database.auth import save_token
 
 from lib.basehandler import OAuthRequestHandler
 

@@ -2,10 +2,10 @@ from tornado import web
 from tornado import ioloop
 from tornado import gen
 
-from lib.database import get_user_from_email
-from lib.database import pop_deauth_request
-from lib.database import create_deauth_request
-from lib.database import delete_user_data
+from lib.database.users import get_user_from_email
+from lib.database.auth import pop_deauth_request
+from lib.database.auth import create_deauth_request
+from lib.database.auth import delete_user_data
 from lib.email_sender import send_deauthorization
 
 import uuid

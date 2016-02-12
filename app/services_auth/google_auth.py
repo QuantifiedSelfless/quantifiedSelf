@@ -4,7 +4,7 @@ from tornado import gen
 from oauth2client import client
 import httplib2
 
-from lib.database import save_token
+from lib.database.auth import save_token
 from lib.basehandler import OAuthRequestHandler
 
 

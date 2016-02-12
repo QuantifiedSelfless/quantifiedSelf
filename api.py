@@ -78,7 +78,6 @@ if __name__ == "__main__":
             (r'/', MainHandler),
             (r'/test', TestHandler),
             (r'/signup', SignupHandler),
-            (r'/user/info', UserAuth),
             (r'/deauth', UserDeauth),
             (r'/leave', UserUnauth),
             (r'/policy', PolicyHandler),
@@ -92,6 +91,8 @@ if __name__ == "__main__":
             (r'/auth/instagram', InstagramAuth),
             (r'/auth/close', CloseWindow),
 
+            (r'/user/info', UserAuth),
+
             (r'/api/showtimes', ListShowtimesHandler),
             (r'/api/showtimes/access_tokens', ShowtimeAccessTokens),
             (r'/api/showtimes/create', CreateShowtimeHandler),
@@ -100,7 +101,7 @@ if __name__ == "__main__":
         template_path="./templates/",
         static_path="./static/",
         debug=debug,
-        cookie_secret="weareseriouslyquantifyingyousohard&**@8274djfkaJJ%%93823#9djdk$<PP?",
+        cookie_secret=CONFIG.get('cookie_secret'),
         base_url=CONFIG.get('base_url'),
         **oauth_creds
     )

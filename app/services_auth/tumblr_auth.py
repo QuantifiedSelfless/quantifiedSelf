@@ -5,7 +5,7 @@ import urllib.parse
 import string
 import random
 
-from lib.database import save_token
+from lib.database.auth import save_token
 
 from lib.basehandler import OAuthRequestHandler
 

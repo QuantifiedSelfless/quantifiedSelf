@@ -2,12 +2,12 @@ from tornado import gen
 from tornado import web
 from tornado import ioloop
 
-from lib.database import user_insert
-from lib.database import create_ticket_reservation
-from lib.database import get_reservations_for_showtime
-from lib.database import get_reservation_for_user
-from lib.database import get_showtime
-from lib.database import get_user_from_email
+from lib.database.users import user_insert
+from lib.database.users import get_user_from_email
+from lib.database.reservations import create_ticket_reservation
+from lib.database.reservations import get_reservations_for_showtime
+from lib.database.showtimes import get_reservation_for_user
+from lib.database.showtimes import get_showtime
 from lib.basehandler import BaseHandler
 
 import uuid
@@ -65,9 +65,3 @@ class UserAuth(BaseHandler):
     def isShowTimeAvailable(self, showtime):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
         return len(allReservations) < showtime["max_booking"]
-
-    def safe_get_argument(self, object, key):
-        if key in object:
-            return object[key]
-        else:
-            return None

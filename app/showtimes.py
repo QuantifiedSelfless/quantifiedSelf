@@ -2,19 +2,19 @@ from tornado import gen
 from tornado import web
 from tornado import ioloop
 
-from lib.database import get_showtimes
-from lib.database import get_reservations
-from lib.database import remove_expired_tickets
-from lib.database import create_showtime
-from lib.database import get_show_privatekey
-from lib.database import get_user_privatekey_from_showid
-from lib.database import get_user_tokens
+from lib.database.showtimes import get_showtimes
+from lib.database.reservations import get_reservations
+from lib.database.reservations import remove_expired_tickets
+from lib.database.showtimes import create_showtime
+from lib.database.encryption import get_show_privatekey
+from lib.database.encryption import get_user_keypair_from_showid
+from lib.database.auth import get_user_tokens
 from lib.basehandler import BaseHandler
-from lib import crypto_helper
 from lib.config import CONFIG
 
 from dateutil import parser as date_parser
 from dateutil import tz
+import cryptohelper
 
 
 class ShowtimeAccessTokens(BaseHandler):
@@ -25,34 +25,35 @@ class ShowtimeAccessTokens(BaseHandler):
     def get(self):
         showid = self.get_argument('showid')
         shares = self.get_arguments('share')
-        passphrase = crypto_helper.recover_passphrase(shares)
+        passphrase = cryptohelper.recover_passphrase(shares)
         privkey_show = yield get_show_privatekey(showid, passphrase)
 
         result = {
             'showid': showid,
             'users': [],
         }
-        users = yield get_user_privatekey_from_showid(showid)
+        users = yield get_user_keypair_from_showid(showid)
         for user in users:
             user_id = user['id']
-            user_privkey_pem = crypto_helper.decrypt_blob(
+            user_privkey_pem = cryptohelper.decrypt_blob(
                 privkey_show,
                 user['enc_private_key']
             )
-            cur_result = {'id': user_id}
-            user_privkey = crypto_helper.import_key(user_privkey_pem)
+            cur_result = {
+                'id': user_id,
+                'publickey': user['public_key'],
+            }
+            user_privkey = cryptohelper.import_key(user_privkey_pem)
             access_tokens = yield get_user_tokens(user_id)
             for key, value in access_tokens.items():
                 if not isinstance(value, bytes):
                     continue
-                cur_result[key] = crypto_helper.decrypt_blob(
-                    user_privkey, 
+                cur_result[key] = cryptohelper.decrypt_blob(
+                    user_privkey,
                     value
                 )
             result['users'].append(cur_result)
         return self.api_response(result)
-
-
 
 
 class CreateShowtimeHandler(BaseHandler):

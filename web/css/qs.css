@@ -2,6 +2,10 @@
     --container-width: 100%;
 }
 
+a {
+    text-decoration: none;
+    color: #d3bb5b;
+}
 
 #nav {
     font-family: 'Arvo', sans-serif;
@@ -17,7 +21,7 @@
 #lander {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 34px;
     height: 80%;
     color: white;
@@ -74,6 +78,11 @@
     color: #d2bb5d;
 }
 
+.tiny {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 16px;
+}
+
 #sponsors {
 
     color: white;
@@ -86,15 +95,14 @@
 
 #policy {
     background-color: #333030;
-    font-family: 'Arvo', sans-serif;
-    font-size: 20px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
     height: 80%;
     color: white;
 }
 
 #policy h1 {
     font-family: 'Arvo', sans-serif;
-    font-size: 28px;
 }
 
 #policy h2 {
@@ -141,6 +149,23 @@
     border-color: white;
 }
 
+#faq {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;  
+}
+
+#faq h3 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#faq .border-bottom {
+    border-color: white;
+}
+
+#faq p {
+    margin-left: 15px;
+}
+
 #start {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
@@ -148,7 +173,14 @@
 }
 
 #start h1 {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Arvo', sans-serif;
+}
+
+.user-block {
+    border-bottom: 3px dashed #37483e;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    display: none;
 }
 
 #privacy {
@@ -211,4 +243,37 @@
 
 #thankyou h2 {
     font-family: 'Quicksand', sans-serif;
+}
+
+#news {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+#news h1 {
+    font-family: 'Arvo', sans-serif;
+}
+
+.news-stub {
+    border-bottom: 3px dashed #37483e;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.news-stub h2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.news-stub p {
+    margin-left: 1em;
+}
+
+.news-stub a {
+    text-decoration: none;
+}
+
+.date {
+    font-size: 14px;
 }

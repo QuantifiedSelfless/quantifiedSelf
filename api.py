@@ -57,6 +57,7 @@ class UserUnauth(web.RequestHandler):
     def get(self):
         self.render("deauth.html")
 
+
 class NewsHandler(web.RequestHandler):
     def get(self):
         self.render("news.html")
@@ -83,7 +84,6 @@ if __name__ == "__main__":
             (r'/test', TestHandler),
             (r'/news', NewsHandler),
             (r'/signup', SignupHandler),
-            (r'/deauth', UserDeauth),
             (r'/leave', UserUnauth),
             (r'/policy', PolicyHandler),
             (r'/about', AboutHandler),
@@ -95,9 +95,9 @@ if __name__ == "__main__":
             (r'/auth/tumblr', TumblrAuth),
             (r'/auth/instagram', InstagramAuth),
             (r'/auth/close', CloseWindow),
+            (r'/auth/deauth', UserDeauth),
 
             (r'/user/info', UserAuth),
-
             (r'/api/showtimes', ListShowtimesHandler),
             (r'/api/showtimes/access_tokens', ShowtimeAccessTokens),
             (r'/api/showtimes/create', CreateShowtimeHandler),

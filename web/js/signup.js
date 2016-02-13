@@ -31,22 +31,22 @@ React.render(
 );
 
 React.render(
-        <div className="center">
-            <Agree />
-        </div>,
-        document.getElementById('privacy')
+  <div className="center">
+      <Agree />
+  </div>,
+  document.getElementById('privacy')
 );
 
 React.render(
-        <div>
-            <Info />
-        </div>,
-        document.getElementById('info')
+  <div>
+      <Info />
+  </div>,
+  document.getElementById('info')
 );
 
 React.render(
-        <div className="center">
-            <Thanks />
-        </div>,
-        document.getElementById('thankyou')
+  <div className="center">
+      <Thanks />
+  </div>,
+  document.getElementById('thankyou')
 );

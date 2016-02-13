@@ -23,13 +23,12 @@ class UserDeauth(web.RequestHandler):
                 self.get_argument('email', None))
             if user is not None:
                 token = str(uuid.uuid1())
-                self._ioloop.add_callback(create_deauth_request,
-                                          id=token, user_id=user['id'])
-                link = "{0}/deauth?token={1}".format(
+                yield create_deauth_request(id=token, user_id=user['id'])
+                link = "{0}/auth/deauth?token={1}".format(
                     self.application.settings['base_url'],
                     token
                 )
-                send_deauthorization(user['email'], user['name'], link)
+                yield send_deauthorization(user['email'], user['name'], link)
             else:
                 raise web.HTTPError(
                         404,
@@ -40,10 +39,7 @@ class UserDeauth(web.RequestHandler):
             request = yield pop_deauth_request(
                     self.get_argument('token', None))
             if request is not None:
-                self._ioloop.add_callback(
-                    delete_user_data,
-                    id=request['user_id']
-                )
+                yield delete_user_data(user_id=request['user_id'])
                 return self.redirect("{0}/leave#final".format(
                     self.application.settings['base_url'])
                 )

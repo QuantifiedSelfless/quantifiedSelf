@@ -40,5 +40,3 @@ def get_user_from_email(email):
     if result.items:
         return result.items[0]
     return None
-
-

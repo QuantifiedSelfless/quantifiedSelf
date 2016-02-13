@@ -14,22 +14,19 @@ class EmailSender:
         self.client = smtplib.SMTP_SSL(self.server, self.port)
         self.client.login(self.username, self.password)
 
+    @gen.coroutine
     def send_email(self, email, subject, template, meta):
-        with open('lib/email_templates/' + template, 'rb') as fp:
-            msg = MIMEText(fp.read().format(meta), 'html')
+        with open('lib/email_templates/' + template) as fp:
+            msg = MIMEText(fp.read().format(**meta), 'html')
         msg['Subject'] = subject
         msg['From'] = self.username
         msg['To'] = email
-        self.client.sendmail(msg['From'], [msg['To']], msg.as_string())
+        yield self.client.sendmail(msg['From'], [msg['To']], msg.as_string())
 
 
 @gen.coroutine
 def send_confirmation(email, name):
-    sender = EmailSender(
-        CONFIG.get('email_address'),
-        CONFIG.get('email_pass')
-    )
-    sender.send_email(
+    yield send_email(
         email,
         name,
         'Ticket Confirmation - Quantified Self',
@@ -40,11 +37,7 @@ def send_confirmation(email, name):
 
 @gen.coroutine
 def send_deauthorization(email, name, link):
-    sender = EmailSender(
-        CONFIG.get('email_address'),
-        CONFIG.get('email_pass')
-    )
-    sender.send_email(
+    yield send_email(
         email,
         name,
         'Deauthorize - Quantified Self',
@@ -59,4 +52,4 @@ def send_email(email, name, subject, template, meta):
         CONFIG.get('email_address'),
         CONFIG.get('email_pass')
     )
-    sender.send_email(email, name, subject, template, meta)
+    yield sender.send_email(email, subject, template, meta)

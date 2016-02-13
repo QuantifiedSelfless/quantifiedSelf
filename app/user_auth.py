@@ -10,8 +10,6 @@ from lib.database.showtimes import get_reservation_for_user
 from lib.database.showtimes import get_showtime
 from lib.basehandler import BaseHandler
 
-import uuid
-
 
 class UserAuth(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()

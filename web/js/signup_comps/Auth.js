@@ -92,8 +92,6 @@ var wasClicked = {
   "Instagram": null,
   "Spotify": null
 };
-var sharePoints = 0;
-var clickBtns = 0;
 
 var Auth = React.createClass({
     getInitialState: function () {
@@ -105,9 +103,6 @@ var Auth = React.createClass({
         };
     },
 
-    componentDidUpdate: function () {
-      $.fn.fullpage.reBuild();
-    },
 
     componentWillMount: function () {
       gotime = setInterval(this.checkPoints, 200);

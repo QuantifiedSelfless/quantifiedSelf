@@ -180,12 +180,12 @@ a {
     border-bottom: 3px dashed #37483e;
     padding-top: 1em;
     padding-bottom: 1em;
-    display: none;
+    /*display: none;*/
 }
 
-.user-block {
+/*.user-block {
     background-color: #37483e;
-}
+}*/
 
 #privacy {
     background-color: #333030;

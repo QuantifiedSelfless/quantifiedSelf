@@ -4,7 +4,8 @@ $(document).ready(function() {
       controlArrows: false,
       autoScrolling: false,
       fitToSection: false,
-      scrollOverflow: true,
+      scrollOverflow: false,
+      scrollBar: false
     });
 });
 

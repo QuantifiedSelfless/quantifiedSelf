@@ -15,20 +15,18 @@ var SocialAuth = React.createClass({
       }
     },
     authorize: function () {
-      sharePoints += this.state.points[this.props.name];
-      clickBtns += 1;
+      wasClicked[this.props.name] = this.state.points[this.props.name];
       this.setState({loginWindow: window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")});
       this.setState({loginWindowTimer: setInterval(this.tick, 200)});
     },
     noshare: function () {
-      clickBtns += 1;
+      wasClicked[this.props.name] = 0;
       window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
       $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("border-color", "red");
       $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("color", "red");
     },
     nouse: function () {
-      clickBtns += 1;
-      console.log(sharePoints);
+      wasClicked[this.props.name] = 0;
       window.open(this.props.url + "?share=noacct", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
       $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("border-color", "yellow");
       $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("color", "yellow");
@@ -81,17 +79,30 @@ var SocialAuth = React.createClass({
     }
 });
 
+var wasClicked = {
+  "Google": null,
+  "Facebook": null,
+  "Twitter": null,
+  "Tumblr": null,
+  "Reddit": null,
+  "Instagram": null,
+  "Spotify": null
+};
 var sharePoints = 0;
 var clickBtns = 0;
 
 var Auth = React.createClass({
     getInitialState: function () {
         return {
-            points: 0,
-            clicked: 0,
+            fullPoints: false,
+            doneClick: false,
             checker: null,
             shitDates: null
         };
+    },
+
+    componentDidUpdate: function () {
+      $.fn.fullpage.reBuild();
     },
 
     componentWillMount: function () {
@@ -116,14 +127,20 @@ var Auth = React.createClass({
     },
 
     checkPoints: function () {
-      if (sharePoints != this.state.points){
-        this.setState({points: sharePoints});
+      var sum = 0;
+      var done = true;
+      for (i in wasClicked) {
+        if (wasClicked[i] == null) {
+          done = false;
+          break;
+        } else {
+          sum += wasClicked[i];
+        }
       }
-      if (clickBtns != this.state.clicked) {
-        this.setState({clicked: clickBtns});
-      }
-      if (sharePoints >= 10){
-        clearInterval(this.checker);
+      if (done == true && sum >= 10) {
+        this.setState({fullPoints: true, doneClick: true});
+      } else if (done == true && sum < 10) {
+        this.setState({fullPoints: false, doneClick: true});
       }
     },
 
@@ -132,23 +149,23 @@ var Auth = React.createClass({
         var theButton = null;
         var shitTix = (<div></div>);
 
-        if (this.state.points >= 10) {
+        if (this.state.fullPoints == true) {
           theButton = <button className="btn btn-primary m1 b1">All Done</button>;
         } else {
           theButton = <button className="btn btn-primary m1 b1" disabled="disabled">All Done</button>
         }
 
-        if (this.state.points < 10 && this.state.clicked >= 7) {
+        if (this.state.fullPoints == false && this.state.doneClick == true) {
           if (this.state.shitDates.length > 0){
             shitTix = (<ShittyForm dates={this.state.shitDates} />);
           } else {
             shitTix = (<p className="center">Sorry, unfortunately you have not shared enough data to get a ticket and we are sold out of tickets for people who do not share data. Please try back once we announce more dates or consider sharing more data.</p>);
           }
         }
-        if (this.state.clicked < 7) {
-          myStyle = {visibility: 'hidden'};
-          shitTix = (<p style={myStyle}>I swear if you tell anyone that we are doing this hack to make this website work correctly that I am going to have to come to your house and cook chicken and biscuits -- no gravy!! Thats right, no gravy. So dont be messin. Anyhow, if you are looking at this, its probably because you are sort of a hacker type, or, well, you at least know how to click a few buttons including inspect element but thats still pretty ballin. If thats you, hacker person, then you should think about looking at the console log because its got a funny little secret for you bunny buns.</p>);
-        }
+        // if (this.state.clicked < 7) {
+        //   myStyle = {visibility: 'hidden'};
+        //   shitTix = (<p style={myStyle}>I swear if you tell anyone that we are doing this hack to make this website work correctly that I am going to have to come to your house and cook chicken and biscuits -- no gravy!! Thats right, no gravy. So dont be messin. Anyhow, if you are looking at this, its probably because you are sort of a hacker type, or, well, you at least know how to click a few buttons including inspect element but thats still pretty ballin. If thats you, hacker person, then you should think about looking at the console log because its got a funny little secret for you bunny buns.</p>);
+        // }
         return (
             <div className="clearfix white py3">
                 <div className="col-10 mx-auto">
@@ -220,7 +237,9 @@ var ShittyForm = React.createClass({
       <div>
         <p className="center">Even though you did not share very much, we are allowing a limited number of people to take tickets without sharing much data. If you are interested in one of these tickets, choose one of the available dates below and press submit.</p>
         <form name="user-form">
-            <label>Ticket Date</label>
+            <div className="center">
+              <label>Ticket Date</label>
+            </div>
             <select onChange={this.changeDate} className="block mb2 mx-auto field">
                 {myTimes.map(function ( atime, i ) {
                     if (i == 0) {

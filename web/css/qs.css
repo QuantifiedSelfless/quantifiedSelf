@@ -195,6 +195,7 @@ a {
 
 #privacy h2 {
     font-family: 'Quicksand', sans-serif;
+    min-height: 100%;
 }
 
 #privacy .btn-outline {

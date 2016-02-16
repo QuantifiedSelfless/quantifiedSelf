@@ -5,9 +5,14 @@ var Info = React.createClass({
         };
     },
 
+    next: function () {
+        appState += 1;
+        stateChange();
+    },
+
     render: function () {
         return (
-            <div className="clearfix mb3">
+            <div className="clearfix pb3" id="info">
                 <div className='col-10 mx-auto white'>
                     <h2 className="center">Useful Information</h2>
                     <p className="center">Even though you just saw our privacy policy, since this kind of production is new, we want to give you some heads up about what will and will not happen during the show.</p>
@@ -36,9 +41,7 @@ var Info = React.createClass({
                     </div>
                     <p className="center">More questions? <a href="/about#faq" target="_blank">see our FAQ page</a></p>
                     <div className="center">
-                        <a href="/signup#auth">
-                            <button className="btn btn-outline m1 b1">Next</button>
-                        </a>
+                        <button onClick={this.next} className="btn btn-outline m1 b1">Next</button>
                     </div>
                 </div>
             </div>

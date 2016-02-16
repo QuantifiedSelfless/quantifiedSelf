@@ -35,7 +35,8 @@ var Start = React.createClass({
                 url: '/user/info',
                 data: data,
                 success: function() {
-                    window.location.replace('/signup#privacy');
+                    appState += 1;
+                    stateChange();
                 },
                 error: function(xhr) {
                     alert("An error occured: " + xhr.status + " " + xhr.statusText);
@@ -67,7 +68,7 @@ var Start = React.createClass({
             }
         }
         return (
-            <div className="clearfix mb3">
+            <div className="clearfix pb3" id="start">
                 <div className="col-10 mx-auto white">
                     <h1 className="center py1">Quantified Self Ticketing</h1>
                     <p><b>Location: </b>University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>

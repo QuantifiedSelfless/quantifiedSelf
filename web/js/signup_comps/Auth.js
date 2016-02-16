@@ -144,13 +144,18 @@ var Auth = React.createClass({
       }
     },
 
+    next: function () {
+        appState += 1;
+        stateChange();
+    },
+
 
     render: function () {
         var theButton = null;
         var shitTix = (<div></div>);
 
         if (this.state.fullPoints == true) {
-          theButton = <button className="btn btn-primary m1 b1">All Done</button>;
+          theButton = <button onClick={this.next} className="btn btn-primary m1 b1">All Done</button>;
         } else {
           theButton = <button className="btn btn-primary m1 b1" disabled="disabled">All Done</button>
         }
@@ -167,7 +172,7 @@ var Auth = React.createClass({
         //   shitTix = (<p style={myStyle}>I swear if you tell anyone that we are doing this hack to make this website work correctly that I am going to have to come to your house and cook chicken and biscuits -- no gravy!! Thats right, no gravy. So dont be messin. Anyhow, if you are looking at this, its probably because you are sort of a hacker type, or, well, you at least know how to click a few buttons including inspect element but thats still pretty ballin. If thats you, hacker person, then you should think about looking at the console log because its got a funny little secret for you bunny buns.</p>);
         // }
         return (
-            <div className="clearfix white py3">
+            <div className="clearfix white py3" id="auth">
                 <div className="col-10 mx-auto">
                     <p className="center">Please go through our list of providers and share with us as many as possible. We only store what is necessary for the show. We also encrypt all information and delete all of your shared information after your visit. The more information you provide, the better the experience.</p>
                     <p className="center">Commonly people ask us about GMail data use so we want to tell you here that no human EVER looks at your raw gmail data. For more info <a href="/about#faq">see our FAQ page</a></p>
@@ -216,7 +221,8 @@ var ShittyForm = React.createClass({
         url: '/user/info',
         data: data,
         success: function() {
-            window.location.replace('/signup#thankyou');
+            appState += 1;
+            stateChange();
         },
         error: function(xhr) {
             alert("An error occured: " + xhr.status + " " + xhr.statusText);

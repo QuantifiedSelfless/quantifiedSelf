@@ -2,6 +2,10 @@
     --container-width: 100%;
 }
 
+html, body {
+    height: 100%;
+}
+
 a {
     text-decoration: none;
     color: #d3bb5b;
@@ -176,6 +180,8 @@ a {
     font-family: 'Arvo', sans-serif;
 }
 
+
+
 .user-block {
     border-bottom: 3px dashed #37483e;
     padding-top: 1em;
@@ -183,19 +189,16 @@ a {
     /*display: none;*/
 }
 
-/*.user-block {
-    background-color: #37483e;
-}*/
 
 #privacy {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
     font-size: 20px;
+    min-height: 80vh;
 }
 
 #privacy h2 {
     font-family: 'Quicksand', sans-serif;
-    min-height: 100%;
 }
 
 #privacy .btn-outline {
@@ -208,6 +211,7 @@ a {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
     font-size: 20px;
+    min-height: 80vh;
 }
 
 #info h2 {
@@ -236,9 +240,10 @@ a {
     border-color: #d2bb5d;
 }
 
-.done .btn-primary {
+.btn-primary {
     background-color: #37483e;
 }
+
 
 #thankyou {
     background-color: #333030;

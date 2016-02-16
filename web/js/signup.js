@@ -1,13 +1,3 @@
-// Setup fullpage.js
-// $(document).ready(function() {
-//     $('#fullpage').fullpage({
-//       controlArrows: false,
-//       autoScrolling: false,
-//       fitToSection: false,
-//       scrollOverflow: true,
-//       scrollBar: true
-//     });
-// });
 
 //Currently am loading React from CDN
 var Agree = require('./signup_comps/Agree.js');

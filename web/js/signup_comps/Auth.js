@@ -51,6 +51,10 @@ var SocialAuth = React.createClass({
       return "";
     },
 
+    componentWillMount: function () {
+      console.log('I swear if you tell anyone that we are doing this hack to make this website work correctly that I am going to have to come to your house and cook chicken and biscuits -- no gravy!! Thats right, no gravy. So dont be messin. Anyhow, if you are looking at this, its probably because you are sort of a hacker type, or, well, you at least know how to click a few buttons including "inspect element" but thats still pretty ballin. If thats you, hacker person, then you should think about asking Evan what he is up to when you come to our show.');
+    },
+
     render: function () {
       var id = this.props.name + "-SocialAuthElement"
       return (

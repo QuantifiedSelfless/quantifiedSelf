@@ -5,14 +5,23 @@ var Start = React.createClass({
             times: [],
             name: '',
             date: '',
-            email: ''
+            email: '',
+            overflow: false,
+            code: null
         };
     },
 
     getDates: function () {
         var me = this;
         $.getJSON("/api/showtimes", function ( data ){
-            me.setState({times: data['data']});
+            var dates = data['data'];
+            for (i in dates){
+                if (dates[i]['available_tickets'] == 0){
+                    dates[i]['date'] = dates[i]['date']+ " -- SOLD OUT";
+                    dates[i]['overflow'] = true;
+                }
+            }
+            me.setState({times: dates});
         }).fail(function () { alert('call to api/showtimes failed');});
     },
 
@@ -22,12 +31,17 @@ var Start = React.createClass({
 
     submitVals: function(e) {
         e.preventDefault();
-
-        var data = {
+        $(e.target).attr('disabled', 'disabled');
+        var data;
+        
+        data = {
             name: this.state.name,
             email: this.state.email,
-            showtime_id: this.state.date
-        };
+            showtime_id: this.state.date,
+        }
+        if (this.state.overflow == true) {
+            data.code = this.state.code;
+        }
 
         if (this.valEmail(data.email)){
             $.ajax({
@@ -55,20 +69,41 @@ var Start = React.createClass({
         this.setState({ name: event.target.value });
     },
 
+    handleCodeChange: function (event) {
+        this.setState({ code: event.target.value });
+    },
+
     changeDate: function (event) {
-        this.setState({ date: event.target.value });
+        var adate = event.target.value;
+        this.checkOverflow(adate)
+        this.setState({ date: adate });
+    },
+
+    checkOverflow: function (someday) {
+        for (i in this.state.times) {
+            if (this.state.times[i]["id"] == someday) {
+                if (this.state.times[i]["overflow"] == true) {
+                    this.setState({overflow: true});
+                } else {
+                    this.setState({overflow: false});
+                }
+            }
+        }
     },
 
     render: function () {
         var myTimes = [];
+        var overflowCode = (<div></div>);
+        if (this.state.overflow == true) {
+            overflowCode = (<div><label>Code</label><input type="text" ref="code" size="60" className="block mb2 field mx-auto" placeholder="paste the code here" onChange={this.handleCodeChange} /></div>);
+        }
         myTimes.push({"id": 99999, "date": "Please Choose a Date"});
         for (var i in this.state.times) {
-            if (this.state.times[i]['available_tickets'] > 0){
-                myTimes.push(this.state.times[i]);
-            }
+            myTimes.push(this.state.times[i]);
         }
+
         return (
-            <div className="clearfix pb3" id="start">
+            <div className="clearfix py3" id="start">
                 <div className="col-10 mx-auto white">
                     <h1 className="center py1">Quantified Self Ticketing</h1>
                     <p><b>Location: </b>University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>
@@ -92,7 +127,8 @@ var Start = React.createClass({
                             <input type="text" ref="username" size="60" className="block mb2 field mx-auto" placeholder="Firstname Lastname" onChange={this.handleNameChange} />
                             <label>Email Address</label>
                             <input type="email" ref="useremail" size="60" className="block mb2 field mx-auto" placeholder="email@domain.com" onChange={this.handleEmailChange} />
-                            <button onClick={this.submitVals} type="submit" className="block btn btn-primary mx-auto">Submit</button>
+                            {overflowCode}
+                            <button onClick={this.submitVals} type="submit" className="done block btn btn-primary mx-auto">Submit</button>
                         </form>
                         <br />
                     </div>

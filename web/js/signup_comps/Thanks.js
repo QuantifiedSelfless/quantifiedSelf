@@ -12,7 +12,7 @@ var Thanks = React.createClass({
 
     render: function() {
         return (
-            <div className="clearfix white">
+            <div className="clearfix white thankyou">
                 <div className="col-10 mx-auto">
                     <h2>Thank you!</h2>
                     <p>Your ticket number is {this.state.ticket}</p>

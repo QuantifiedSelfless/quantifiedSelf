@@ -11,7 +11,9 @@ def pop_deauth_request(id):
     conn = yield connection()
     result = yield r.table('deauth').\
         get(id).delete(return_changes=True).run(conn)
-    return result['changes'][0]['old_val']
+    if result['changes']:
+        return result['changes'][0]['old_val']
+    return None
 
 
 @gen.coroutine
@@ -25,11 +27,12 @@ def create_deauth_request(id, user_id):
 
 
 @gen.coroutine
-def delete_user_data(id):
+def delete_user_data(user_id):
     conn = yield connection()
-    auth = yield r.table('auth').get(id).delete().run(conn)
-    user = yield r.table('users').get(id).delete().run(conn)
-    return auth, user
+    auth = yield r.table('auth').get(user_id).delete().run(conn)
+    user = yield r.table('users').get(user_id).delete().run(conn)
+    encryption = yield r.table('encryption_user').get(user_id).delete().run(conn)
+    return auth, user, encryption
 
 
 @gen.coroutine

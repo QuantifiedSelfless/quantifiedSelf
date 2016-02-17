@@ -7,6 +7,7 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var streamify = require('gulp-streamify');
 var htmlreplace = require('gulp-html-replace');
+var replace = require('gulp-replace');
 var gutil = require('gulp-util');
 var _ = require('lodash');
 
@@ -49,6 +50,12 @@ gulp.task('css', function(){
 
 gulp.task('css-prod', function(){
     gulp.src(path.CSS)
+        .pipe(gulp.dest(path.DEST_FINAL_CSS));
+});
+
+gulp.task('css-dev', function(){
+    gulp.src(path.CSS)
+        .pipe(replace(/.user-block [^}]*}/m, ''))
         .pipe(gulp.dest(path.DEST_FINAL_CSS));
 });
 
@@ -125,4 +132,5 @@ gulp.task('replaceHTML', function(){
     })
 });
 
+gulp.task('dev', ['copy-prod', 'replaceHTML', 'build', 'css-dev', 'js-prod', 'img-prod']);
 gulp.task('production', ['copy-prod', 'replaceHTML','build', 'css-prod', 'js-prod', 'img-prod']);

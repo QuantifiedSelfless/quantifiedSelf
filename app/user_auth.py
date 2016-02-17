@@ -6,7 +6,7 @@ from lib.database.users import user_insert
 from lib.database.users import get_user_from_email
 from lib.database.reservations import create_ticket_reservation
 from lib.database.reservations import get_reservations_for_showtime
-from lib.database.showtimes import get_reservation_for_user
+from lib.database.reservations import get_reservation_for_user
 from lib.database.showtimes import get_showtime
 from lib.basehandler import BaseHandler
 

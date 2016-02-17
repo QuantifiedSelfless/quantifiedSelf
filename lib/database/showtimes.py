@@ -6,16 +6,6 @@ from .connection import connection
 
 
 @gen.coroutine
-def get_reservation_for_user(id):
-    conn = yield connection()
-    result = yield r.table('showtimes').\
-        filter({"user_id": id}).run(conn)
-    if result.items:
-        return result.items[0]
-    return None
-
-
-@gen.coroutine
 def get_showtimes():
     conn = yield connection()
     result = yield r.table('showtimes').order_by('date').run(conn)
@@ -30,7 +20,7 @@ def get_showtime(showid):
 
 
 @gen.coroutine
-def create_showtime(date, available_tickets=40):
+def create_showtime(date, available_tickets=40, shitty_tickets=5):
     conn = yield connection()
     dedup_shows = yield r.table('showtimes').\
         filter(r.row['date'] == date).count().run(conn)
@@ -38,8 +28,8 @@ def create_showtime(date, available_tickets=40):
         raise Exception("Show already exists")
     data = {
         'date': date,
-        'available_tickets': available_tickets,
-        'max_booking': available_tickets,
+        'max_shitty_booking': shitty_tickets,
+        'max_normal_booking': available_tickets,
     }
     result = yield r.table('showtimes').insert(data).run(conn)
     show_id = result['generated_keys'][0]

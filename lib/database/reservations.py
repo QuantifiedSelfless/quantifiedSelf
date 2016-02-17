@@ -8,13 +8,24 @@ from .connection import connection
 
 
 @gen.coroutine
-def create_ticket_reservation(showtime_id, user_id):
+def get_reservation_for_user(id):
+    conn = yield connection()
+    result = yield r.table('showtimes').\
+        filter({"user_id": id}).run(conn)
+    if result.items:
+        return result.items[0]
+    return None
+
+
+@gen.coroutine
+def create_ticket_reservation(showtime_id, user_id, is_shitty=False):
     conn = yield connection()
     data = {
         "showtime_id": showtime_id,
         "user_id": user_id,
         "confirmation_code": "",
-        "reserved_on": r.now()
+        "reserved_on": r.now(),
+        "is_shitty": is_shitty
     }
     reservations = r.table('reservations')
     yield reservations.filter({"user_id": user_id}).delete().run(conn)

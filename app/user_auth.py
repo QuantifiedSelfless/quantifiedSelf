@@ -62,4 +62,4 @@ class UserAuth(BaseHandler):
     @gen.coroutine
     def isShowTimeAvailable(self, showtime):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
-        return len(allReservations) < showtime["max_booking"]
+        return len(allReservations) < showtime["max_normal_booking"]

@@ -64,11 +64,12 @@ class CreateShowtimeHandler(BaseHandler):
     def get(self):
         date_raw = self.get_argument('date')
         available_tickets = int(self.get_argument('tickets', 40))
+        shitty_tickets = int(self.get_argument('shitty_tickets', 5))
 
         timezone = tz.gettz(CONFIG.get('timezone'))
         date = date_parser.parse(date_raw).replace(tzinfo=timezone)
 
-        showid = yield create_showtime(date, available_tickets)
+        showid = yield create_showtime(date, available_tickets, shitty_tickets)
         return self.api_response({'showid': showid})
 
 
@@ -86,13 +87,15 @@ class ListShowtimesHandler(BaseHandler):
 
         showtimes = yield get_showtimes()
         reservations = yield get_reservations()
-        showtime_map = {}
+        showtime_map = {}  # Tuple (normal_tickets, shitty_tickets)
         for reservation in reservations:
             ticket_id = reservation["showtime_id"]
-            if ticket_id in showtime_map:
-                showtime_map[ticket_id] += 1
+            ticketTuple = showtime_map.get(ticket_id, (0, 0))
+            if reservation['is_shitty']:
+                ticketTuple = (ticketTuple[0], ticketTuple[1]+1)
             else:
-                showtime_map[ticket_id] = 1
+                ticketTuple = (ticketTuple[0]+1, ticketTuple[1])
+            showtime_map[ticket_id] = ticketTuple
 
         result = []
         timezone = tz.gettz(CONFIG.get('timezone'))
@@ -105,14 +108,22 @@ class ListShowtimesHandler(BaseHandler):
 
             if showid in showtime_map:
                 available_tickets = \
-                        showtime["max_booking"] - showtime_map[showid]
+                    showtime["max_normal_booking"]\
+                    - showtime_map[showid][0]
                 if available_tickets < 0:
                     available_tickets = 0
+                available_shitty_tickets = \
+                    showtime["max_shitty_booking"]\
+                    - showtime_map[showid][1]
+                if available_shitty_tickets < 0:
+                    available_shitty_tickets = 0
             else:
-                available_tickets = showtime["max_booking"]
+                available_tickets = showtime["max_normal_booking"]
+                available_shitty_tickets = showtime["max_shitty_booking"]
             result.append({
                 "id": showid,
                 "date": dateString,
                 "available_tickets": available_tickets,
+                "shitty_tickets": available_shitty_tickets
             })
         self.api_response(result)

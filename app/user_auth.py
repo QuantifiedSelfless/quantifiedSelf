@@ -84,23 +84,29 @@ class UserAuth(BaseHandler):
                 yield confirm_ticket_reservation(
                     reservation['id'], confirmation_code, True)
             else:
-                showtime = yield get_showtime(showtime_id)
-                if showtime is None:
-                    return self.error(404, "Show time not found!")
-
-                if not (yield self.isShowTimeAvailable(showtime, True)):
-                    return self.error(400, "Ticket is not available any more.")
-
-                yield change_reservation_showtime(
-                    reservation['id'], showtime_id)
-
-                yield confirm_ticket_reservation(
-                    reservation['id'], confirmation_code, True)
+                yield self.switch_ticket(showtime_id, reservation, cc)
         else:
             # TODO: check the access_tokens, make sure we have enough.
             yield confirm_ticket_reservation(
                 reservation['id'], confirmation_code, False)
         self.clear_cookie('user_id')
+
+    @gen.coroutine
+    def switch_ticket(self, show, resv, cc):
+        showtime = yield get_showtime(show)
+        if showtime is None:
+            return self.error(404, "Showtime not found!")
+
+        if not (yield self.isShowTimeAvailable(showtime, True)):
+            return self.error(400, "Ticket is not available any more.")
+
+        yield change_reservation_showtime(
+            resv['id'], show)
+
+        yield confirm_ticket_reservation(
+            resv['id'], cc, True)
+
+
 
     @gen.coroutine
     def isShowTimeAvailable(self, showtime, is_shitty=False):

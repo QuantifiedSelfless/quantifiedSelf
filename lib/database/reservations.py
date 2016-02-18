@@ -57,6 +57,15 @@ def confirm_ticket_reservation(id, confirmation_code, is_shitty=False):
 
 
 @gen.coroutine
+def change_reservation_showtime(reservation_id, showtime_id):
+    conn = yield connection()
+    result = yield r.table('reservations').get(reservation_id).update({
+        "showtime_id": showtime_id
+    }).run(conn)
+    return result
+
+
+@gen.coroutine
 def get_reservations_for_showtime(id):
     conn = yield connection()
     result = yield r.table('reservations').\

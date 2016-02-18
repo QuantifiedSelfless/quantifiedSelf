@@ -2,9 +2,13 @@ from tornado import gen
 from tornado import web
 from tornado import ioloop
 
+import uuid
+
 from lib.database.users import user_insert
 from lib.database.users import get_user_from_email
 from lib.database.reservations import create_ticket_reservation
+from lib.database.reservations import confirm_ticket_reservation
+from lib.database.reservations import change_reservation_showtime
 from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
 from lib.database.showtimes import get_showtime
@@ -60,6 +64,49 @@ class UserAuth(BaseHandler):
         yield create_ticket_reservation(showtime["id"], user_id)
 
     @gen.coroutine
-    def isShowTimeAvailable(self, showtime):
+    def put(self):
+        ticket_type = self.get_argument("type", "normal")
+        showtime_id = self.get_argument("showtime_id", None)
+        user_id = self.get_secure_cookie("user_id", None)
+
+        if user_id is None:
+            return self.error(403, "Must include the user cookie")
+
+        # Now grab the reservation
+        reservation = yield get_reservation_for_user(user_id)
+        if reservation is None:
+            return self.error(400, "There is no reservation on this account.")
+
+        confirmation_code = str(uuid.uuid1)
+        if ticket_type == "shitty":
+            # Confirm a shitty ticket_type
+            if reservation['showtime_id'] == showtime_id:
+                yield confirm_ticket_reservation(
+                    reservation['id'], confirmation_code, True)
+            else:
+                showtime = yield get_showtime(showtime_id)
+                if showtime is None:
+                    return self.error(404, "Show time not found!")
+
+                if not (yield self.isShowTimeAvailable(showtime, True)):
+                    return self.error(400, "Ticket is not available any more.")
+
+                yield change_reservation_showtime(
+                    reservation['id'], showtime_id)
+
+                yield confirm_ticket_reservation(
+                    reservation['id'], confirmation_code, True)
+        else:
+            # TODO: check the access_tokens, make sure we have enough.
+            yield confirm_ticket_reservation(
+                reservation['id'], confirmation_code, False)
+        self.clear_cookie('user_id')
+
+    @gen.coroutine
+    def isShowTimeAvailable(self, showtime, is_shitty=False):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
-        return len(allReservations) < showtime["max_normal_booking"]
+        if is_shitty:
+            fieldName = "max_shitty_booking"
+        else:
+            fieldName = "max_normal_booking"
+        return len(allReservations) < showtime[fieldName]

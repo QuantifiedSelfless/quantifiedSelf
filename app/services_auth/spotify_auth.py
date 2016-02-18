@@ -7,7 +7,7 @@ from lib.basehandler import OAuthRequestHandler
 
 class SpotifyAuth(OAuthRequestHandler, spot.SpotifyOAuth2Mixin):
     scope = [
-        'playlist-read-private', 
+        'playlist-read-private',
         'playlist-read-collaborative',
         'user-follow-read',
         'user-library-read',

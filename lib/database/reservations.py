@@ -47,10 +47,20 @@ def remove_expired_tickets():
 
 
 @gen.coroutine
-def confirm_ticket_reservation(id, confirmation_code):
+def confirm_ticket_reservation(id, confirmation_code, is_shitty=False):
     conn = yield connection()
     result = yield r.table('reservations').get(id).update({
-        "confirmation_code": confirmation_code
+        "confirmation_code": confirmation_code,
+        "is_shitty": is_shitty
+    }).run(conn)
+    return result
+
+
+@gen.coroutine
+def change_reservation_showtime(reservation_id, showtime_id):
+    conn = yield connection()
+    result = yield r.table('reservations').get(reservation_id).update({
+        "showtime_id": showtime_id
     }).run(conn)
     return result
 

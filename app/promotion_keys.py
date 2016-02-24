@@ -18,14 +18,12 @@ class PromotionKeysHandler(BaseHandler):
         showtime_id = self.get_argument('showtime_id', None)
 
         if showtime_id is None:
-            self.error(400, "Must provide 'showtime_id' as url parameter.")
-            return
+            return self.error(400, "Must provide 'showtime_id' to proceed.")
 
         # Verify that such a show exists.
         showtime = yield get_showtime(showtime_id)
         if showtime is None:
-            self.error(404, "Show time not found.")
-            return
+            return self.error(404, "Show time not found.")
 
         promotion_key = yield create_promotion_key(showtime_id)
         self.set_header("Location", "{0}/api/promotion_keys/{1}".

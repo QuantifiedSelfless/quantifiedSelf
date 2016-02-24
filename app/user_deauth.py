@@ -7,11 +7,12 @@ from lib.database.auth import pop_deauth_request
 from lib.database.auth import create_deauth_request
 from lib.database.auth import delete_user_data
 from lib.email_sender import send_deauthorization
+from lib.basehandler import BaseHandler
 
 import uuid
 
 
-class UserDeauth(web.RequestHandler):
+class UserDeauth(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 
     @web.asynchronous
@@ -30,9 +31,10 @@ class UserDeauth(web.RequestHandler):
                 )
                 yield send_deauthorization(user['email'], user['name'], link)
             else:
-                raise web.HTTPError(
-                        404,
-                        'User is either already deleted or not in DB')
+                return self.error(
+                    404,
+                    "User is either already deleted or not in DB"
+                )
 
         elif (self.get_argument('token', None)):
             # pop the request
@@ -44,12 +46,6 @@ class UserDeauth(web.RequestHandler):
                     self.application.settings['base_url'])
                 )
             else:
-                raise web.HTTPError(
-                        404,
-                        'Not found.')
-
+                return self.error(404, "Token not found.")
         else:
-            # return error
-            raise web.HTTPError(
-                    400,
-                    'Insufficient params.')
+            return self.error(400, "Insufficient params.")

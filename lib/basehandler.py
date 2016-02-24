@@ -81,7 +81,7 @@ class OAuthRequestHandler(BaseHandler):
         else:
             self.set_cookie("auth-result", "inprogress")
             return self.startFlow()
-        return self.error(403)
+        return self.error(403, "Not authorized.")
 
     def finishAuthRequest(self, status):
         self.set_cookie("auth-result", status)

@@ -25,23 +25,23 @@ class UserAuth(BaseHandler):
         email = self.get_argument("email", None)
         showtime_id = self.get_argument("showtime_id", None)
 
-        # Validate the show time
-        if showtime_id is None:
-            return self.error(403, "Must provide showtime_id to proceed.")
-
-        showtime = yield get_showtime(showtime_id)
-        if showtime is None:
-            return self.error(404, "Could not find the selected showtime.")
-
-        if not (yield self.isShowTimeAvailable(showtime)):
-            return self.error(404, "The showtime is sold out.")
-
         # Validate user and email entries
         if name is None or email is None:
             return self.error(
                 403,
                 "Must provide valid username and email address to continue"
             )
+
+        # Validate the show time
+        if showtime_id is None:
+            return self.error(400, "Must provide 'showtime_id' to proceed.")
+
+        showtime = yield get_showtime(showtime_id)
+        if showtime is None:
+            return self.error(404, "Could not find the selected showtime.")
+
+        if not (yield self.isShowTimeAvailable(showtime)):
+            return self.error(400, "This showtime is sold out.")
 
         # Grab or create a user
         user = yield get_user_from_email(email)
@@ -75,7 +75,7 @@ class UserAuth(BaseHandler):
         # Now grab the reservation
         reservation = yield get_reservation_for_user(user_id)
         if reservation is None:
-            return self.error(400, "There is no reservation on this account.")
+            return self.error(403, "There is no reservation for this account.")
 
         confirmation_code = str(uuid.uuid1)
         if ticket_type == "shitty":
@@ -84,7 +84,8 @@ class UserAuth(BaseHandler):
                 yield confirm_ticket_reservation(
                     reservation['id'], confirmation_code, True)
             else:
-                yield self.switch_ticket(showtime_id, reservation, cc)
+                yield self.switch_ticket(showtime_id, reservation,
+                                         confirmation_code)
         else:
             # TODO: check the access_tokens, make sure we have enough.
             yield confirm_ticket_reservation(
@@ -92,8 +93,8 @@ class UserAuth(BaseHandler):
         self.clear_cookie('user_id')
 
     @gen.coroutine
-    def switch_ticket(self, show, resv, cc):
-        showtime = yield get_showtime(show)
+    def change_showtime(self, showtime_id, reservation, confirmation_code):
+        showtime = yield get_showtime(showtime_id)
         if showtime is None:
             return self.error(404, "Showtime not found!")
 
@@ -101,12 +102,10 @@ class UserAuth(BaseHandler):
             return self.error(400, "Ticket is not available any more.")
 
         yield change_reservation_showtime(
-            resv['id'], show)
+            reservation['id'], showtime_id)
 
         yield confirm_ticket_reservation(
-            resv['id'], cc, True)
-
-
+            reservation['id'], confirmation_code, True)
 
     @gen.coroutine
     def isShowTimeAvailable(self, showtime, is_shitty=False):

@@ -4,7 +4,9 @@ from tornado import options
 
 from app.user_auth import UserAuth
 from app.user_deauth import UserDeauth
-from app.showtimes import CreateShowtimeHandler, ListShowtimesHandler, ShowtimeAccessTokens
+from app.showtimes import CreateShowtimeHandler, ListShowtimesHandler,\
+    ShowtimeAccessTokens
+from app.promotionkeys import PromotionKeysHandler
 from app.services_auth.google_auth import GoogleAuth
 from app.services_auth.facebook_auth import FacebookAuth
 from app.services_auth.spotify_auth import SpotifyAuth
@@ -101,6 +103,9 @@ if __name__ == "__main__":
             (r'/api/showtimes', ListShowtimesHandler),
             (r'/api/showtimes/access_tokens', ShowtimeAccessTokens),
             (r'/api/showtimes/create', CreateShowtimeHandler),
+
+            (r'/api/promotionkeys', PromotionKeysHandler),
+
             (r"/favicon.ico", web.StaticFileHandler, {"path": ""}),
         ],
         template_path="./templates/",

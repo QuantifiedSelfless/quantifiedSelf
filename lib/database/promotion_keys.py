@@ -2,12 +2,14 @@ from tornado import gen
 import rethinkdb as r
 
 from .connection import connection
+from .utils import dump_cursor
 
 
 @gen.coroutine
 def get_promotion_keys():
     conn = yield connection()
     result = yield r.table('promotion_keys').run(conn)
+    result = yield dump_cursor(result)
     return result
 
 

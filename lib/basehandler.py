@@ -28,12 +28,13 @@ class BaseHandler(web.RequestHandler):
         self.set_status(code, reason)
         self.finish()
 
-    def error(self, code, reason=None, body=None):
+    def error(self, code, message, payload=None):
         self.add_header("Access-Control-Allow-Origin", "*")
-        if body:
-            self.write(body)
-        self.set_status(code, reason)
-        self.finish()
+        if payload is None:
+            payload = {'message': message}
+        else:
+            payload['message'] = message
+        self.api_response(payload, code)
 
     def get_secure_cookie(self, *args, **kwargs):
         result = super().get_secure_cookie(*args, **kwargs)
@@ -80,7 +81,7 @@ class OAuthRequestHandler(BaseHandler):
         else:
             self.set_cookie("auth-result", "inprogress")
             return self.startFlow()
-        return self.error(403)
+        return self.error(403, "Not authorized.")
 
     def finishAuthRequest(self, status):
         self.set_cookie("auth-result", status)

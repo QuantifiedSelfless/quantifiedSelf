@@ -42,4 +42,5 @@ def init():
     yield try_create_table(conn, 'reservations')
     yield try_create_table(conn, 'encryption_show')
     yield try_create_table(conn, 'encryption_user')
+    yield try_create_table(conn, 'promotion_keys')
     return connection

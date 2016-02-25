@@ -10,7 +10,7 @@ from .connection import connection
 @gen.coroutine
 def get_reservation_for_user(id):
     conn = yield connection()
-    result = yield r.table('showtimes').\
+    result = yield r.table('reservations').\
         filter({"user_id": id}).run(conn)
     if result.items:
         return result.items[0]

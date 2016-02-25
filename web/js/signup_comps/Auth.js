@@ -111,18 +111,16 @@ var Auth = React.createClass({
     },
 
     getShitty: function() {
-      // var me = this;
-      // $.getJSON("/api/showtimes", function ( data ){
-      //       theDates = []
-      //       data['data'].map( function ( date ){
-      //         if (date['shitty_tickets'] > 0) {
-      //           theDates.push({date: date['date'], id: date['id']});
-      //         }
-      //       });
-      //       me.setState({shitDates: theDates});
-      //   }).fail(function () { alert('call to api/showtimes failed');});
-
-      this.setState({shitDates: [{id: 1235, date: "April 30 - 7:30PM"}]})
+       var me = this;
+       $.getJSON("/api/showtimes", function ( data ){
+             theDates = []
+             data['data'].map( function ( date ){
+               if (date['shitty_tickets'] > 0) {
+                 theDates.push({date: date['date'], id: date['id']});
+               }
+             });
+             me.setState({shitDates: theDates});
+         }).fail(function () { alert('call to api/showtimes failed');});
     },
 
     checkPoints: function () {

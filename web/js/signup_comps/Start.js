@@ -40,7 +40,7 @@ var Start = React.createClass({
             showtime_id: this.state.date,
         }
         if (this.state.overflow == true) {
-            data.code = this.state.code;
+            data.promotion_key = this.state.code;
         }
 
         if (this.valEmail(data.email)){

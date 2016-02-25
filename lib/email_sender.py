@@ -25,13 +25,13 @@ class EmailSender:
 
 
 @gen.coroutine
-def send_confirmation(email, name):
+def send_confirmation(email, name, confirmation_code):
     yield send_email(
         email,
         name,
         'Ticket Confirmation - Quantified Self',
         'confirmation.html',
-        {'name': name}
+        {'name': name, 'confirmation_code': confirmation_code}
     )
 
 

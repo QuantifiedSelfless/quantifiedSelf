@@ -115,10 +115,15 @@ a {
     font-family: 'Quicksand', sans-serif;
     font-size: 18px;
     min-height: 90vh;
-    color: white;
 }
 
 #deauth h1 {
+    font-family: 'Arvo', sans-serif;
+}
+
+#deauth .btn-outline {
+    border-color: #d2bb5d;
+    color: #d2bb5d;
     font-family: 'Arvo', sans-serif;
 }
 

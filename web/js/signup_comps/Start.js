@@ -31,6 +31,8 @@ var Start = React.createClass({
 
     submitVals: function(e) {
         e.preventDefault();
+        $(e.target).remove();
+        $('.user-block').append("<p>Hold on a second. We are generating all of your encryption keys so we can keep your data secure.</p>");
         $(e.target).attr('disabled', 'disabled');
         var data;
         

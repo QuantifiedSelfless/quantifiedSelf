@@ -238,7 +238,7 @@ var ShittyForm = React.createClass({
     });
     return (
       <div>
-        <p className="center">Even though you did not share very much, we are allowing a limited number of people to take tickets without sharing much data. If you are interested in one of these tickets, choose one of the available dates below and press submit.</p>
+        <p className="center">Even though you did not share very much, we are allowing a limited number of people to take tickets without sharing much data. If you are interested in one of these tickets, choose one of the available dates below and press submit. If none of these dates work, we apologize, but since the show is about the future of data, we want to ensure a high-quality first performance. Consider sharing more data or checking back for future dates.</p>
         <form name="user-form">
             <div className="center">
               <label>Ticket Date</label>

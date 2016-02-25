@@ -52,7 +52,7 @@ class UserAuth(BaseHandler):
             self.set_secure_cookie("user_id", user_id)
             # check for any previous confirmed booking
             reservation = yield get_reservation_for_user(user_id)
-            if reservation is not None and reservation.confirmation_code != "":
+            if reservation is not None and reservation['confirmation_code'] != "":
                 return self.error(
                     403,
                     "Sorry, you already have a ticket for the show."
@@ -87,7 +87,7 @@ class UserAuth(BaseHandler):
                     reservation['id'], confirmation_code, True)
             else:
                 yield self.change_showtime(showtime_id, reservation,
-                                         confirmation_code)
+                                           confirmation_code)
         else:
             # TODO: check the access_tokens, make sure we have enough.
             yield confirm_ticket_reservation(

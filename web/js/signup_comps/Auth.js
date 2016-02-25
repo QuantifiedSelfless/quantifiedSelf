@@ -164,10 +164,6 @@ var Auth = React.createClass({
             shitTix = (<p className="center">Sorry, unfortunately you have not shared enough data to get a ticket and we are sold out of tickets for people who do not share data. Please try back once we announce more dates or consider sharing more data.</p>);
           }
         }
-        // if (this.state.clicked < 7) {
-        //   myStyle = {visibility: 'hidden'};
-        //   shitTix = (<p style={myStyle}>I swear if you tell anyone that we are doing this hack to make this website work correctly that I am going to have to come to your house and cook chicken and biscuits -- no gravy!! Thats right, no gravy. So dont be messin. Anyhow, if you are looking at this, its probably because you are sort of a hacker type, or, well, you at least know how to click a few buttons including inspect element but thats still pretty ballin. If thats you, hacker person, then you should think about looking at the console log because its got a funny little secret for you bunny buns.</p>);
-        // }
         return (
             <div className="clearfix white py3" id="auth">
                 <div className="col-10 mx-auto">
@@ -225,6 +221,10 @@ var ShittyForm = React.createClass({
             alert("An error occured: " + xhr.status + " " + xhr.statusText);
         }
     });
+  },
+    
+  componentDidMount: function () {
+    $(document).scrollTop($(document).height());
   },
 
   changeDate: function(e) {

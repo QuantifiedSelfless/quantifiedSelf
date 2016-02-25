@@ -86,7 +86,7 @@ class UserAuth(BaseHandler):
                 yield confirm_ticket_reservation(
                     reservation['id'], confirmation_code, True)
             else:
-                yield self.switch_ticket(showtime_id, reservation,
+                yield self.change_showtime(showtime_id, reservation,
                                          confirmation_code)
         else:
             # TODO: check the access_tokens, make sure we have enough.

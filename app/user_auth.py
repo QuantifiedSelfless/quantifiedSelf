@@ -11,7 +11,7 @@ from lib.database.reservations import confirm_ticket_reservation
 from lib.database.reservations import change_reservation_showtime
 from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
-from lib.database.promotion_key import pop_promotion_key
+from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
 from lib.basehandler import BaseHandler
 

@@ -59,6 +59,13 @@ class UserUnauth(web.RequestHandler):
     def get(self):
         self.render("deauth.html")
 
+class UserUnauth2(web.RequestHandler):
+    def get(self):
+        self.render("deauth2.html")
+
+class UserUnauth3(web.RequestHandler):
+    def get(self):
+        self.render("deauth3.html")
 
 class NewsHandler(web.RequestHandler):
     def get(self):
@@ -87,6 +94,8 @@ if __name__ == "__main__":
             (r'/news', NewsHandler),
             (r'/signup', SignupHandler),
             (r'/leave', UserUnauth),
+            (r'/leave2', UserUnauth2),
+            (r'/fullcancel', UserUnauth3),
             (r'/policy', PolicyHandler),
             (r'/about', AboutHandler),
             (r'/auth/google', GoogleAuth),

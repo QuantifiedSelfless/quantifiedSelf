@@ -110,6 +110,18 @@ a {
     font-size: 24px;
 }
 
+#deauth {
+    background-color: #333030;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
+    min-height: 90vh;
+    color: white;
+}
+
+#deauth h1 {
+    font-family: 'Arvo', sans-serif;
+}
+
 #about-land {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
@@ -228,6 +240,7 @@ a {
     background-color: #333030;
     font-family: 'Quicksand', sans-serif;
     font-size: 20px;
+    min-height: 90vh;
 }
 
 

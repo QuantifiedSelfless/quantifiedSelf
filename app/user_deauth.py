@@ -35,6 +35,9 @@ class UserDeauth(BaseHandler):
                     404,
                     "User is either already deleted or not in DB"
                 )
+            return self.redirect("{0}/leave2".format(
+                    self.application.settings['base_url'])
+                )
 
         elif (self.get_argument('token', None)):
             # pop the request
@@ -42,7 +45,7 @@ class UserDeauth(BaseHandler):
                     self.get_argument('token', None))
             if request is not None:
                 yield delete_user_data(user_id=request['user_id'])
-                return self.redirect("{0}/leave#final".format(
+                return self.redirect("{0}/fullcancel".format(
                     self.application.settings['base_url'])
                 )
             else:

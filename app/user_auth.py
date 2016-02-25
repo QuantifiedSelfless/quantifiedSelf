@@ -69,7 +69,6 @@ class UserAuth(BaseHandler):
     def put(self):
         ticket_type = self.get_argument("type", "normal")
         showtime_id = self.get_argument("showtime_id", None)
-        promo_code = self.get_argument("promo_code", None)
         user_id = self.get_secure_cookie("user_id", None)
 
         if user_id is None:

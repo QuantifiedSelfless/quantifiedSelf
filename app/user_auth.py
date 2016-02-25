@@ -5,6 +5,7 @@ from tornado import ioloop
 import uuid
 
 from lib.database.users import user_insert
+from lib.database.users import get_user
 from lib.database.users import get_user_from_email
 from lib.database.reservations import create_ticket_reservation
 from lib.database.reservations import confirm_ticket_reservation
@@ -13,6 +14,7 @@ from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
 from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
+from lib.email_sender import send_confirmation
 from lib.basehandler import BaseHandler
 
 
@@ -52,7 +54,8 @@ class UserAuth(BaseHandler):
             self.set_secure_cookie("user_id", user_id)
             # check for any previous confirmed booking
             reservation = yield get_reservation_for_user(user_id)
-            if reservation is not None and reservation['confirmation_code'] != "":
+            if reservation is not None and\
+                    reservation['confirmation_code'] != "":
                 return self.error(
                     403,
                     "Sorry, you already have a ticket for the show."
@@ -79,7 +82,7 @@ class UserAuth(BaseHandler):
         if reservation is None:
             return self.error(403, "There is no reservation for this account.")
 
-        confirmation_code = str(uuid.uuid1)
+        confirmation_code = str(uuid.uuid1())
         if ticket_type == "shitty":
             # Confirm a shitty ticket_type
             if reservation['showtime_id'] == showtime_id:
@@ -92,7 +95,10 @@ class UserAuth(BaseHandler):
             # TODO: check the access_tokens, make sure we have enough.
             yield confirm_ticket_reservation(
                 reservation['id'], confirmation_code, False)
+        user = yield get_user(user_id)
+        yield send_confirmation(user['email'], user['name'], confirmation_code)
         self.clear_cookie('user_id')
+        self.api_response({'confirmation_code': confirmation_code})
 
     @gen.coroutine
     def change_showtime(self, showtime_id, reservation, confirmation_code):

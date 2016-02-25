@@ -11,6 +11,7 @@ from lib.database.reservations import confirm_ticket_reservation
 from lib.database.reservations import change_reservation_showtime
 from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
+from lib.database.promotion_key import pop_promotion_key
 from lib.database.showtimes import get_showtime
 from lib.basehandler import BaseHandler
 
@@ -24,6 +25,7 @@ class UserAuth(BaseHandler):
         name = self.get_argument("name", None)
         email = self.get_argument("email", None)
         showtime_id = self.get_argument("showtime_id", None)
+        promo_code = self.get_argument('promotion_key', None)
 
         # Validate user and email entries
         if name is None or email is None:
@@ -40,7 +42,7 @@ class UserAuth(BaseHandler):
         if showtime is None:
             return self.error(404, "Could not find the selected showtime.")
 
-        if not (yield self.isShowTimeAvailable(showtime)):
+        if not (yield self.canBookTicketForShowtime(showtime, promo_code)):
             return self.error(400, "This showtime is sold out.")
 
         # Grab or create a user
@@ -67,6 +69,7 @@ class UserAuth(BaseHandler):
     def put(self):
         ticket_type = self.get_argument("type", "normal")
         showtime_id = self.get_argument("showtime_id", None)
+        promo_code = self.get_argument("promo_code", None)
         user_id = self.get_secure_cookie("user_id", None)
 
         if user_id is None:
@@ -115,3 +118,13 @@ class UserAuth(BaseHandler):
         else:
             fieldName = "max_normal_booking"
         return len(allReservations) < showtime[fieldName]
+
+    @gen.coroutine
+    def canBookTicketForShowtime(self, showtime, promo_code):
+        if (yield self.isShowTimeAvailable(showtime)):
+            return True
+        if promo_code is None:
+            return False
+        promotion_key = yield pop_promotion_key(promo_code)
+        return promotion_key is not None and\
+            promotion_key['showtime_id'] == showtime['id']

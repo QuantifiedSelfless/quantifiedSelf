@@ -11,7 +11,7 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
              "user_likes", "user_about_me", "user_education_history",
              "user_events", "user_photos", "user_relationships",
              "user_birthday", "user_videos", "user_games_activity",
-             "user_status", "user_relationship_details", "user_hometown",
+             "user_status", "user_relationship_details", 
              "user_work_history", "read_custom_friendlists",
              "user_religion_politics"]
 

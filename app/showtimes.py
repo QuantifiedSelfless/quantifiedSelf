@@ -25,7 +25,9 @@ class ShowtimeAccessTokens(BaseHandler):
     def get(self):
         showid = self.get_argument('showid')
         shares = self.get_arguments('share')
-        passphrase = cryptohelper.recover_passphrase(shares)
+        passphrase = self.get_argument('passphrase', None)
+        if not passphrase:
+            passphrase = cryptohelper.recover_passphrase(shares)
         privkey_show = yield get_show_privatekey(showid, passphrase)
 
         result = {
@@ -98,13 +100,9 @@ class ListShowtimesHandler(BaseHandler):
             showtime_map[ticket_id] = ticketTuple
 
         result = []
-        timezone = tz.gettz(CONFIG.get('timezone'))
-        timeformat = "%A %d, %B - %I:%M%p"
         for showtime in showtimes:
             showid = showtime["id"]
-            dateString = showtime["date"]. \
-                astimezone(timezone). \
-                strftime(timeformat)
+            dateString = showtime["date_str"]
 
             if showid in showtime_map:
                 available_tickets = \

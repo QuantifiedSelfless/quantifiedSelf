@@ -28,7 +28,6 @@ class EmailSender:
 def send_confirmation(email, name, confirmation_code):
     yield send_email(
         email,
-        name,
         'Ticket Confirmation - Quantified Self',
         'confirmation.html',
         {'name': name, 'confirmation_code': confirmation_code}
@@ -39,7 +38,6 @@ def send_confirmation(email, name, confirmation_code):
 def send_deauthorization(email, name, link):
     yield send_email(
         email,
-        name,
         'Deauthorize - Quantified Self',
         'deauthorization.html',
         {'name': name, 'link': link}
@@ -47,7 +45,7 @@ def send_deauthorization(email, name, link):
 
 
 @gen.coroutine
-def send_email(email, name, subject, template, meta):
+def send_email(email, subject, template, meta):
     sender = EmailSender(
         CONFIG.get('email_address'),
         CONFIG.get('email_pass')

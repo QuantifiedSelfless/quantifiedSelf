@@ -44,3 +44,11 @@ Finally, run the script,
 $ python3 api.py
 ```
 
+## Dev Notes
+
+Normally when creating a showtime, we take the passphrase that encrypts that
+show and split it into shares.  At least 2 of these shares are required to
+decrypt the contents of that show.  If you set `share_threshold` in config to 1,
+we instead just send out the passphrase to make development easier.  The
+`ShowtimeAccessTokens` endpoint will take either multiple `shares` (as we would
+expect in production) or a `passphrase` option for the dev case.

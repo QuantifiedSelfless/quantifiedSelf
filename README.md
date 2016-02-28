@@ -51,4 +51,6 @@ show and split it into shares.  At least 2 of these shares are required to
 decrypt the contents of that show.  If you set `share_threshold` in config to 1,
 we instead just send out the passphrase to make development easier.  The
 `ShowtimeAccessTokens` endpoint will take either multiple `shares` (as we would
-expect in production) or a `passphrase` option for the dev case.
+expect in production) or a `passphrase` option for the dev case.  Just remember
+to change the `dev:shares_email` config field in `config.conf` so that you get
+the e-mail with the passphrase!

@@ -40,8 +40,12 @@ def create_showtime_keys(showid, passphrase=None):
         }
         for email, share in zip(share_email, shares):
             meta['share'] = share
-            yield send_email(email, "Showtime Password",
-                             "show_code.html", meta)
+            yield send_email(
+                email,
+                "[{}] Showtime Password".format(showtime['date_str']),
+                "show_code.html",
+                meta
+            )
     return result
 
 

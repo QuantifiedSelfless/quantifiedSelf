@@ -40,6 +40,18 @@ class BaseHandler(web.RequestHandler):
         result = super().get_secure_cookie(*args, **kwargs)
         return result.decode()
 
+    def get_current_user(self):
+        user_id = self.get_secure_cookie("user_id", None)
+        if user_id is not None:
+            return {'id': user_id, 'is_admin': False}
+        admin_id = self.get_secure_cookie("admin_id", None)
+        if admin_id is not None:
+            return {'id': admin_id, 'is_admin': True}
+        return None
+
+    def authenticated(self):
+        return None
+
 
 class OAuthRequestHandler(BaseHandler):
     def setProvider(self, provider):

@@ -23,7 +23,7 @@ class ShowtimeAccessTokens(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def get(self):
-        showid = self.get_argument('showid')
+        showid = self.get_argument('showtime_id')
         shares = self.get_arguments('share')
         passphrase = cryptohelper.recover_passphrase(shares)
         privkey_show = yield get_show_privatekey(showid, passphrase)

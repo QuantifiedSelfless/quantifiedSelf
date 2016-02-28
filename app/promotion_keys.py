@@ -25,9 +25,8 @@ class PromotionKeysHandler(BaseHandler):
         if showtime is None:
             return self.error(404, "Show time not found.")
 
-        promotion_keys = []
-        for i in range(0, count):
-            promotion_keys.append((yield create_promotion_key(showtime_id)))
+        promotion_keys = yield [create_promotion_key(showtime_id)
+                                for _ in range(count)]
 
         self.api_response({'promotion_keys': promotion_keys}, 201)
 

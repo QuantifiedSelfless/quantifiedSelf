@@ -23,7 +23,7 @@ class ShowtimeAccessTokens(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def get(self):
-        showid = self.get_argument('showid')
+        showid = self.get_argument('showtime_id')
         shares = self.get_arguments('share')
         passphrase = self.get_argument('passphrase', None)
         if not passphrase:

@@ -1,22 +1,32 @@
 from tornado import gen
 import rethinkdb as r
+from dateutil import tz
 
-from .encryption import create_showtime_keys
+from . import encryption
 from .connection import connection
+from ..config import CONFIG
+
+
+def format_showtime(showtime):
+    timezone = tz.gettz(CONFIG.get('timezone'))
+    timeformat = "%A %d, %B - %I:%M%p"
+    showtime['date_str'] = showtime['date'].astimezone(timezone). \
+        strftime(timeformat)
+    return showtime
 
 
 @gen.coroutine
 def get_showtimes():
     conn = yield connection()
     result = yield r.table('showtimes').order_by('date').run(conn)
-    return result
+    return list(map(format_showtime, result))
 
 
 @gen.coroutine
 def get_showtime(showid):
     conn = yield connection()
     result = yield r.table('showtimes').get(showid).run(conn)
-    return result
+    return format_showtime(result)
 
 
 @gen.coroutine
@@ -33,5 +43,5 @@ def create_showtime(date, available_tickets=40, shitty_tickets=5):
     }
     result = yield r.table('showtimes').insert(data).run(conn)
     show_id = result['generated_keys'][0]
-    yield create_showtime_keys(show_id)
+    yield encryption.create_showtime_keys(show_id)
     return show_id

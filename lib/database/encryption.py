@@ -2,15 +2,28 @@ from tornado import gen
 import rethinkdb as r
 import cryptohelper
 
-from .connection import connection
 from .utils import dump_cursor
+from .connection import connection
+from . import showtimes
+from ..email_sender import send_email
+from ..config import CONFIG
 
 
 @gen.coroutine
 def create_showtime_keys(showid, passphrase=None):
     if passphrase is None:
         passphrase = cryptohelper.generate_passphrase()
-    shares = cryptohelper.split_passphrase(passphrase)
+    share_email = list(map(str.strip, CONFIG.get('shares_email').split(',')))
+    share_threshold = int(CONFIG.get("shares_threshold"))
+    num_shares = len(share_email)
+    if share_threshold >= 2:
+        shares = cryptohelper.split_passphrase(
+            passphrase,
+            share_threshold=share_threshold,
+            num_shares=num_shares,
+        )
+    else:
+        shares = [passphrase, ] * num_shares
     public_key, private_key = cryptohelper.create_keypair(passphrase)
     conn = yield connection()
     data = {
@@ -20,10 +33,15 @@ def create_showtime_keys(showid, passphrase=None):
     }
     result = yield r.table('encryption_show').insert(data).run(conn)
     if not result['errors']:
-        print(showid, shares)
-        # email_sender.send_shares(show, shares)
-        # TODO: this
-        pass
+        showtime = yield showtimes.get_showtime(showid)
+        meta = {
+            "show_date": showtime['date_str'],
+            "share_threshold": share_threshold,
+        }
+        for email, share in zip(share_email, shares):
+            meta['share'] = share
+            yield send_email(email, "Showtime Password",
+                             "show_code.html", meta)
     return result
 
 

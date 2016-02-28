@@ -25,6 +25,19 @@ $ gulp production
 $ cd ..
 ```
 
+Lastly, you'll want to decrypt the config files.  Simply run,
+
+```
+$ python3 config_packer.py decrypt config.conf.enc > config.conf
+```
+
+Similarly, if you changed the `config.conf` file, run the following to encrypt
+your changes,
+
+```
+$ python3 config_packer.py encrypt config.conf > config.conf.enc
+```
+
 Finally, run the script,
 
 ```

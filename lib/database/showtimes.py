@@ -2,7 +2,7 @@ from tornado import gen
 import rethinkdb as r
 from dateutil import tz
 
-from . import encryption
+from .encryption import *
 from .connection import connection
 from ..config import CONFIG
 

@@ -5,6 +5,36 @@ from .database.auth import deny
 
 import json
 import time
+import base64
+
+
+def secured(handler_class):
+    print(handler_class)
+
+    def wrap_execute(handler_execute):
+        def require_basic_auth(handler, kwargs):
+            auth_header = handler.request.headers.get('Authorization')
+            if auth_header is None or not auth_header.startswith('Basic '):
+                handler.set_status(401)
+                handler.set_header('WWW-Authenticate',
+                                   'Basic realm=Restricted')
+                handler._transforms = []
+                handler.finish()
+                return False
+            auth_decoded = base64.b64decode(auth_header[6:]).decode('utf-8')
+            user, password = auth_decoded.split(':', 2)
+            print(user)
+            print(password)
+            return True
+
+        def _execute(self, transforms, *args, **kwargs):
+            if not require_basic_auth(self, kwargs):
+                return False
+            return handler_execute(self, transforms, *args, **kwargs)
+        return _execute
+
+    handler_class._execute = wrap_execute(handler_class._execute)
+    return handler_class
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -39,18 +69,6 @@ class BaseHandler(web.RequestHandler):
     def get_secure_cookie(self, *args, **kwargs):
         result = super().get_secure_cookie(*args, **kwargs)
         return result.decode()
-
-    def get_current_user(self):
-        user_id = self.get_secure_cookie("user_id", None)
-        if user_id is not None:
-            return {'id': user_id, 'is_admin': False}
-        admin_id = self.get_secure_cookie("admin_id", None)
-        if admin_id is not None:
-            return {'id': admin_id, 'is_admin': True}
-        return None
-
-    def authenticated(self):
-        return None
 
 
 class OAuthRequestHandler(BaseHandler):

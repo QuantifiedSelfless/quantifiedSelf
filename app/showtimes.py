@@ -10,6 +10,7 @@ from lib.database.encryption import get_show_privatekey
 from lib.database.encryption import get_user_keypair_from_showid
 from lib.database.auth import get_user_tokens
 from lib.basehandler import BaseHandler
+from lib.basehandler import secured
 from lib.config import CONFIG
 
 from dateutil import parser as date_parser
@@ -17,6 +18,7 @@ from dateutil import tz
 import cryptohelper
 
 
+@secured
 class ShowtimeAccessTokens(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 
@@ -56,6 +58,7 @@ class ShowtimeAccessTokens(BaseHandler):
         return self.api_response(result)
 
 
+@secured
 class CreateShowtimeHandler(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 

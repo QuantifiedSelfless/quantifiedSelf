@@ -4,7 +4,6 @@ import cryptohelper
 
 from .utils import dump_cursor
 from .connection import connection
-from . import showtimes
 from ..email_sender import send_email
 from ..config import CONFIG
 
@@ -33,7 +32,8 @@ def create_showtime_keys(showid, passphrase=None):
     }
     result = yield r.table('encryption_show').insert(data).run(conn)
     if not result['errors']:
-        showtime = yield showtimes.get_showtime(showid)
+        from .showtimes import get_showtime
+        showtime = yield get_showtime(showid)
         meta = {
             "show_date": showtime['date_str'],
             "share_threshold": share_threshold,

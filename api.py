@@ -120,7 +120,6 @@ if __name__ == "__main__":
         template_path="./templates/",
         static_path="./static/",
         debug=debug,
-        xsrf_cookies=True,  # Forgery protection
         cookie_secret=CONFIG.get('cookie_secret'),
         base_url=CONFIG.get('base_url'),
         **oauth_creds

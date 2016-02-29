@@ -2,14 +2,15 @@ from tornado import web
 from tornado import gen
 
 from .database.auth import deny
+from lib.config import CONFIG
 
 import json
 import time
 import base64
+import bcrypt
 
 
 def secured(handler_class):
-    print(handler_class)
 
     def wrap_execute(handler_execute):
         def require_basic_auth(handler, kwargs):
@@ -23,9 +24,16 @@ def secured(handler_class):
                 return False
             auth_decoded = base64.b64decode(auth_header[6:]).decode('utf-8')
             user, password = auth_decoded.split(':', 2)
-            print(user)
-            print(password)
-            return True
+            hashed_password = CONFIG.get('admin_user_pass').encode('utf-8')
+            encoded_password = password.encode('utf-8')
+            result = (user == CONFIG.get('admin_user_id') and
+                      bcrypt.hashpw(encoded_password, hashed_password) ==
+                      hashed_password)
+            if not result:
+                handler.set_status(401)
+                handler._transforms = []
+                handler.finish()
+            return result
 
         def _execute(self, transforms, *args, **kwargs):
             if not require_basic_auth(self, kwargs):

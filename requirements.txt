@@ -9,4 +9,5 @@ praw
 python-Levenshtein
 python-dateutil
 oauth2
+bcrypt
 git+https://github.com/QuantifiedSelfless/cryptohelper.git

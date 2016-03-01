@@ -22,7 +22,7 @@ var Start = React.createClass({
                 }
             }
             me.setState({times: dates});
-        }).fail(function () { alert('call to api/showtimes failed');});
+        }).fail(function () { alert('We did not find any showtimes!');});
     },
 
     componentWillMount: function () {
@@ -33,7 +33,6 @@ var Start = React.createClass({
         e.preventDefault();
         $(e.target).remove();
         $('.user-block').append("<p>Hold on a second. We are generating all of your encryption keys so we can keep your data secure.</p>");
-        $(e.target).attr('disabled', 'disabled');
         var data;
         
         data = {
@@ -54,8 +53,8 @@ var Start = React.createClass({
                     appState += 1;
                     stateChange();
                 },
-                error: function(xhr) {
-                    alert("An error occured: " + xhr.status + " " + xhr.statusText);
+                error: function(resp) {
+                    alert("An error occured: " + resp.status_code + " - " + resp.data.message + "\n" + "If you beileve this is an error on our part, please reload the page and try again.");
                 }
             });
         } else {

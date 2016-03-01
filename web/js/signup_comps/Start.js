@@ -54,7 +54,8 @@ var Start = React.createClass({
                     stateChange();
                 },
                 error: function(resp) {
-                    alert("An error occured: " + resp.status_code + " - " + resp.data.message + "\n" + "If you beileve this is an error on our part, please reload the page and try again.");
+                    stuff = resp.responseJSON
+                    alert("An error occured: " + stuff.status_code + " - " + stuff.data.message + "\n\n" + "If you beileve this is an error on our part, please reload the page and try again.");
                 }
             });
         } else {

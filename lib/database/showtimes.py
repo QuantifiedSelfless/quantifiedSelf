@@ -2,7 +2,7 @@ from tornado import gen
 import rethinkdb as r
 from dateutil import tz
 
-from . import encryption
+from .encryption import create_showtime_keys
 from .connection import connection
 from ..config import CONFIG
 
@@ -43,5 +43,5 @@ def create_showtime(date, available_tickets=40, shitty_tickets=5):
     }
     result = yield r.table('showtimes').insert(data).run(conn)
     show_id = result['generated_keys'][0]
-    yield encryption.create_showtime_keys(show_id)
+    yield create_showtime_keys(show_id)
     return show_id

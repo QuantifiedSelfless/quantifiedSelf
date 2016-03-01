@@ -14,10 +14,7 @@ from app.services_auth.twitter_auth import TwitterAuth
 from app.services_auth.reddit_auth import RedditAuth
 from app.services_auth.tumblr_auth import TumblrAuth
 from app.services_auth.instagram_auth import InstagramAuth
-
 from lib import config
-
-
 # Set basic options
 options.define("port", default=6060, type=int, help="What port to run on")
 options.define("debug", default=False, type=bool, help="Debug Mode")
@@ -59,13 +56,16 @@ class UserUnauth(web.RequestHandler):
     def get(self):
         self.render("deauth.html")
 
+
 class UserUnauth2(web.RequestHandler):
     def get(self):
         self.render("deauth2.html")
 
+
 class UserUnauth3(web.RequestHandler):
     def get(self):
         self.render("deauth3.html")
+
 
 class NewsHandler(web.RequestHandler):
     def get(self):

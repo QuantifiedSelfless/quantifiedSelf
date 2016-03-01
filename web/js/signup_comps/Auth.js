@@ -15,7 +15,6 @@ var SocialAuth = React.createClass({
       }
     },
     authorize: function () {
-      wasClicked[this.props.name] = this.state.points[this.props.name];
       this.setState({loginWindow: window.open(this.props.url, this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400")});
       this.setState({loginWindowTimer: setInterval(this.tick, 200)});
     },
@@ -24,19 +23,32 @@ var SocialAuth = React.createClass({
       window.open(this.props.url + "?share=noshare", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
       $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("border-color", "red");
       $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("color", "red");
+      $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("border-color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("border-color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("color", "#d2bb5d");
     },
     nouse: function () {
       wasClicked[this.props.name] = 0;
       window.open(this.props.url + "?share=noacct", this.props.name + " Login", "location=1,scrollbars=1,width=500,height=400");
       $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("border-color", "yellow");
       $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("color", "yellow");
+      $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("border-color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("border-color", "#d2bb5d");
+      $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("color", "#d2bb5d");
     },
     tick: function () {
       if(this.state.loginWindow.closed) {
         clearInterval(this.state.loginWindowTimer);
         if(this.getCookie("auth-result") == "success") {
+          wasClicked[this.props.name] = this.state.points[this.props.name];
           $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("border-color", "green");
           $("#"+this.props.name+"-SocialAuthElement #authorizeButton").css("color", "green");
+          $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("border-color", "#d2bb5d");
+          $("#"+this.props.name+"-SocialAuthElement #noshareButton").css("color", "#d2bb5d");
+          $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("border-color", "#d2bb5d");
+          $("#"+this.props.name+"-SocialAuthElement #nouseButton").css("color", "#d2bb5d");
         }
       }
     },

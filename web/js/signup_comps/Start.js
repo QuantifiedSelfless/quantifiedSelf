@@ -111,7 +111,6 @@ var Start = React.createClass({
                     <p><b>Location: </b>University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>
                     <p><b>Price: </b><em>Free!</em> Due to kind donations from the John S. and James L. Knight Foundation and CU-Boulder's Engineering Excellence Fund our first show will be free. Though due to high demand and limited space we ask you to cancel early if you decide not to come.</p>
                     <p>Since our show is an immersive, interactive performance, we are asking that you share some information with us during your reservation process. We anticipate that this RSVP process will take you 2-4 minutes. Once you hit the submit button below, we will hold your ticket for 15 minutes. If you do not finish your RSVP within 15 minutes you will need to start over. You will be required to show valid government ID at the door on the night of the show that proves your identity and that you are over 18.</p>
-                    <p className="red">We are not yet taking RSVPs, please return the first week of March to make a reservation.</p>
                     
                     <div className="center border-bottom user-block">
                         <form name="user-form">

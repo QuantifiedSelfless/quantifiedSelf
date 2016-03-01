@@ -6,8 +6,11 @@ from lib.database.showtimes import get_showtime
 from lib.database.promotion_keys import create_promotion_key
 from lib.database.promotion_keys import get_promotion_keys
 from lib.basehandler import BaseHandler
+from lib.basehandler import secured
+from lib.config import CONFIG
 
 
+@secured
 class PromotionKeysHandler(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 

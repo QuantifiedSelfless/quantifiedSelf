@@ -20,10 +20,15 @@ email_pass = ""
 base_url = "http://iamadatapoint.com:8085"
 rethink_db = ''
 rethink_host = ''
-rethink_port = 
+rethink_port =
+admin_user_id =
+admin_user_pass =
 
 [prod]
 base_url = "https://iamadatapoint.com"
 rethink_db = ''
 rethink_host = ''
 rethink_port = 
+admin_user_id =
+admin_user_pass =
+

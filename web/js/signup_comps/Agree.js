@@ -24,10 +24,17 @@ var Agree = React.createClass({
         return (
             <div className="clearfix white py3" id="privacy">
                 <div className="col-10 mx-auto">
-                    <h2>Privacy and Terms of Service</h2>
-                    <p>Our theatre and art production creates a profile on you similar to the way your online services do. In order to achieve this we ask that you authorize our service through as many of your social media and online platforms as possible. Since our production is meant to give you an experience to help understand what your data says about you and how it's used, your sharing makes the performance better. Per our policy, we never share or sell any of your data and we delete it immediately after the night you attend our show. If you do not get a ticket, for some reason, but share data, we will immediately delete your data upon cancellation.</p>
-                    <p>Please read our data policy at the following link, and click "Agree" below if you accept: <a href="/policy" target="_blank">www.iamadatapoint.com/policy</a>. If you do not agree, simply go back or contact our team for more questions.</p>
-                    <button onClick={this.next} className="btn btn-outline m2 b1">Agree</button>
+                    <h2 className="center">Privacy and Terms of Service Overview</h2>
+                    <ul className="px3">
+                        <li><span className="att">WE NEVER SELL OR SHARE ANY OF YOUR DATA</span></li>
+                        <li>Any data you choose to share with us from your online providers is <span className="att">immediately encrypted</span> and requires multiple members of our production staff to decrypt it the night of the show.</li>
+                        <li>After you attend the show we <span className="att">permanently delete all data you shared with us</span>.</li>
+                        <li>Our overall privacy policy <span className="att">protects you more</span> than your other services such as Google or Facebook since we do not share, sell, or work with third-parties, and do not persist any of the data you share after attending.</li>
+                    </ul>
+                    <p>If you have more detailed questions, read our full policy at: <a href="/policy" target="_blank">www.iamadatapoint.com/policy</a>. If you do not agree, simply go back or contact our team for more questions. If you do agree, simply click "Agree" below.</p>
+                    <div className="center">
+                        <button onClick={this.next} className="btn btn-outline m2 b1">Agree</button>
+                    </div>
                 </div>
             </div>
         );

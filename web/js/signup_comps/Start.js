@@ -31,6 +31,10 @@ var Start = React.createClass({
 
     submitVals: function(e) {
         e.preventDefault();
+        if (this.state.date == '' || this.state.date == 99999){
+            alert('You must select a valid date');
+            return;
+        }
         $(e.target).remove();
         $('.user-block').append("<p>Hold on a second. We are generating all of your encryption keys so we can keep your data secure.</p>");
         var data;
@@ -108,9 +112,15 @@ var Start = React.createClass({
             <div className="clearfix py3" id="start">
                 <div className="col-10 mx-auto white">
                     <h1 className="center py1">Quantified Self Ticketing</h1>
-                    <p><b>Location: </b>University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>
-                    <p><b>Price: </b><em>Free!</em> Due to kind donations from the John S. and James L. Knight Foundation and CU-Boulder's Engineering Excellence Fund our first show will be free. Though due to high demand and limited space we ask you to cancel early if you decide not to come.</p>
-                    <p>Since our show is an immersive, interactive performance, we are asking that you share some information with us during your reservation process. We anticipate that this RSVP process will take you 2-4 minutes. Once you hit the submit button below, we will hold your ticket for 15 minutes. If you do not finish your RSVP within 15 minutes you will need to start over. You will be required to show valid government ID at the door on the night of the show that proves your identity and that you are over 18.</p>
+                    <p><span className="att">Location</span>: University of Colorado, <a href="http://atlas.colorado.edu/atlas-centers/center-for-media-arts-and-performance-cmap/">ATLAS Black Box Theater</a></p>
+                    <p><span className="att">Price</span>: <em>Free!</em> Due to kind donations from the John S. and James L. Knight Foundation and CU-Boulder's Engineering Excellence Fund our first show will be free.</p>
+                    <p><span className="att">Reserving your ticket</span>:
+                        <ul>
+                            <li>After choosing a date, we will ask you to connect us to your other online providers (Google, Facebook, etc.) so we can customize the show for you.</li>
+                            <li>Signing up will take you 2-4 minutes. The process will show you our privacy policy, then some info about the show, and finally a data sharing page.</li>
+                            <li>You must be over 18 and able to show a valid ID the night you attend.</li>
+                        </ul>
+                    </p>
                     
                     <div className="center border-bottom user-block">
                         <form name="user-form">

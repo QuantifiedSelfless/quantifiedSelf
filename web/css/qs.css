@@ -78,13 +78,22 @@ a {
     color: #d2bb5d;
 }
 
+#maillist .y-group-item {
+    box-shadow: 1px 1px 2px 2px #000;
+
+}
+
+.att {
+    text-decoration: underline;
+    font-weight: 700;
+}
+
 .tiny {
     font-family: 'Quicksand', sans-serif;
     font-size: 16px;
 }
 
 #sponsors {
-
     color: white;
     background-color: #333030;
 }

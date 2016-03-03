@@ -25,7 +25,7 @@ stateChange = function () {
     );
   } else if (appState == 1){
     React.render(
-      <div className="center">
+      <div>
           <Agree />
       </div>,
       document.getElementById('signup-content')

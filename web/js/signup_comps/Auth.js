@@ -189,8 +189,13 @@ var Auth = React.createClass({
         return (
             <div className="clearfix white py3" id="auth">
                 <div className="col-10 mx-auto">
-                    <p className="center">Please go through our list of providers and share with us as many as possible. We only store what is necessary for the show. We also encrypt all information and delete all of your shared information after your visit. The more information you provide, the better the experience.</p>
-                    <p className="center">Commonly people ask us about GMail data use so we want to tell you here that no human EVER looks at your raw gmail data. For more info <a href="/about#faq">see our FAQ page</a></p>
+                    <h2 className="center">Data Sharing</h2>
+                    <ul>
+                      <li>Please select a share option <span className="att">for every provider</span>.</li>
+                      <li>Remember, the more you share, the better your personal experience will be.</li>
+                      <li>We go through extreme measures to protect you and your data, the goal of this show is to explore what all this data means.</li>
+                    </ul>
+                    <p className="center">Commonly people ask us about GMail data use so we want to tell you here that NO HUMAN EVER looks at your raw gmail data. For more info <a href="/about#faq">see our FAQ page</a></p>
                 </div>
                 <div className="col-8 mx-auto py1">
                     <div className="social flex flex-column">

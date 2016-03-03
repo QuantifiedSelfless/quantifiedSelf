@@ -9,7 +9,8 @@
                 "headlines": ["Sanders wins New Hampshire!", "Drone Strike Kills 9 in Yemen"]
             },
         "user": UserBlob,
-        "priority": 1
+        "priority": 1,
+        "who": "Nathan"
     },
     {
         "exhibit_name": "personalized news",
@@ -18,7 +19,8 @@
             "category": 3
             },
         "user": UserBlob,
-        "priority": 1
+        "priority": 1,
+        "who": "Danny"
     },
     {
         "exhibit_name": "job interview",
@@ -27,7 +29,8 @@
             "stats" : ["1300 Messages a day", "Mentioned being drunk 4 times", "Follows communism on reddit"]
             },
         "user": UserBlob,
-        "priority": 1
+        "priority": 1,
+        "who": "Danny"
     },
     {
         "exhibit_name": "romantic match",
@@ -35,7 +38,8 @@
         "data": {
             },
         "user": UserBlob,
-        "priority": 1
+        "priority": 1,
+        "who": "Nathan"
     },
     {
         "exhibit_name": "mental health",
@@ -64,8 +68,8 @@
             "articles" : [{
                 "headline": "Crane collapses in Times Square.",
                 "link": "http://nyt.com/thatonetime"
-                },
-            ]
+                }],
+        "who": "Danny"
         },
         "user": UserBlob,
         "priority": 1

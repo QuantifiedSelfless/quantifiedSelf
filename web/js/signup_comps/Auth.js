@@ -154,8 +154,18 @@ var Auth = React.createClass({
     },
 
     next: function () {
-        appState += 1;
-        stateChange();
+        
+        $.ajax({
+            type: 'PUT',
+            url: '/user/info',
+            success: function() {
+                appState += 1;
+                stateChange();
+            },
+            error: function(xhr) {
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);
+            }
+        });
     },
 
 
@@ -194,9 +204,7 @@ var Auth = React.createClass({
                     </div>
                 </div>
                 <div className="center done">
-                    <a href="/signup#thankyou">
                         {theButton}
-                    </a>
                 </div>
                 <div className="col-8 mx-auto py1">
                   {shitTix}

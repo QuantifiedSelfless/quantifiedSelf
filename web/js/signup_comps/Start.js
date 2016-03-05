@@ -145,7 +145,7 @@ var Start = React.createClass({
                     </div>
                     <div className="center py2 social">
                         <p>Tickets sold out or not in your location? Find out when we announce new dates or public events by joining our mailing list.</p>
-                        <form action="http://www.freelists.org/cgi-bin/subscription.cgi" method="post"> 
+                        <form action="https://www.freelists.org/cgi-bin/subscription.cgi" method="post"> 
                             <input className="block col-6 field rounded-top y-group-item mx-auto mb1"type="text" placeholder="email@domain.com" name="email"/> 
                             <input type="hidden" name="list" value="quantifiedself" /> 
                             <input type="hidden" name="url_or_message" value="Thanks for subscribing! Please check your email to confirm your subscription. Hope to see you at one of our shows."/> 

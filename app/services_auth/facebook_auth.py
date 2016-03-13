@@ -10,9 +10,8 @@ class FacebookAuth(OAuthRequestHandler, auth.FacebookGraphMixin):
     scope = ["public_profile", "email", "user_friends", "user_posts",
              "user_likes", "user_about_me", "user_education_history",
              "user_events", "user_photos", "user_relationships",
-             "user_birthday", "user_videos", "user_games_activity",
-             "user_status", "user_relationship_details", 
-             "user_work_history", "read_custom_friendlists",
+             "user_birthday", "user_relationship_details", 
+             "user_work_history", "user_hometown",
              "user_religion_politics"]
 
     def initialize(self):

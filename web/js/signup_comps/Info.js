@@ -13,7 +13,7 @@ var Info = React.createClass({
     render: function () {
         return (
             <div className="clearfix py3" id="info">
-                <div className='col-10 mx-auto white'>
+                <div className='col-11 mx-auto white'>
                     <h2 className="center">What to Expect</h2>
                     <p className="center">Beyond our privacy policy, we want to give you a heads up about what to expect in the show.</p>
                     <div className="flex flex-start">
@@ -21,12 +21,13 @@ var Info = React.createClass({
                         <div className='col col-5 white'>
                             <p>You Will...</p>
                             <ul>
-                                <li>Talk and interact with actors</li>
+                                <li>Talk and interact with characters</li>
                                 <li>Use technology <span className="att">inside of private booths</span> for anything that could contain <span className="att">sensitive data</span></li>
                                 <li>Use technology in <span className="att">public spaces</span> where your data has been <span className="att">filtered to only include harmless data</span></li>
                                 <li>Have a bracelet that gives you sole access to your data during the performance</li>
                             </ul>
                         </div>
+                        <div className="flex-auto"></div>
                         <div className='col col-5 white'>
                             <p>You Will <span className="att">Not</span>...</p>
                             <ul>

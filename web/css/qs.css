@@ -98,6 +98,12 @@ a {
     background-color: #333030;
 }
 
+#sponsors a:hover {
+    text-decoration: none;
+    opacity: .8;
+
+}
+
 #sponsors h1 {
     font-family: 'Arvo', sans-serif;
 }
@@ -234,6 +240,7 @@ a {
     font-family: 'Quicksand', sans-serif;
     font-size: 20px;
     min-height: 80vh;
+    line-height: 30px;
 }
 
 #info h2 {
@@ -242,6 +249,7 @@ a {
 
 #info li {
     text-align: left;
+    line-height: 30px;
 }
 
 #info .btn-outline {

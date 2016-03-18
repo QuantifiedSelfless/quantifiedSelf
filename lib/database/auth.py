@@ -31,6 +31,7 @@ def delete_user_data(user_id):
     conn = yield connection()
     auth = yield r.table('auth').get(user_id).delete().run(conn)
     user = yield r.table('users').get(user_id).delete().run(conn)
+    res = yield r.table('reservations').filter(r.row['user_id'] == user_id).delete().run(conn)
     encryption = yield r.table('encryption_user')\
         .get(user_id).delete().run(conn)
     return auth, user, encryption

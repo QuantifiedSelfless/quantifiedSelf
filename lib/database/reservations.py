@@ -42,7 +42,8 @@ def remove_expired_tickets():
     safeDate = datetime.now() - timedelta(seconds=expiration_time)
     safeDate = r.epoch_time(int(safeDate.strftime("%s")))
     result = yield r.table('reservations').\
-        filter(r.row['reserved_on'] < safeDate).delete().run(conn)
+        filter((r.row['confirmation_code'] == '') &
+               (r.row['reserved_on'] < safeDate)).delete().run(conn)
     return result
 
 

@@ -18,7 +18,6 @@ from dateutil import tz
 import cryptohelper
 
 
-@secured
 class ShowtimeAccessTokens(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 
@@ -30,6 +29,11 @@ class ShowtimeAccessTokens(BaseHandler):
         passphrase = self.get_argument('passphrase', None)
         if not passphrase:
             passphrase = cryptohelper.recover_passphrase(shares)
+        if not (bool(shares) ^ bool(passphrase)):
+            return self.error(
+                400,
+                'Either shares or passphrase needs to be provided'
+            )
         privkey_show = yield get_show_privatekey(showid, passphrase)
 
         result = {

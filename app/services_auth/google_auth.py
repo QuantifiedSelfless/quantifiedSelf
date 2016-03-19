@@ -15,6 +15,7 @@ class GoogleAuth(OAuthRequestHandler, auth.GoogleOAuth2Mixin):
         'https://www.googleapis.com/auth/gmail.readonly',
         'https://www.googleapis.com/auth/calendar.readonly',
         'https://www.googleapis.com/auth/youtube.readonly',
+        'https://www.googleapis.com/auth/drive.photos.readonly',
     ]
 
     def initialize(self):

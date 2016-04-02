@@ -1,8 +1,10 @@
+tornado
 python-instagram
 google-api-python-client
 tornado
 rethinkdb
 requests
+requests_oauthlib
 ujson
 spotipy
 praw
@@ -11,3 +13,5 @@ python-dateutil
 oauth2
 bcrypt
 git+https://github.com/QuantifiedSelfless/cryptohelper.git
+git+https://github.com/dianakhuang/pytumblr.git@diana/python-3-support
+six

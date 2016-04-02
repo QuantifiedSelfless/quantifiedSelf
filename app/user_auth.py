@@ -120,10 +120,10 @@ class UserAuth(BaseHandler):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
         if is_shitty:
             fieldName = "max_shitty_booking"
-            
+            good = list(filter(lambda x: x['is_shitty'] == True, allReservations))
         else:
             fieldName = "max_normal_booking"
-        good = list(filter(lambda x: x['is_shitty'] == False, allReservations))
+            good = list(filter(lambda x: x['is_shitty'] == False, allReservations))
         return len(good) < showtime[fieldName]
 
     @gen.coroutine

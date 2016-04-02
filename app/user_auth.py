@@ -120,9 +120,11 @@ class UserAuth(BaseHandler):
         allReservations = yield get_reservations_for_showtime(showtime["id"])
         if is_shitty:
             fieldName = "max_shitty_booking"
+            
         else:
             fieldName = "max_normal_booking"
-        return len(allReservations) < showtime[fieldName]
+        good = list(filter(lambda x: x['is_shitty'] == False, allReservations))
+        return len(good) < showtime[fieldName]
 
     @gen.coroutine
     def canBookTicketForShowtime(self, showtime, promo_code):

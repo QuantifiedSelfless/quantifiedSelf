@@ -50,17 +50,20 @@ class ShowtimeAccessTokens(BaseHandler):
             cur_result = {
                 'id': user_id,
                 'publickey': user['public_key'],
+                'privatekey': user_privkey_pem,
+                'services': {},
             }
             user_privkey = cryptohelper.import_key(user_privkey_pem)
             access_tokens = yield get_user_tokens(user_id)
-            for key, value in access_tokens.items():
-                if not isinstance(value, bytes):
-                    continue
-                cur_result[key] = cryptohelper.decrypt_blob(
-                    user_privkey,
-                    value
-                )
-            result['users'].append(cur_result)
+            if access_tokens is not None:
+                for key, value in access_tokens.items():
+                    if not isinstance(value, bytes):
+                        continue
+                    cur_result['services'][key] = cryptohelper.decrypt_blob(
+                        user_privkey,
+                        value
+                    )
+                result['users'].append(cur_result)
         return self.api_response(result)
 
 

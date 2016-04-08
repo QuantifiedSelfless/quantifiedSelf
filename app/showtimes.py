@@ -44,7 +44,7 @@ class ShowtimeAccessTokens(BaseHandler):
         users = yield get_user_keypair_from_showid(showid)
         for user in users:
             user_id = user['id']
-            user_blob = get_user(user_id)
+            user_blob = yield get_user(user_id)
             user_name = user_blob['name']
             user_privkey_pem = cryptohelper.decrypt_blob(
                 privkey_show,

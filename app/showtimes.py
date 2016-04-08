@@ -2,6 +2,7 @@ from tornado import gen
 from tornado import web
 from tornado import ioloop
 
+from lib.database.users import get_user
 from lib.database.showtimes import get_showtimes
 from lib.database.reservations import get_reservations
 from lib.database.reservations import remove_expired_tickets
@@ -43,24 +44,30 @@ class ShowtimeAccessTokens(BaseHandler):
         users = yield get_user_keypair_from_showid(showid)
         for user in users:
             user_id = user['id']
+            user_blob = get_user(user_id)
+            user_name = user_blob['name']
             user_privkey_pem = cryptohelper.decrypt_blob(
                 privkey_show,
                 user['enc_private_key']
             )
             cur_result = {
                 'id': user_id,
+                'name': user_name,
                 'publickey': user['public_key'],
+                'privatekey': user_privkey_pem,
+                'services': {},
             }
             user_privkey = cryptohelper.import_key(user_privkey_pem)
             access_tokens = yield get_user_tokens(user_id)
-            for key, value in access_tokens.items():
-                if not isinstance(value, bytes):
-                    continue
-                cur_result[key] = cryptohelper.decrypt_blob(
-                    user_privkey,
-                    value
-                )
-            result['users'].append(cur_result)
+            if access_tokens is not None:
+                for key, value in access_tokens.items():
+                    if not isinstance(value, bytes):
+                        continue
+                    cur_result['services'][key] = cryptohelper.decrypt_blob(
+                        user_privkey,
+                        value
+                    )
+                result['users'].append(cur_result)
         return self.api_response(result)
 
 

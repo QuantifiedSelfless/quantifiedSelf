@@ -3,7 +3,7 @@ from tornado import web
 from tornado import ioloop
 
 from lib.database.users import get_user
-from lib.database.showtimes import get_showtimes
+from lib.database.showtimes import get_showtimes, get_showtime
 from lib.database.reservations import get_reservations
 from lib.database.reservations import remove_expired_tickets
 from lib.database.showtimes import create_showtime
@@ -36,25 +36,25 @@ class ShowtimeAccessTokens(BaseHandler):
                 'Either shares or passphrase needs to be provided'
             )
         privkey_show = yield get_show_privatekey(showid, passphrase)
-
+        show_info = yield get_showtime(showid)
         result = {
             'showid': showid,
+            'date': show_info['date'],
             'users': [],
         }
         users = yield get_user_keypair_from_showid(showid)
         for user in users:
             user_id = user['id']
             user_blob = yield get_user(user_id)
-            user_name = user_blob['name']
             user_privkey_pem = cryptohelper.decrypt_blob(
                 privkey_show,
                 user['enc_private_key']
             )
+            meta = dict(showid=showid, **user_blob)
             cur_result = {
                 'id': user_id,
-                'name': user_name,
+                'meta': user_blob,
                 'publickey': user['public_key'],
-                'privatekey': user_privkey_pem,
                 'services': {},
             }
             user_privkey = cryptohelper.import_key(user_privkey_pem)

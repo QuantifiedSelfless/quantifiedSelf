@@ -4,6 +4,7 @@ from tornado import gen
 from .database.auth import deny
 from lib.config import CONFIG
 
+from datetime import datetime
 import json
 import time
 import base64
@@ -51,6 +52,8 @@ class JSONEncoder(json.JSONEncoder):
             return list(obj)
         elif isinstance(obj, bytes):
             return obj.decode('utf8')
+        elif isinstance(obj, datetime):
+            return int(obj.strftime("%s"))
         return json.JSONEncoder.default(self, obj)
 
 

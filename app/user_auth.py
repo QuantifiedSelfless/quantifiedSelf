@@ -14,8 +14,35 @@ from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
 from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
+from .lib.email_sender import send_reminder
+from .lib.database.showtimes import get_showtimes
+from .lib.database.reservations import get_reservations
+from lib.basehandler import secured
 from lib.email_sender import send_confirmation
 from lib.basehandler import BaseHandler
+
+
+@secured
+class UserReminder(BaseHandler):
+    _ioloop = ioloop.IOLoop().instance()
+
+    @web.asynchronous
+    @gen.coroutine
+    def get(self):
+        all_reservations = yield get_reservations()
+        all_showtimes = yield get_showtimes()
+        for reservation in all_reservations:
+            show_id = reservation['showtime_id']
+            date_str = filter(
+                (lambda x: x['id'] == show_id),
+                all_showtimes)[0]
+            user_id = reservation['user_id']
+            user = get_user(user_id)
+            name = user['name']
+            email = user['email']
+            yield send_reminder(email, name, date_str)
+
+        return self.api_response({'reminder_status': "all sent!"})
 
 
 class UserAuth(BaseHandler):

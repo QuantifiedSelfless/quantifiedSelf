@@ -35,6 +35,16 @@ def send_confirmation(email, name, confirmation_code):
 
 
 @gen.coroutine
+def send_reminder(email, name, date):
+    yield send_email(
+        email,
+        'Reminder - Quantified Self Ticket',
+        'reminder.html',
+        {'name': name, 'date': date}
+    )
+
+
+@gen.coroutine
 def send_deauthorization(email, name, link):
     yield send_email(
         email,

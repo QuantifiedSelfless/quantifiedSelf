@@ -33,10 +33,10 @@ class UserReminder(BaseHandler):
         all_showtimes = yield get_showtimes()
         for reservation in all_reservations:
             show_id = reservation['showtime_id']
-            good_one = filter(
+            good_one = list(filter(
                 (lambda x: x['id'] == show_id),
-                all_showtimes)
-            date_str = good_one['date_str']
+                all_showtimes))
+            date_str = good_one[0]['date_str']
             user_id = reservation['user_id']
             user = get_user(user_id)
             name = user['name']

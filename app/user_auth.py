@@ -14,9 +14,9 @@ from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
 from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
-from .lib.email_sender import send_reminder
-from .lib.database.showtimes import get_showtimes
-from .lib.database.reservations import get_reservations
+from lib.email_sender import send_reminder
+from lib.database.showtimes import get_showtimes
+from lib.database.reservations import get_reservations
 from lib.basehandler import secured
 from lib.email_sender import send_confirmation
 from lib.basehandler import BaseHandler

@@ -29,14 +29,11 @@ class UserReminder(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def get(self):
-        all_reservations = yield get_reservations()
-        all_showtimes = yield get_showtimes()
-        for reservation in all_reservations:
+        reservations = yield get_reservations()
+        for reservation in reservations:
             show_id = reservation['showtime_id']
-            good_one = list(filter(
-                (lambda x: x['id'] == show_id),
-                all_showtimes))
-            date_str = good_one[0]['date_str']
+            show_meta = yield get_showtime(show_id)
+            date_str = show_meta['date_str']
             user_id = reservation['user_id']
             user = yield get_user(user_id)
             name = user['name']

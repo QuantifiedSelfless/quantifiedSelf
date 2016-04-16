@@ -38,7 +38,7 @@ class UserReminder(BaseHandler):
                 all_showtimes))
             date_str = good_one[0]['date_str']
             user_id = reservation['user_id']
-            user = get_user(user_id)
+            user = yield get_user(user_id)
             name = user['name']
             email = user['email']
             yield send_reminder(email, name, date_str)

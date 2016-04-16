@@ -3,6 +3,7 @@ from tornado import web
 from tornado import options
 
 from app.user_auth import UserAuth
+from app.user_auth import UserReminder
 from app.user_deauth import UserDeauth
 from app.showtimes import CreateShowtimeHandler, ListShowtimesHandler,\
     ShowtimeAccessTokens
@@ -107,7 +108,7 @@ if __name__ == "__main__":
             (r'/auth/instagram', InstagramAuth),
             (r'/auth/close', CloseWindow),
             (r'/auth/deauth', UserDeauth),
-
+            (r'/api/reminders', UserReminder),
             (r'/user/info', UserAuth),
             (r'/api/showtimes', ListShowtimesHandler),
             (r'/api/showtimes/access_tokens', ShowtimeAccessTokens),

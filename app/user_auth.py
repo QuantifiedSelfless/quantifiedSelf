@@ -17,7 +17,6 @@ from lib.database.reservations import get_reservation_for_user
 from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
 from lib.email_sender import send_reminder
-from lib.database.showtimes import get_showtimes
 from lib.database.reservations import get_reservations
 from lib.basehandler import secured
 from lib.email_sender import send_confirmation
@@ -31,15 +30,12 @@ class UserReminder(BaseHandler):
     @web.asynchronous
     @gen.coroutine
     def get(self):
-        all_reservations = yield get_reservations()
-        all_showtimes = yield get_showtimes()
         send_res = []
-        for reservation in all_reservations:
+        reservations = yield get_reservations()
+        for reservation in reservations:
             show_id = reservation['showtime_id']
-            good_one = list(filter(
-                (lambda x: x['id'] == show_id),
-                all_showtimes))
-            date_str = good_one[0]['date_str']
+            show_meta = yield get_showtime(show_id)
+            date_str = show_meta['date_str']
             user_id = reservation['user_id']
             user = yield get_user(user_id)
             name = user['name']

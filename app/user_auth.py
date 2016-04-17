@@ -3,6 +3,8 @@ from tornado import web
 from tornado import ioloop
 
 import uuid
+import os
+import pickle
 
 from lib.database.users import user_insert
 from lib.database.users import get_user
@@ -31,6 +33,7 @@ class UserReminder(BaseHandler):
     def get(self):
         all_reservations = yield get_reservations()
         all_showtimes = yield get_showtimes()
+        send_res = []
         for reservation in all_reservations:
             show_id = reservation['showtime_id']
             good_one = list(filter(
@@ -41,7 +44,15 @@ class UserReminder(BaseHandler):
             user = yield get_user(user_id)
             name = user['name']
             email = user['email']
-            yield send_reminder(email, name, date_str)
+            try:
+                yield send_reminder(email, name, date_str)
+                send_res.append(email)
+            except Exception as e:
+                print("Exception while sending out emails: {0}".format(e))
+            os.makedirs("./data/", exist_ok=True)
+            with open('./data/emails.pkl', 'wb+') as fd:
+                pickle.dump(send_res, fd)
+            yield gen.sleep(1)
 
         return self.api_response({'reminder_status': "all sent!"})
 

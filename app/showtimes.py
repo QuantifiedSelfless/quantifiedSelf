@@ -19,6 +19,48 @@ from dateutil import tz
 import cryptohelper
 
 
+class ShowtimeKeys(BaseHandler):
+    _ioloop = ioloop.IOLoop().instance()
+
+    @web.asynchronous
+    @gen.coroutine
+    def get(self):
+        showid = self.get_argument('showtime_id')
+        shares = self.get_arguments('share')
+        passphrase = self.get_argument('passphrase', None)
+        if not passphrase:
+            passphrase = cryptohelper.recover_passphrase(shares)
+        if not (bool(shares) ^ bool(passphrase)):
+            return self.error(
+                400,
+                'Either shares or passphrase needs to be provided'
+            )
+        privkey_show = yield get_show_privatekey(showid, passphrase)
+        show_info = yield get_showtime(showid)
+        result = {
+            'showid': showid,
+            'date': show_info['date'],
+            'users': [],
+        }
+        users = yield get_user_keypair_from_showid(showid)
+        for user in users:
+            user_id = user['id']
+            user_blob = yield get_user(user_id)
+            user_privkey_pem = cryptohelper.decrypt_blob(
+                privkey_show,
+                user['enc_private_key']
+            )
+            meta = dict(showid=showid, **user_blob)
+            cur_result = {
+                'id': user_id,
+                'meta': meta,
+                'publickey': user['public_key'],
+                'privatekey': user_privkey_pem,
+            }
+            result['users'].append(cur_result)
+        return self.api_response(result)
+
+
 class ShowtimeAccessTokens(BaseHandler):
     _ioloop = ioloop.IOLoop().instance()
 
@@ -53,7 +95,7 @@ class ShowtimeAccessTokens(BaseHandler):
             meta = dict(showid=showid, **user_blob)
             cur_result = {
                 'id': user_id,
-                'meta': user_blob,
+                'meta': meta,
                 'publickey': user['public_key'],
                 'services': {},
             }

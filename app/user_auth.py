@@ -3,6 +3,8 @@ from tornado import web
 from tornado import ioloop
 
 import uuid
+import os
+import pickle
 
 from lib.database.users import user_insert
 from lib.database.users import get_user
@@ -14,8 +16,41 @@ from lib.database.reservations import get_reservations_for_showtime
 from lib.database.reservations import get_reservation_for_user
 from lib.database.promotion_keys import pop_promotion_key
 from lib.database.showtimes import get_showtime
+from lib.email_sender import send_reminder
+from lib.database.reservations import get_reservations
+from lib.basehandler import secured
 from lib.email_sender import send_confirmation
 from lib.basehandler import BaseHandler
+
+
+@secured
+class UserReminder(BaseHandler):
+    _ioloop = ioloop.IOLoop().instance()
+
+    @web.asynchronous
+    @gen.coroutine
+    def get(self):
+        send_res = []
+        reservations = yield get_reservations()
+        for reservation in reservations:
+            show_id = reservation['showtime_id']
+            show_meta = yield get_showtime(show_id)
+            date_str = show_meta['date_str']
+            user_id = reservation['user_id']
+            user = yield get_user(user_id)
+            name = user['name']
+            email = user['email']
+            try:
+                yield send_reminder(email, name, date_str)
+                send_res.append(email)
+            except Exception as e:
+                print("Exception while sending out emails: {0}".format(e))
+            os.makedirs("./data/", exist_ok=True)
+            with open('./data/emails.pkl', 'wb+') as fd:
+                pickle.dump(send_res, fd)
+            yield gen.sleep(1)
+
+        return self.api_response({'reminder_status': "all sent!"})
 
 
 class UserAuth(BaseHandler):

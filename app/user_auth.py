@@ -45,9 +45,9 @@ class UserReminder(BaseHandler):
                 send_res.append(email)
             except Exception as e:
                 print("Exception while sending out emails: {0}".format(e))
-            os.makedirs("./data/", exist_ok=True)
-            with open('./data/emails.pkl', 'wb+') as fd:
-                pickle.dump(send_res, fd)
+                os.makedirs("./data/", exist_ok=True)
+                with open('./data/emails.pkl', 'wb+') as fd:
+                    pickle.dump(send_res, fd)
             yield gen.sleep(1)
 
         return self.api_response({'reminder_status': "all sent!"})

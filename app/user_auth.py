@@ -32,6 +32,8 @@ class UserReminder(BaseHandler):
     def get(self):
         send_res = []
         reservations = yield get_reservations()
+        past_email = pickle.load(open(
+            './data/emails.pkl', 'rb'))
         for reservation in reservations:
             show_id = reservation['showtime_id']
             show_meta = yield get_showtime(show_id)
@@ -40,6 +42,8 @@ class UserReminder(BaseHandler):
             user = yield get_user(user_id)
             name = user['name']
             email = user['email']
+            if email in past_email:
+                continue
             try:
                 yield send_reminder(email, name, date_str)
                 send_res.append(email)

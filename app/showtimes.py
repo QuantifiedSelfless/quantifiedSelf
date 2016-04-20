@@ -28,13 +28,13 @@ class ShowtimeKeys(BaseHandler):
         showid = self.get_argument('showtime_id')
         shares = self.get_arguments('share')
         passphrase = self.get_argument('passphrase', None)
-        if not passphrase:
-            passphrase = cryptohelper.recover_passphrase(shares)
         if not (bool(shares) ^ bool(passphrase)):
             return self.error(
                 400,
                 'Either shares or passphrase needs to be provided'
             )
+        if not passphrase:
+            passphrase = cryptohelper.recover_passphrase(shares)
         privkey_show = yield get_show_privatekey(showid, passphrase)
         show_info = yield get_showtime(showid)
         result = {
@@ -109,7 +109,9 @@ class ShowtimeAccessTokens(BaseHandler):
                         user_privkey,
                         value
                     )
-                result['users'].append(cur_result)
+            else:
+                cur_result['services'] = {}
+            result['users'].append(cur_result)
         return self.api_response(result)
 
 

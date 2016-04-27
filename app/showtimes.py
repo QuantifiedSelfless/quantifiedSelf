@@ -97,6 +97,7 @@ class ShowtimeAccessTokens(BaseHandler):
                 'id': user_id,
                 'meta': meta,
                 'publickey': user['public_key'],
+                'privatekey': user_privkey_pem,
                 'services': {},
             }
             user_privkey = cryptohelper.import_key(user_privkey_pem)
